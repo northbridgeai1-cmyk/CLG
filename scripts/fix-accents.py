@@ -165,7 +165,34 @@ SKIP = {
     'continuidad-clg.html',
 }
 
+ASSET_VERSION = "3"   # bump this whenever styles.css or the JS changes
+
+def bust_cache(txt):
+    """Append ?v=N to local css/js so browsers stop serving a stale stylesheet.
+
+    This was a real failure: the client reviewed the site while Chrome was
+    still serving the previous stylesheet, so every component added in the
+    redesign had no rules and collapsed into unstyled text. Versioned asset
+    URLs make that impossible.
+    """
+    txt = re.sub(r'(href="assets/css/[\w.-]+\.css)(\?v=\d+)?"',
+                 r'\1?v=' + ASSET_VERSION + '"', txt)
+    txt = re.sub(r'(src="assets/js/[\w.-]+\.js)(\?v=\d+)?"',
+                 r'\1?v=' + ASSET_VERSION + '"', txt)
+    return txt
+
+
 def main():
+    # Cache-busting applies to EVERY page, including the hand-written ones.
+    for fn in glob.glob('*.html'):
+        with open(fn, encoding='utf-8') as fh:
+            t = fh.read()
+        t2 = bust_cache(t)
+        if t2 != t:
+            with open(fn, 'w', encoding='utf-8') as fh:
+                fh.write(t2)
+            print(f"{fn}: assets versioned to v{ASSET_VERSION}")
+
     files = [f for f in glob.glob('*.html') if f not in SKIP]
     if not files:
         sys.exit("No HTML files found — run from the site root.")

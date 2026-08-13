@@ -57,30 +57,18 @@
     <div class="container">
       <div class="map-wrap">
         <div class="us-map">
-          <!-- Mapa esquemático: regiones clicables, no cartografía exacta.
-               Suficiente para explorar, honesto sobre lo que es. -->
-          <svg id="us-map" viewBox="0 0 640 400" role="img" aria-label="Mapa de regiones de Estados Unidos">
-            <g>
-              <rect class="state" data-state="ca" tabindex="0" role="button" aria-label="California" x="20"  y="90"  width="90"  height="190" rx="8"/>
-              <text x="65"  y="190" text-anchor="middle" font-family="Public Sans" font-size="15" font-weight="700" fill="#2A1240" pointer-events="none">CA</text>
-
-              <rect class="state" data-state="tx" tabindex="0" role="button" aria-label="Texas" x="200" y="200" width="130" height="150" rx="8"/>
-              <text x="265" y="280" text-anchor="middle" font-family="Public Sans" font-size="15" font-weight="700" fill="#2A1240" pointer-events="none">TX</text>
-
-              <rect class="state" data-state="il" tabindex="0" role="button" aria-label="Illinois y Medio Oeste" x="340" y="90"  width="110" height="100" rx="8"/>
-              <text x="395" y="145" text-anchor="middle" font-family="Public Sans" font-size="14" font-weight="700" fill="#2A1240" pointer-events="none">MEDIO OESTE</text>
-
-              <rect class="state" data-state="ny" tabindex="0" role="button" aria-label="Nueva York" x="470" y="60"  width="140" height="90"  rx="8"/>
-              <text x="540" y="110" text-anchor="middle" font-family="Public Sans" font-size="15" font-weight="700" fill="#2A1240" pointer-events="none">NY</text>
-
-              <rect class="state" data-state="ga" tabindex="0" role="button" aria-label="Georgia y Sureste" x="400" y="200" width="120" height="90"  rx="8"/>
-              <text x="460" y="250" text-anchor="middle" font-family="Public Sans" font-size="14" font-weight="700" fill="#2A1240" pointer-events="none">SURESTE</text>
-
-              <rect class="state" data-state="fl" tabindex="0" role="button" aria-label="Florida" x="470" y="300" width="120" height="70"  rx="8"/>
-              <text x="530" y="340" text-anchor="middle" font-family="Public Sans" font-size="15" font-weight="700" fill="#2A1240" pointer-events="none">FL</text>
-            </g>
-          </svg>
-          <p class="note">Mapa esquemático para explorar regiones, no un mapa geográfico exacto. Toca una región para ver sus industrias.</p>
+          <!-- Lista de regiones, no un mapa falso. Un mapa real necesita
+               cartografía SVG con las siluetas de los estados; hasta que se
+               integre, una lista honesta se ve mejor y funciona mejor en
+               móvil que unos rectángulos etiquetados. -->
+          <div class="region-list">
+            <button class="region-btn" data-state="fl"><span>Florida</span><small>Miami y Orlando</small></button>
+            <button class="region-btn" data-state="tx"><span>Texas</span><small>Austin, Houston, Dallas</small></button>
+            <button class="region-btn" data-state="ny"><span>Nueva York</span><small>Área metropolitana</small></button>
+            <button class="region-btn" data-state="ca"><span>California</span><small>Los Ángeles y Bay Area</small></button>
+            <button class="region-btn" data-state="ga"><span>Sureste</span><small>Georgia y las Carolinas</small></button>
+            <button class="region-btn" data-state="il"><span>Medio Oeste</span><small>Illinois y alrededores</small></button>
+          </div>
         </div>
         <aside class="map-panel" id="map-panel"></aside>
       </div>

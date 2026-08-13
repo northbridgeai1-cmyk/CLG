@@ -23,7 +23,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css">
+<!-- ?v=3 busts the browser cache. Bump this number on every CSS change. -->
+<link rel="stylesheet" href="assets/css/styles.css?v=3">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -65,15 +66,14 @@
 
 <header class="site-header">
   <div class="container">
-    <a href="index.html" class="brand">
+    <!-- El logo ya contiene el nombre de la firma. No repetirlo en texto. -->
+    <a href="index.html" class="brand" aria-label="Calderaro Law Group, inicio">
       <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
-      <span>Calderaro Law Group<small>Estrategia Migratoria</small></span>
     </a>
     <nav class="main-nav">
       <a href="index.html" class="active" data-i18n="nav_inicio">Inicio</a>
       <a href="metas-clg.html" data-i18n="nav_metas">Metas</a>
       <a href="#vias" data-i18n="nav_estrategias">Vías</a>
-      <a href="oportunidades.html" data-i18n="nav_oportunidades">Oportunidades</a>
       <a href="casos-de-exito.html" data-i18n="nav_casos">Casos</a>
       <a href="nosotros.html" data-i18n="nav_nosotros">Nosotros</a>
       <a href="recursos.html" data-i18n="nav_recursos">Recursos</a>
@@ -99,12 +99,14 @@
         <div class="eyebrow" data-i18n="hero_eyebrow">Estrategia migratoria, no venta de visas</div>
         <h1 data-i18n="hero_h1">No vendemos visas. Diseñamos tu estrategia migratoria completa.</h1>
         <p class="lede" data-i18n="hero_lede">Para empresarios, profesionales, artistas, deportistas y familias que necesitan tomar la decisión correcta antes de invertir tiempo, dinero y años en un proceso migratorio.</p>
-        <div class="hero-steps">
-          <span data-i18n="hero_step1">Entendemos tu perfil</span>
-          <span data-i18n="hero_step2">Diseñamos la estrategia</span>
-          <span data-i18n="hero_step3">Construimos el caso</span>
-          <span data-i18n="hero_step4">Te acompañamos hasta la resolución</span>
-        </div>
+        <!-- Lista real. Antes eran <span> sueltos y, sin CSS, se leían como
+             una sola frase corrida. -->
+        <ol class="hero-steps">
+          <li data-i18n="hero_step1">Entendemos tu perfil</li>
+          <li data-i18n="hero_step2">Diseñamos la estrategia</li>
+          <li data-i18n="hero_step3">Construimos el caso</li>
+          <li data-i18n="hero_step4">Te acompañamos hasta la resolución</li>
+        </ol>
         <div class="hero-actions">
           <a href="fase1-evaluacion-clg.html" class="btn btn-primary btn-lg" data-i18n="cta_main">Quiero conocer mi estrategia</a>
           <a href="#donde-estas" class="btn btn-ghost btn-lg" data-i18n="cta_secondary">Explorar mis opciones</a>
@@ -123,7 +125,7 @@
   </section>
 
   <!-- 02 TRUST -->
-  <div class="trustbar">
+  <div class="trustbar" style="background:#1E1130;color:#FAF8F5;padding:30px 0;">
     <div class="container">
       <div><strong data-i18n="trust_1">20+ años</strong><span data-i18n="trust_1s">de experiencia legal en inmigración</span></div>
       <div><strong data-i18n="trust_2">Clientes internacionales</strong><span data-i18n="trust_2s">en toda Latinoamérica y más allá</span></div>
@@ -292,7 +294,7 @@
         <article class="case-card">
           <div class="case-body">
             <div style="display:flex;align-items:center;gap:10px;">
-              <img class="case-flag" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="Bandera de Colombia">
+              <img class="case-flag" width="28" height="19" style="width:28px;height:19px;object-fit:cover;flex:none;" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="Bandera de Colombia">
               <strong>Javier O.</strong>
             </div>
             <dl class="case-meta">
@@ -308,7 +310,7 @@
         <article class="case-card">
           <div class="case-body">
             <div style="display:flex;align-items:center;gap:10px;">
-              <img class="case-flag" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f43bca7bf_5a6cfc6-e57-8fb-4e1-08bc13af7765_Flag_of_Japan_bordered_.webp" alt="Bandera de Japón">
+              <img class="case-flag" width="28" height="19" style="width:28px;height:19px;object-fit:cover;flex:none;" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f43bca7bf_5a6cfc6-e57-8fb-4e1-08bc13af7765_Flag_of_Japan_bordered_.webp" alt="Bandera de Japón">
               <strong>Shiro</strong>
             </div>
             <dl class="case-meta">
@@ -324,7 +326,7 @@
         <article class="case-card">
           <div class="case-body">
             <div style="display:flex;align-items:center;gap:10px;">
-              <img class="case-flag" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="Bandera de Perú">
+              <img class="case-flag" width="28" height="19" style="width:28px;height:19px;object-fit:cover;flex:none;" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="Bandera de Perú">
               <strong>Giancarlos C.</strong>
             </div>
             <dl class="case-meta">
@@ -344,15 +346,18 @@
   </section>
 
   <!-- 09 POR QUÉ CLG -->
-  <section class="section section--purple">
+  <!-- El fondo oscuro va también inline: si la hoja de estilos falla o queda
+       en caché, el texto claro seguiría siendo legible en vez de desaparecer
+       sobre el crema. -->
+  <section class="section section--purple" style="background:#1E1130;">
     <div class="container">
       <div class="eyebrow">La diferencia</div>
       <h2 data-i18n="why_clg_h2">¿Por qué familias y empresarios eligen CLG?</h2>
       <div class="grid-4" style="margin-top:40px;">
-        <div><div class="card-num" style="color:var(--yellow);">01</div><h3 style="font-size:1.1rem;">Estrategia antes que trámite</h3><p style="color:#C4B4D4;font-size:.93rem;">No empezamos por una visa. Empezamos entendiendo tu situación.</p></div>
-        <div><div class="card-num" style="color:var(--yellow);">02</div><h3 style="font-size:1.1rem;">Una visión completa</h3><p style="color:#C4B4D4;font-size:.93rem;">Negocio, profesión, familia, capital, tiempos y objetivos, juntos.</p></div>
-        <div><div class="card-num" style="color:var(--yellow);">03</div><h3 style="font-size:1.1rem;">Equipo legal con nombre</h3><p style="color:#C4B4D4;font-size:.93rem;">Abogado y case manager asignados, con seguimiento real.</p></div>
-        <div><div class="card-num" style="color:var(--yellow);">04</div><h3 style="font-size:1.1rem;">Pensamos más allá de la aprobación</h3><p style="color:#C4B4D4;font-size:.93rem;">La estrategia contempla lo que pasa cuando ya estás allá.</p></div>
+        <div><div class="on-dark-num">01</div><h3 class="on-dark-h">Estrategia antes que trámite</h3><p class="on-dark-p">No empezamos por una visa. Empezamos entendiendo tu situación.</p></div>
+        <div><div class="on-dark-num">02</div><h3 class="on-dark-h">Una visión completa</h3><p class="on-dark-p">Negocio, profesión, familia, capital, tiempos y objetivos, juntos.</p></div>
+        <div><div class="on-dark-num">03</div><h3 class="on-dark-h">Equipo legal con nombre</h3><p class="on-dark-p">Abogado y case manager asignados, con seguimiento real.</p></div>
+        <div><div class="on-dark-num">04</div><h3 class="on-dark-h">Pensamos más allá de la aprobación</h3><p class="on-dark-p">La estrategia contempla lo que pasa cuando ya estás allá.</p></div>
       </div>
     </div>
   </section>
@@ -364,10 +369,10 @@
       <h2>Entendemos de dónde vienes porque ya acompañamos familias de toda la región</h2>
       <p class="lede center" style="margin-bottom:26px;">No es lo mismo estructurar un caso desde Buenos Aires que desde Ciudad de México. Los tiempos, los bancos y la documentación cambian, y eso lo aprendimos caso por caso.</p>
       <div class="country-row" style="justify-content:center;">
-        <span class="country-chip"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="">Colombia</span>
-        <span class="country-chip"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f3ef46544_132adda-bb-d50f-31f-fe045b454ddb_Flag-Argentina.webp" alt="">Argentina</span>
-        <span class="country-chip"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="">Perú</span>
-        <span class="country-chip"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f16daf301_41bd7-04c1-3c6-8475-73afbfb134e_Flag_of_Ecuador.webp" alt="">Ecuador</span>
+        <span class="country-chip"><img width="22" height="15" style="width:22px;height:15px;object-fit:cover;" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="">Colombia</span>
+        <span class="country-chip"><img width="22" height="15" style="width:22px;height:15px;object-fit:cover;" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f3ef46544_132adda-bb-d50f-31f-fe045b454ddb_Flag-Argentina.webp" alt="">Argentina</span>
+        <span class="country-chip"><img width="22" height="15" style="width:22px;height:15px;object-fit:cover;" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="">Perú</span>
+        <span class="country-chip"><img width="22" height="15" style="width:22px;height:15px;object-fit:cover;" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f16daf301_41bd7-04c1-3c6-8475-73afbfb134e_Flag_of_Ecuador.webp" alt="">Ecuador</span>
         <span class="country-chip">México</span>
         <span class="country-chip">Bolivia</span>
         <span class="country-chip">Chile</span>
@@ -434,7 +439,7 @@
   </section>
 
   <!-- 13 CTA FINAL -->
-  <section class="section section--purple">
+  <section class="section section--purple" style="background:#1E1130;">
     <div class="container center" style="max-width:760px;">
       <h2 data-i18n="final_h2">Tu primera decisión no debería ser qué visa presentar.</h2>
       <p class="lede center" data-i18n="final_lede">Debería ser entender cuál es la estrategia correcta para ti, tu patrimonio, tu profesión y tu familia.</p>
@@ -556,14 +561,21 @@
     </form>
   </div>
   <button class="ai-fab" id="ai-fab" aria-label="Abrir asistente">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3a9 9 0 1 0 9 9c0-1.5-.4-2.9-1-4"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg>
+    <!-- Burbuja de chat sólida. El icono anterior era un círculo incompleto
+         y se leía como un spinner de carga. -->
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 3C6.9 3 3 6.5 3 10.8c0 2.4 1.2 4.5 3.2 5.9v3.6l3.4-1.9c.8.2 1.6.3 2.4.3 5.1 0 9-3.5 9-7.9S17.1 3 12 3Z"/>
+      <circle cx="8.4" cy="10.8" r="1.05" fill="#1E1130"/>
+      <circle cx="12" cy="10.8" r="1.05" fill="#1E1130"/>
+      <circle cx="15.6" cy="10.8" r="1.05" fill="#1E1130"/>
+    </svg>
   </button>
   <a class="wa-fab" data-wa-link="Hola, quiero conocer mi estrategia migratoria." aria-label="WhatsApp">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.87.5 3.62 1.4 5.13L2 22l5.02-1.36A9.95 9.95 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2Zm5.9 14.24c-.25.7-1.45 1.34-2 1.42-.53.08-1.2.11-1.94-.12-.45-.14-1.02-.33-1.76-.65-3.1-1.34-5.12-4.46-5.28-4.67-.15-.21-1.26-1.68-1.26-3.2s.79-2.28 1.07-2.59c.28-.31.6-.38.8-.38h.58c.19 0 .44-.07.68.53.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.09.2-.14.33-.28.5-.14.17-.29.38-.42.51-.14.14-.28.29-.12.57.15.28.68 1.15 1.47 1.87 1.01.93 1.87 1.22 2.15 1.36.28.14.44.12.6-.07.17-.2.71-.85.9-1.14.19-.29.38-.24.63-.14.25.09 1.6.78 1.87.92.28.14.46.21.53.33.07.12.07.68-.18 1.38Z"/></svg>
   </a>
 </div>
 
-<script src="assets/js/i18n.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/i18n.js?v=3"></script>
+<script src="assets/js/main.js?v=3"></script>
 </body>
 </html>
