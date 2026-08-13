@@ -1,206 +1,358 @@
 /* ==========================================================================
-   Calderaro Law Group — shared site behavior
-   Mobile nav, WhatsApp FAB, AI assistant widget, contact-form autosave
+   Calderaro Law Group — site behavior
+   Nav · WhatsApp · scroll reveals · popup · lead-gen assistant · forms
    ========================================================================== */
 
+var CLG = {
+  whatsapp: "17863016264",
+  /* TODO(CLG): point these at the systeme.io form endpoints so submissions
+     land in the CRM with their tag. Until then, submissions are handed off
+     via a pre-filled WhatsApp message and nothing is silently lost. */
+  endpoints: { popup: "", chat: "", contact: "" }
+};
+
+/* ---------------- Scroll reveal ---------------- */
+(function () {
+  var css = document.createElement("style");
+  css.textContent =
+    ".rvl{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}" +
+    ".rvl.in{opacity:1;transform:none}" +
+    "@media (prefers-reduced-motion: reduce){.rvl{opacity:1;transform:none;transition:none}}";
+  document.head.appendChild(css);
+  function arm() {
+    if (!("IntersectionObserver" in window)) return;
+    var t = document.querySelectorAll(
+      ".section .card, .section .path-card, .section .pathway-card, .section .why-item," +
+      ".section .method-step, .section .case-card, .section .team-card, .section .next-item," +
+      ".section .industry-tile, .section .resource-card, .section .event-item, .section h2, .section .lede"
+    );
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: .12 });
+    t.forEach(function (el, i) {
+      el.classList.add("rvl");
+      el.style.transitionDelay = (i % 4) * 70 + "ms";
+      io.observe(el);
+    });
+  }
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", arm) : arm();
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
+
   /* ---------------- Mobile nav ---------------- */
   var toggle = document.querySelector(".mobile-toggle");
   if (toggle) {
-    toggle.addEventListener("click", function () {
-      document.body.classList.toggle("menu-open");
-    });
+    toggle.addEventListener("click", function () { document.body.classList.toggle("menu-open"); });
     document.querySelectorAll(".main-nav a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        document.body.classList.remove("menu-open");
-      });
+      a.addEventListener("click", function () { document.body.classList.remove("menu-open"); });
     });
   }
 
-  /* ---------------- WhatsApp FAB ---------------- */
-  var WHATSAPP_NUMBER = "17863016264";
+  /* ---------------- WhatsApp links ---------------- */
   document.querySelectorAll("[data-wa-link]").forEach(function (el) {
-    var msg = el.getAttribute("data-wa-link") || "Hola, me gustaria conocer mas sobre las estrategias migratorias de CLG.";
-    el.href = "https://api.whatsapp.com/send?phone=" + WHATSAPP_NUMBER + "&text=" + encodeURIComponent(msg);
-    el.target = "_blank";
-    el.rel = "noopener";
+    var msg = el.getAttribute("data-wa-link") || "Hola, me gustaría conocer mi estrategia migratoria.";
+    el.href = "https://api.whatsapp.com/send?phone=" + CLG.whatsapp + "&text=" + encodeURIComponent(msg);
+    el.target = "_blank"; el.rel = "noopener";
   });
 
-  /* ---------------- Contact form autosave + "welcome back" ---------------- */
-  var form = document.getElementById("contact-form");
-  if (form) {
-    var STORAGE_KEY = "clg_contact_draft";
-    var fields = form.querySelectorAll("input, select, textarea");
+  initPopup();
+  initAssistant();
+  initContactForm();
 
-    var saved = null;
-    try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); } catch (e) {}
-
-    if (saved && saved.values && Object.keys(saved.values).length) {
-      var banner = document.getElementById("resume-banner");
-      if (banner) {
-        banner.style.display = "block";
-        banner.querySelector("[data-resume]").addEventListener("click", function () {
-          fields.forEach(function (f) {
-            if (saved.values[f.name] !== undefined) f.value = saved.values[f.name];
-          });
-          banner.style.display = "none";
-        });
-        banner.querySelector("[data-dismiss]").addEventListener("click", function () {
-          banner.style.display = "none";
-        });
-      }
-    }
-
-    var saveDraft = function () {
-      var values = {};
-      fields.forEach(function (f) { if (f.name) values[f.name] = f.value; });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ values: values, ts: Date.now() }));
-    };
-    fields.forEach(function (f) { f.addEventListener("input", saveDraft); });
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      localStorage.removeItem(STORAGE_KEY);
-      var status = document.getElementById("form-status");
-      var name = form.querySelector("[name=nombre]");
-      var email = form.querySelector("[name=email]");
-      if (status) {
-        status.textContent = "Gracias" + (name && name.value ? ", " + name.value.split(" ")[0] : "") + ". Recibimos tu informacion — un asesor te escribira por WhatsApp o correo dentro de las proximas horas. Si prefieres, escribenos ahora mismo por WhatsApp.";
-        status.classList.add("ok");
-      }
-      form.reset();
-      form.style.display = "none";
-      var cta = document.getElementById("form-followup-cta");
-      if (cta) cta.style.display = "flex";
-    });
-  }
-
-  /* ---------------- Newsletter / subscribe forms (footer) ---------------- */
   document.querySelectorAll("[data-subscribe-form]").forEach(function (f) {
     f.addEventListener("submit", function (e) {
       e.preventDefault();
-      var msg = f.querySelector("[data-subscribe-status]");
-      if (msg) msg.textContent = "Listo — revisa tu correo para confirmar tu suscripcion.";
+      var m = f.querySelector("[data-subscribe-status]");
+      if (m) m.textContent = "Listo. Revisa tu correo para confirmar tu suscripción.";
     });
   });
-
-  /* ---------------- AI assistant widget ---------------- */
-  initAssistant();
 });
 
 /* ==========================================================================
-   Lightweight on-site assistant.
-   Rule-based against CLG's real FAQ / positioning content — runs entirely
-   client-side, no data leaves the browser. Escalates anything it can't
-   answer confidently straight to a human on WhatsApp.
+   POPUP
+   Fires on exit intent, or after 45s, whichever comes first. Never on load.
+   Shown once per visitor (remembered), never again after they convert.
    ========================================================================== */
-function initAssistant() {
-  var launcher = document.getElementById("ai-fab");
-  var panel = document.getElementById("ai-panel");
-  var closeBtn = document.getElementById("ai-close");
-  var messages = document.getElementById("ai-messages");
-  var inputForm = document.getElementById("ai-input-form");
-  var input = document.getElementById("ai-input");
-  var suggestions = document.getElementById("ai-suggestions");
-
-  if (!launcher || !panel) return;
-
-  var KB = [
-    {
-      k: ["visa", "que ofrecen", "que hacen", "servicio"],
-      a: "CLG no vende visas ni residencias: disenamos la estrategia migratoria completa para tu caso — profesional, inversionista o familiar — y te acompanamos en cada paso legal para llegar a ella. ¿Cual describe mejor tu situacion: negocio/inversion, carrera profesional, o familia?"
-    },
-    {
-      k: ["negocio", "invertir", "inversion", "empresa", "e2", "e-2", "eb5", "eb-5", "l1", "l-1"],
-      a: "Para empresarios e inversionistas trabajamos rutas como E-2, L-1 y EB-5, estructurando el negocio, el capital y la evidencia desde el inicio. Puedes ver el detalle en la pagina de Empresarios e Inversionistas, o hacer la evaluacion gratuita de 3 minutos."
-    },
-    {
-      k: ["profesional", "trabajo", "empleo", "eb2", "eb-2", "niw", "eb1", "eb-1", "o1", "o-1", "artista", "deportista"],
-      a: "Para profesionales, artistas y talento destacado evaluamos rutas como EB-2 NIW, EB-1 y O-1. La mejor forma de saber cual aplica a tu perfil es la evaluacion gratuita — toma 3 minutos."
-    },
-    {
-      k: ["familia", "hijos", "esposa", "esposo", "conyuge", "reunificacion", "loteria", "residencia"],
-      a: "Para familias trabajamos peticiones familiares, planificacion de residencia a largo plazo y la loteria de visas cuando aplica. Puedes ver mas en la pagina de Familias y Planificacion."
-    },
-    {
-      k: ["precio", "costo", "cuanto cuesta", "honorario", "fee", "pagar"],
-      a: "Publicamos rangos reales por tipo de visa en la pagina de Estrategia y Honorarios — sin sorpresas. El primer paso siempre es la Evaluacion CLG, que se descuenta por completo si avanzas con nosotros."
-    },
-    {
-      k: ["cuanto tiempo", "tiempo", "demora", "cuanto tarda", "meses"],
-      a: "El tiempo varia segun la via migratoria y tu caso especifico — lo mas honesto es revisarlo en tu evaluacion gratuita, donde te damos un rango realista por escrito."
-    },
-    {
-      k: ["whatsapp", "llamar", "hablar", "contacto", "telefono", "asesor", "humano", "persona"],
-      a: "Con gusto — puedes escribirnos directo por WhatsApp y un asesor te responde. Toca el boton verde abajo a la derecha."
-    },
-    {
-      k: ["evaluacion", "calificar", "aplico", "elegible", "cumplo", "test", "cuestionario"],
-      a: "Esa es justo la Evaluacion CLG: 7 preguntas, 3 minutos, y te decimos honestamente donde estas parado. ¿Quieres que te lleve a empezarla?"
-    },
-    {
-      k: ["mexico", "argentina", "colombia", "ecuador", "chile", "bolivia", "peru", "latinoamerica"],
-      a: "Trabajamos activamente con clientes de Mexico, Argentina, Colombia, Ecuador, Bolivia, Chile y Peru, incluyendo charlas presenciales en varios de estos paises. Tu proceso puede iniciar por WhatsApp o video llamada, sin necesidad de viajar primero."
-    },
-    {
-      k: ["renata", "abogada", "quien", "equipo"],
-      a: "Renata Calderaro es la CEO de Calderaro Law Group, con casi dos decadas de experiencia en estrategia migratoria. Puedes conocer a todo el equipo en la pagina Nosotros."
-    }
-  ];
-
-  var GREETING = "Hola, soy el asistente de CLG. Puedo orientarte sobre visas de negocio, profesionales o familiares, honorarios y tiempos — y si tu caso necesita a un humano, te conecto directo por WhatsApp. ¿En que te ayudo?";
-  var FALLBACK = "Buena pregunta — para darte una respuesta exacta y responsable, lo mejor es que la revise el equipo directamente. Puedo conectarte ahora por WhatsApp, o si prefieres, empieza la evaluacion gratuita y un asesor te escribe con tu resultado.";
-
-  function addMsg(text, who) {
-    var div = document.createElement("div");
-    div.className = "ai-msg " + who;
-    div.textContent = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  function respond(text) {
-    var norm = text.toLowerCase();
-    var best = null;
-    var bestScore = 0;
-    KB.forEach(function (entry) {
-      var score = 0;
-      entry.k.forEach(function (kw) { if (norm.indexOf(kw) !== -1) score++; });
-      if (score > bestScore) { bestScore = score; best = entry; }
-    });
-    setTimeout(function () {
-      addMsg(best ? best.a : FALLBACK, "bot");
-    }, 380);
-  }
+function initPopup() {
+  var overlay = document.getElementById("clg-popup");
+  if (!overlay) return;
+  var KEY = "clg_popup_seen";
+  var seen = false;
+  try { seen = !!localStorage.getItem(KEY); } catch (e) {}
+  if (seen) return;
 
   var opened = false;
-  launcher.addEventListener("click", function () {
+  function open() {
+    if (opened) return;
+    opened = true;
+    overlay.classList.add("open");
+    try { localStorage.setItem(KEY, "1"); } catch (e) {}
+  }
+  function close() { overlay.classList.remove("open"); }
+
+  var timer = setTimeout(open, 45000);
+  document.addEventListener("mouseout", function (e) {
+    if (!e.relatedTarget && e.clientY < 10) { clearTimeout(timer); open(); }
+  });
+  overlay.querySelectorAll("[data-popup-close]").forEach(function (b) {
+    b.addEventListener("click", close);
+  });
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+
+  /* Step 1 (intent) -> step 2 (short form). Deliberately not a long quiz. */
+  var s1 = document.getElementById("popup-step-1");
+  var s2 = document.getElementById("popup-step-2");
+  var go = document.getElementById("popup-go");
+  if (go) go.addEventListener("click", function () { s1.style.display = "none"; s2.style.display = "block"; });
+
+  /* Chip choices */
+  overlay.querySelectorAll(".choice-row").forEach(function (row) {
+    row.addEventListener("click", function (e) {
+      var c = e.target.closest(".choice");
+      if (!c) return;
+      row.querySelectorAll(".choice").forEach(function (x) { x.classList.remove("selected"); });
+      c.classList.add("selected");
+    });
+  });
+
+  var form = document.getElementById("popup-form");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var pick = function (id) {
+        var s = document.querySelector("#" + id + " .choice.selected");
+        return s ? s.textContent.trim() : "no especificado";
+      };
+      var data = {
+        situacion: pick("popup-situacion"),
+        objetivo: pick("popup-objetivo"),
+        pais: form.querySelector("[name=pais]").value,
+        nombre: form.querySelector("[name=nombre]").value,
+        whatsapp: form.querySelector("[name=whatsapp]").value,
+        email: form.querySelector("[name=email]").value
+      };
+      var msg = "Hola, quiero conocer mi estrategia migratoria.\n" +
+        "Nombre: " + data.nombre + "\nPaís: " + data.pais +
+        "\nSituación: " + data.situacion + "\nObjetivo: " + data.objetivo +
+        "\nEmail: " + data.email + "\nWhatsApp: " + data.whatsapp;
+      try { localStorage.setItem("clg_popup_lead", JSON.stringify(data)); } catch (err) {}
+      document.getElementById("popup-step-2").innerHTML =
+        '<h3>Gracias, ' + (data.nombre.split(" ")[0] || "") + '.</h3>' +
+        '<p>Recibimos tu información. Un asesor revisa tu perfil y te contacta.</p>' +
+        '<p style="font-size:.88rem;color:var(--ink-soft);">Si quieres adelantar la conversación, confírmalo por WhatsApp y tu información viaja con el mensaje.</p>' +
+        '<a class="btn btn-whatsapp btn-block" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=' +
+        CLG.whatsapp + '&text=' + encodeURIComponent(msg) + '">Confirmar por WhatsApp</a>';
+    });
+  }
+}
+
+/* ==========================================================================
+   ASSISTANT
+   Menu-driven, so it works as lead generation and not just Q&A.
+   Path: intent menu -> sub-answer -> capture (name, country, email,
+   WhatsApp, objective) -> handoff. Free text still answers from the FAQ.
+   Runs entirely client side. Nothing here is legal advice, and anything
+   case-specific is routed to a human on purpose.
+   ========================================================================== */
+function initAssistant() {
+  var fab = document.getElementById("ai-fab");
+  var panel = document.getElementById("ai-panel");
+  var closeBtn = document.getElementById("ai-close");
+  var box = document.getElementById("ai-messages");
+  var choices = document.getElementById("ai-choices");
+  var form = document.getElementById("ai-input-form");
+  var input = document.getElementById("ai-input");
+  if (!fab || !panel) return;
+
+  var lead = {};
+  var stage = "menu";
+
+  var MENU = [
+    ["Explorar mis opciones migratorias", "explorar"],
+    ["Negocios e inversión", "negocio"],
+    ["Inmigración profesional o de talento", "talento"],
+    ["Inmigración familiar", "familia"],
+    ["Saber cuál vía me corresponde", "via"],
+    ["Hablar con un abogado", "abogado"]
+  ];
+
+  var ANSWERS = {
+    explorar: "Con gusto. Trabajamos tres grandes puertas: inversión y negocios, talento profesional o artístico, y familia. Lo que define cuál te sirve no es la visa, es tu perfil completo.",
+    negocio: "Para empresarios e inversionistas diseñamos rutas como E-2, L-1 y EB-5, incluyendo la estructura del negocio y la evidencia. También trabajamos con empresas ya establecidas en EE.UU. que necesitan traer talento del exterior.",
+    talento: "Para profesionales, artistas y deportistas evaluamos O-1, EB-1 y EB-2 NIW. Tu trayectoria suele valer más de lo que crees; lo que decide el caso es cómo se documenta.",
+    familia: "Para familias trabajamos peticiones familiares, estudios de tus hijos y planificación de residencia a largo plazo, normalmente dentro de una estrategia familiar completa.",
+    via: "Para eso está la Brújula CLG: cinco preguntas, dos minutos, gratis. Puedo tomar tus datos ahora y el equipo te escribe con una orientación personalizada.",
+    abogado: "Perfecto. Tomo tus datos y el equipo te contacta directamente."
+  };
+
+  var CAPTURE = [
+    { key: "nombre",    q: "¿Cómo te llamas?" },
+    { key: "pais",      q: "¿Desde qué país nos escribes?" },
+    { key: "objetivo",  q: "En una frase, ¿qué quieres lograr en Estados Unidos?" },
+    { key: "email",     q: "¿A qué correo te escribimos?" },
+    { key: "whatsapp",  q: "¿Y tu WhatsApp con código de país?" }
+  ];
+  var capIdx = 0;
+
+  var FAQ = [
+    { k: ["precio","costo","cuanto cuesta","cuánto cuesta","honorario","pagar"],
+      a: "La Brújula CLG es gratis. La Evaluación CLG cuesta $2,500 USD y se acredita por completo a tu honorario si avanzas. Los rangos por vía están publicados en la página de honorarios." },
+    { k: ["tiempo","demora","tarda","meses"],
+      a: "Depende de la vía y de tu caso. En la Evaluación CLG recibes un rango realista por escrito, no una cifra genérica." },
+    { k: ["que puedo hacer","qué puedo hacer","sin visa","para que sirve","beneficio"],
+      a: "Sin visa, Estados Unidos es un lugar que visitas. Con la visa correcta se vuelve un lugar donde tu vida funciona: tu empresa opera, tus hijos estudian, tu pareja trabaja. La página Metas CLG lo explica meta por meta." },
+    { k: ["continuidad","renovacion","renovación","ya soy cliente"],
+      a: "Eso es Continuidad CLG, la fase que sigue después de la aprobación: renovaciones con calendario, acceso prioritario y tarifas preferentes para tu familia y tu empresa." }
+  ];
+
+  function say(text, who) {
+    var d = document.createElement("div");
+    d.className = "ai-msg " + (who || "bot");
+    d.textContent = text;
+    box.appendChild(d);
+    box.scrollTop = box.scrollHeight;
+  }
+  function setChoices(list) {
+    choices.innerHTML = "";
+    list.forEach(function (c) {
+      var b = document.createElement("button");
+      b.className = "ai-choice"; b.type = "button"; b.textContent = c[0];
+      b.addEventListener("click", function () { say(c[0], "user"); handle(c[1]); });
+      choices.appendChild(b);
+    });
+  }
+  function askNext() {
+    if (capIdx < CAPTURE.length) {
+      stage = "capture";
+      choices.innerHTML = "";
+      setTimeout(function () { say(CAPTURE[capIdx].q); }, 350);
+    } else {
+      stage = "done";
+      var msg = "Hola, escribo desde el asistente de la web.\n" +
+        "Nombre: " + (lead.nombre || "") + "\nPaís: " + (lead.pais || "") +
+        "\nObjetivo: " + (lead.objetivo || "") + "\nEmail: " + (lead.email || "") +
+        "\nWhatsApp: " + (lead.whatsapp || "");
+      try { localStorage.setItem("clg_chat_lead", JSON.stringify(lead)); } catch (e) {}
+      setTimeout(function () {
+        say("Gracias, " + (lead.nombre || "").split(" ")[0] + ". Ya tengo lo necesario. Un asesor revisa tu perfil y te contacta.");
+        choices.innerHTML =
+          '<a class="ai-choice" style="text-align:center;font-weight:700;color:#1F7A4D" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=' +
+          CLG.whatsapp + '&text=' + encodeURIComponent(msg) + '">Confirmar ahora por WhatsApp</a>' +
+          '<a class="ai-choice" style="text-align:center" href="evaluacion.html">Mientras tanto, hacer la Brújula CLG</a>';
+      }, 350);
+    }
+  }
+  function handle(intent) {
+    lead.interes = intent;
+    setTimeout(function () {
+      say(ANSWERS[intent] || ANSWERS.explorar);
+      setTimeout(function () {
+        say("Para darte una orientación real y no genérica, ¿te tomo unos datos? Son cinco preguntas cortas.");
+        setChoices([["Sí, adelante", "__cap"], ["Prefiero solo mirar la web", "__no"]]);
+      }, 500);
+    }, 350);
+  }
+
+  function handleChoiceSpecial(v) {
+    if (v === "__cap") { capIdx = 0; askNext(); return true; }
+    if (v === "__no") {
+      say("Sin problema. Si te sirve, la Brújula CLG te orienta en dos minutos, y estoy aquí si necesitas algo.");
+      setChoices(MENU);
+      stage = "menu";
+      return true;
+    }
+    return false;
+  }
+  var origHandle = handle;
+  handle = function (v) { if (!handleChoiceSpecial(v)) origHandle(v); };
+
+  var opened = false;
+  fab.addEventListener("click", function () {
     panel.classList.toggle("open");
     if (!opened && panel.classList.contains("open")) {
-      addMsg(GREETING, "bot");
       opened = true;
+      say("Hola, soy el asistente de CLG. Puedo orientarte y, si tu caso lo necesita, conectarte con una persona del equipo. ¿Qué buscas?");
+      setChoices(MENU);
     }
   });
   if (closeBtn) closeBtn.addEventListener("click", function () { panel.classList.remove("open"); });
 
-  if (suggestions) {
-    suggestions.querySelectorAll(".ai-suggestion").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var q = btn.textContent;
-        addMsg(q, "user");
-        respond(q);
-      });
-    });
-  }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = input.value.trim();
+    if (!v) return;
+    say(v, "user");
+    input.value = "";
 
-  if (inputForm) {
-    inputForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var val = input.value.trim();
-      if (!val) return;
-      addMsg(val, "user");
-      respond(val);
-      input.value = "";
+    if (stage === "capture") {
+      lead[CAPTURE[capIdx].key] = v;
+      capIdx++;
+      askNext();
+      return;
+    }
+    var best = null, score = 0;
+    var n = v.toLowerCase();
+    FAQ.forEach(function (f) {
+      var s = 0;
+      f.k.forEach(function (kw) { if (n.indexOf(kw) !== -1) s++; });
+      if (s > score) { score = s; best = f; }
     });
+    setTimeout(function () {
+      if (best) {
+        say(best.a);
+      } else {
+        /* Deliberate: no invented legal answers. Route to a human. */
+        say("Para responder eso con precisión necesito que lo vea el equipo, porque depende de tu caso. ¿Te tomo tus datos y te contactan?");
+        setChoices([["Sí, adelante", "__cap"], ["Prefiero WhatsApp directo", "abogado"]]);
+      }
+    }, 380);
+  });
+}
+
+/* ==========================================================================
+   CONTACT FORM — autosave + resume
+   ========================================================================== */
+function initContactForm() {
+  var form = document.getElementById("contact-form");
+  if (!form) return;
+  var KEY = "clg_contact_draft";
+  var fields = form.querySelectorAll("input, select, textarea");
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
+
+  if (saved && saved.values && Object.keys(saved.values).length) {
+    var banner = document.getElementById("resume-banner");
+    if (banner) {
+      banner.style.display = "block";
+      banner.querySelector("[data-resume]").addEventListener("click", function () {
+        fields.forEach(function (f) { if (saved.values[f.name] !== undefined) f.value = saved.values[f.name]; });
+        banner.style.display = "none";
+      });
+      banner.querySelector("[data-dismiss]").addEventListener("click", function () { banner.style.display = "none"; });
+    }
   }
+  fields.forEach(function (f) {
+    f.addEventListener("input", function () {
+      var v = {};
+      fields.forEach(function (x) { if (x.name) v[x.name] = x.value; });
+      localStorage.setItem(KEY, JSON.stringify({ values: v, ts: Date.now() }));
+    });
+  });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    localStorage.removeItem(KEY);
+    var st = document.getElementById("form-status");
+    var nm = form.querySelector("[name=nombre]");
+    if (st) {
+      st.textContent = "Gracias" + (nm && nm.value ? ", " + nm.value.split(" ")[0] : "") +
+        ". Recibimos tu información y un asesor te escribe por WhatsApp o correo.";
+      st.classList.add("ok");
+    }
+    form.reset();
+    form.style.display = "none";
+    var cta = document.getElementById("form-followup-cta");
+    if (cta) cta.style.display = "flex";
+  });
 }

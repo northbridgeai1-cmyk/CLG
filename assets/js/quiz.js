@@ -1,322 +1,195 @@
 /* ==========================================================================
-   Evaluacion CLG — client-side eligibility & strategy scorecard.
-   7 questions -> personalized pathway read + strength tier.
-   No data leaves the browser except what the visitor explicitly sends
-   via the WhatsApp / email hand-off buttons on the result screen.
+   Brújula CLG — the ONE unified free assessment (5 questions).
+   Same question set as the Fase 1 embedded quiz. Ends pointing at Fase 1.
+   Optional email capture, tagged quiz-inversion / quiz-talento / quiz-familia.
+   Country selector on result → real client testimonial (video where we have it).
    ========================================================================== */
 
 (function () {
   var root = document.getElementById("quiz-root");
   if (!root) return;
 
-  var state = {
-    step: 0,
-    answers: {},
-    path: { negocio: 0, profesional: 0, familia: 0 },
-    strength: 0
+  var WHATSAPP = "17863016264";
+  var FASE1_URL = "fase1-evaluacion-clg.html";
+
+  /* TODO(CLG): confirm which YouTube ID corresponds to which client before
+     launch. Colombia is currently mapped to the video used on the old
+     services page (assumed Gustavo). Add more IDs as testimonial videos are
+     published on the channel. */
+  var COUNTRY_PROOF = {
+    colombia:  { video: "xRnHOhXaG4w", quote: "Gracias a la asesoría de CLG compramos nuestro negocio y nos tiene viviendo de una manera cómoda en Estados Unidos.", who: "Javier O. · Colombia · Visa E-2" },
+    argentina: { video: null, quote: "Tuve la suerte de contar con Renata y su equipo. Me sacaron del 75% de mis dudas en la primera reunión.", who: "Leandro C. · Argentina · Visa E-2" },
+    peru:      { video: null, quote: "Se pusieron la camiseta de mi familia para lograr el objetivo, de forma legal y planificada.", who: "Giancarlos C. · Perú · Visa L-1" },
+    ecuador:   { video: null, quote: "No solo se basan en una reunión: ven todo el espectro, y cuando llegamos a Estados Unidos nos guiaron al siguiente paso.", who: "Claudia y Diego · Ecuador · Residencia Permanente" },
+    otro:      { video: "c7Ax1yagoyY", quote: "I am very grateful with CLG. Thanks to them I am now living as a U.S. citizen based on my art.", who: "Shiro · Japón · Visa O y Residencia Permanente" }
   };
 
   var QUESTIONS = [
-    {
-      id: "objetivo",
-      q: "¿Cual describe mejor lo que buscas en Estados Unidos?",
-      options: [
-        { t: "Expandir o abrir un negocio, o invertir", v: "negocio", path: { negocio: 3 } },
-        { t: "Continuar mi carrera profesional o mi talento", v: "profesional", path: { profesional: 3 } },
-        { t: "Asegurar el futuro de mi familia a largo plazo", v: "familia", path: { familia: 3 } },
-        { t: "Todavia estoy explorando mis opciones", v: "explorando", path: {} }
-      ]
-    },
-    {
-      id: "perfil",
-      q: "¿Cual de estas opciones te describe mejor hoy?",
-      options: [
-        { t: "Tengo un negocio activo o capital para invertir", v: "empresario", path: { negocio: 2 } },
-        { t: "Tengo estudios, experiencia o logros destacados en mi profesion", v: "profesional_perfil", path: { profesional: 2 } },
-        { t: "Soy artista, deportista o tengo un talento reconocido", v: "talento", path: { profesional: 2 } },
-        { t: "Tengo un familiar directo con estatus legal en EE.UU.", v: "familiar", path: { familia: 2 } }
-      ]
-    },
-    {
-      id: "pais",
-      q: "¿Desde que pais nos escribes?",
-      options: [
-        { t: "Mexico", v: "mx" },
-        { t: "Argentina", v: "ar" },
-        { t: "Colombia", v: "co" },
-        { t: "Otro pais de Latinoamerica", v: "latam" },
-        { t: "Otro", v: "otro" }
-      ]
-    },
-    {
-      id: "conexion",
-      q: "¿Cual es tu conexion actual con Estados Unidos?",
-      options: [
-        { t: "Ya tengo negocio, inversion o empresa relacionada", v: "negocio_activo", strength: 3, path: { negocio: 1 } },
-        { t: "Tengo oferta, cliente o proyecto profesional en EE.UU.", v: "oferta", strength: 2, path: { profesional: 1 } },
-        { t: "Tengo un familiar directo con estatus legal", v: "familiar_directo", strength: 2, path: { familia: 1 } },
-        { t: "Todavia no tengo una conexion directa", v: "sin_conexion", strength: 0 }
-      ]
-    },
-    {
-      id: "tiempo",
-      q: "¿En que plazo te gustaria empezar tu estrategia?",
-      options: [
-        { t: "Quiero empezar ahora", v: "ya", strength: 2 },
-        { t: "En los proximos 6 a 12 meses", v: "6-12", strength: 1 },
-        { t: "Estoy planificando a 2 o 3 anos", v: "2-3", strength: 0 }
-      ]
-    },
-    {
-      id: "capacidad",
-      q: "¿Cuentas con capital o respaldo financiero disponible para tu estrategia?",
-      options: [
-        { t: "Si, mas de $100,000 USD disponibles", v: "alto", strength: 3 },
-        { t: "Si, un monto menor a eso", v: "medio", strength: 1 },
-        { t: "No aplica a mi caso (via profesional o familiar)", v: "no_aplica", strength: 1 },
-        { t: "Aun no lo se con certeza", v: "no_se", strength: 0 }
-      ]
-    }
+    { q: "¿Cuál describe mejor tu situación hoy?", opts: [
+      ["Tengo capital para invertir o un negocio propio", "inv"],
+      ["Soy profesional, artista o deportista con trayectoria", "pro"],
+      ["Tengo familiares ciudadanos o residentes en EE. UU.", "fam"],
+      ["Mis hijos quieren estudiar en Estados Unidos", "fam"]]},
+    { q: "Si tu vía fuera la inversión, ¿de qué capital hablamos?", opts: [
+      ["Más de USD 150,000", "inv"],
+      ["Entre USD 50,000 y 150,000", "inv"],
+      ["Prefiero no invertir capital", "pro"],
+      ["Aún no lo sé", "neutro"]]},
+    { q: "¿Cuántos años de experiencia tienes en tu profesión o industria?", opts: [
+      ["Más de 10 años", "pro"],
+      ["Entre 5 y 10 años", "pro"],
+      ["Menos de 5 años", "neutro"],
+      ["Mi fortaleza es el capital, no la trayectoria", "inv"]]},
+    { q: "¿Quiénes viajarían contigo?", opts: [
+      ["Solo yo", "neutro"],
+      ["Mi pareja", "neutro"],
+      ["Mi familia con hijos menores de 21", "fam"],
+      ["Toda la familia, incluidos hijos mayores", "fam"]]},
+    { q: "¿Ya hablaste con algún abogado de inmigración sobre tu caso?", opts: [
+      ["No, este sería el primero", "primera"],
+      ["Sí, con uno — quiero una segunda mirada completa", "segunda"],
+      ["Sí, con más de uno, y me dieron respuestas distintas", "distintas"],
+      ["Prefiero prepararme antes de hablar con alguien", "prepararme"]]}
   ];
 
-  var TOTAL_STEPS = QUESTIONS.length + 1; // +1 for contact step
+  var RESULTADOS = {
+    inv: { titulo: "Tu perfil apunta a la puerta de la inversión", tag: "quiz-inversion",
+      visas: ["Visa E-2", "Visa L-1", "EB-5"],
+      texto: "Con capital disponible o un negocio propio, las vías de inversión suelen ser el camino más directo — y tu familia puede acompañarte.",
+      link: "estrategias-empresarios.html" },
+    pro: { titulo: "Tu perfil apunta a la puerta del talento", tag: "quiz-talento",
+      visas: ["Visa O-1", "EB-2 NIW", "EB-1"],
+      texto: "Tu trayectoria profesional, artística o deportiva puede valer más de lo que crees frente a inmigración. La clave está en cómo se documenta.",
+      link: "estrategias-profesionales.html" },
+    fam: { titulo: "Tu perfil apunta a la puerta familiar", tag: "quiz-familia",
+      visas: ["Reunificación familiar", "Estrategia familiar completa"],
+      texto: "Los vínculos familiares — o el proyecto de estudios de tus hijos — pueden ser la base de una estrategia para toda la familia.",
+      link: "estrategias-familias.html" }
+  };
+
+  var NOTA_PREVIA = {
+    primera: "Como sería tu primera conversación con un abogado de inmigración, tu Evaluación CLG arranca desde cero, sin nada que corregir primero.",
+    segunda: "Como ya hablaste con un abogado, tu Evaluación CLG está pensada exactamente para esto: una segunda mirada completa, por escrito.",
+    distintas: "Como ya te dieron respuestas distintas, empezamos con un análisis completo del expediente — no con una opinión más.",
+    prepararme: "Tu Evaluación CLG es justo esa preparación: sales con un reporte por escrito, no con más preguntas."
+  };
+
+  var paso = 0, votos = { inv: 0, pro: 0, fam: 0 }, contextoPrevio = "primera";
 
   function render() {
     root.innerHTML = "";
-
     var progress = document.createElement("div");
     progress.className = "quiz-progress";
-    var progressFill = document.createElement("span");
-    progressFill.style.width = Math.round((state.step / TOTAL_STEPS) * 100) + "%";
-    progress.appendChild(progressFill);
+    var fill = document.createElement("span");
+    fill.style.width = Math.round((paso / QUESTIONS.length) * 100) + "%";
+    progress.appendChild(fill);
     root.appendChild(progress);
-
-    if (state.step < QUESTIONS.length) {
-      renderQuestion(QUESTIONS[state.step]);
-    } else if (state.step === QUESTIONS.length) {
-      renderContactStep();
-    } else {
-      renderResult();
-    }
+    if (paso < QUESTIONS.length) renderQuestion(); else renderResult();
   }
 
-  function renderQuestion(question) {
+  function renderQuestion() {
+    var p = QUESTIONS[paso];
     var wrap = document.createElement("div");
     wrap.className = "quiz-step active";
-
     var num = document.createElement("div");
     num.className = "q-num";
-    num.textContent = "Pregunta " + (state.step + 1) + " de " + QUESTIONS.length;
+    num.textContent = "Pregunta " + (paso + 1) + " de " + QUESTIONS.length;
     wrap.appendChild(num);
-
     var h = document.createElement("h3");
-    h.textContent = question.q;
+    h.textContent = p.q;
     wrap.appendChild(h);
-
     var opts = document.createElement("div");
     opts.className = "quiz-options";
-    question.options.forEach(function (opt) {
+    p.opts.forEach(function (o) {
       var btn = document.createElement("div");
       btn.className = "quiz-option";
-      btn.textContent = opt.t;
-      if (state.answers[question.id] === opt.v) btn.classList.add("selected");
+      btn.textContent = o[0];
       btn.addEventListener("click", function () {
-        state.answers[question.id] = opt.v;
-        if (opt.path) {
-          Object.keys(opt.path).forEach(function (k) { state.path[k] += opt.path[k]; });
-        }
-        if (typeof opt.strength === "number") state.strength += opt.strength;
-        state.step++;
-        render();
+        if (paso < 4) { if (o[1] !== "neutro") votos[o[1]]++; }
+        else contextoPrevio = o[1];
+        paso++; render();
       });
       opts.appendChild(btn);
     });
     wrap.appendChild(opts);
-
-    var nav = document.createElement("div");
-    nav.className = "quiz-nav";
-    if (state.step > 0) {
+    if (paso > 0) {
       var back = document.createElement("button");
-      back.className = "btn btn-ghost";
-      back.type = "button";
-      back.textContent = "Atras";
-      back.addEventListener("click", function () { state.step--; render(); });
-      nav.appendChild(back);
-    } else {
-      nav.appendChild(document.createElement("span"));
+      back.className = "btn btn-ghost"; back.type = "button"; back.textContent = "Atrás";
+      back.addEventListener("click", function () { paso--; render(); });
+      wrap.appendChild(back);
     }
-    wrap.appendChild(nav);
-
     root.appendChild(wrap);
   }
-
-  function renderContactStep() {
-    var wrap = document.createElement("div");
-    wrap.className = "quiz-step active";
-
-    var num = document.createElement("div");
-    num.className = "q-num";
-    num.textContent = "Ultimo paso";
-    wrap.appendChild(num);
-
-    var h = document.createElement("h3");
-    h.textContent = "¿A donde enviamos tu reporte personalizado?";
-    wrap.appendChild(h);
-    var p = document.createElement("p");
-    p.style.color = "var(--ink-soft)";
-    p.style.marginBottom = "20px";
-    p.textContent = "Con esto, un asesor de CLG puede darte seguimiento con tu resultado y responder tus preguntas especificas.";
-    wrap.appendChild(p);
-
-    var field1 = fieldHTML("Nombre completo", "text", "quiz-nombre", true);
-    var field2 = fieldHTML("Correo electronico", "email", "quiz-email", true);
-    var field3 = fieldHTML("WhatsApp (con codigo de pais)", "tel", "quiz-whatsapp", false);
-    wrap.appendChild(field1);
-    wrap.appendChild(field2);
-    wrap.appendChild(field3);
-
-    var nav = document.createElement("div");
-    nav.className = "quiz-nav";
-    var back = document.createElement("button");
-    back.className = "btn btn-ghost";
-    back.type = "button";
-    back.textContent = "Atras";
-    back.addEventListener("click", function () { state.step--; render(); });
-    nav.appendChild(back);
-
-    var next = document.createElement("button");
-    next.className = "btn btn-primary";
-    next.type = "button";
-    next.textContent = "Ver mi resultado";
-    next.addEventListener("click", function () {
-      state.contact = {
-        nombre: document.getElementById("quiz-nombre").value,
-        email: document.getElementById("quiz-email").value,
-        whatsapp: document.getElementById("quiz-whatsapp").value
-      };
-      state.step++;
-      render();
-    });
-    nav.appendChild(next);
-
-    wrap.appendChild(nav);
-    root.appendChild(wrap);
-  }
-
-  function fieldHTML(label, type, id, required) {
-    var f = document.createElement("div");
-    f.className = "form-field";
-    var l = document.createElement("label");
-    l.setAttribute("for", id);
-    l.textContent = label;
-    var i = document.createElement("input");
-    i.type = type; i.id = id; i.required = !!required;
-    f.appendChild(l); f.appendChild(i);
-    return f;
-  }
-
-  function topPath() {
-    var keys = Object.keys(state.path);
-    keys.sort(function (a, b) { return state.path[b] - state.path[a]; });
-    if (state.path[keys[0]] === 0) return "explorando";
-    return keys[0];
-  }
-
-  var PATH_COPY = {
-    negocio: {
-      label: "Empresarios e Inversionistas",
-      routes: "E-2 (Tratado de Inversion), L-1 (Traslado intracompania) o EB-5, segun tu capital y estructura.",
-      link: "estrategias-empresarios.html"
-    },
-    profesional: {
-      label: "Profesionales y Talento",
-      routes: "EB-2 NIW, EB-1 o O-1, segun tus credenciales, trayectoria y logros.",
-      link: "estrategias-profesionales.html"
-    },
-    familia: {
-      label: "Familias y Planificacion",
-      routes: "Peticion familiar, planificacion de residencia a largo plazo, o loteria de visas segun tu caso.",
-      link: "estrategias-familias.html"
-    },
-    explorando: {
-      label: "Explorando tus opciones",
-      routes: "Con lo que nos compartiste aun no es clara una unica ruta — y esta bien. La Evaluacion CLG con un asesor humano es el siguiente paso logico.",
-      link: "nosotros.html"
-    }
-  };
 
   function renderResult() {
-    var path = topPath();
-    var copy = PATH_COPY[path];
-    var tier, badgeClass, tierText;
-    if (state.strength >= 5) {
-      tier = "strong"; badgeClass = "strong"; tierText = "Candidato fuerte";
-    } else if (state.strength >= 2) {
-      tier = "medium"; badgeClass = "medium"; tierText = "Posible, con mas informacion";
-    } else {
-      tier = "early"; badgeClass = "early"; tierText = "Es pronto — aqui esta tu mapa";
-    }
+    var ganador = Object.keys(votos).sort(function (a, b) { return votos[b] - votos[a]; })[0];
+    if (votos[ganador] === 0) ganador = "fam";
+    var r = RESULTADOS[ganador];
+    var nota = NOTA_PREVIA[contextoPrevio] || "";
 
     var wrap = document.createElement("div");
     wrap.className = "quiz-result active";
+    wrap.innerHTML =
+      '<span class="result-badge strong">Tu Brújula CLG apunta</span>' +
+      '<h3>' + r.titulo + '</h3>' +
+      r.visas.map(function (v) { return '<span class="badge-list-pill">' + v + '</span>'; }).join(" ") +
+      '<p style="color:var(--ink-soft);margin-top:14px;">' + r.texto + ' ' + nota + '</p>' +
 
-    var badge = document.createElement("span");
-    badge.className = "result-badge " + badgeClass;
-    badge.textContent = tierText;
-    wrap.appendChild(badge);
+      /* País → prueba real */
+      '<div class="form-field" style="margin-top:22px;"><label for="brujula-pais">¿De dónde eres? Te mostramos a alguien que empezó donde tú estás:</label>' +
+      '<select id="brujula-pais"><option value="">Selecciona tu país</option>' +
+      '<option value="colombia">Colombia</option><option value="argentina">Argentina</option>' +
+      '<option value="peru">Perú</option><option value="ecuador">Ecuador</option>' +
+      '<option value="otro">Otro país</option></select></div>' +
+      '<div id="proof-slot"></div>' +
 
-    var h = document.createElement("h3");
-    h.textContent = (state.contact && state.contact.nombre ? state.contact.nombre.split(" ")[0] + ", tu" : "Tu") + " perfil apunta a: " + copy.label;
-    wrap.appendChild(h);
+      /* Captura de correo — OPCIONAL, nunca bloquea el CTA a Fase 1.
+         TODO(CLG): conectar este campo al formulario/automatización de
+         systeme.io para el tagging real en CRM (quiz-inversion / quiz-talento
+         / quiz-familia) y el envío de la Guía CLG 2026. */
+      '<div class="callout" style="margin-top:22px;">' +
+      '<strong>Opcional:</strong> te enviamos tu resultado y la Guía CLG 2026 a tu correo.' +
+      '<form id="brujula-email-form" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">' +
+      '<input type="email" id="brujula-email" placeholder="tu@correo.com" style="flex:1;min-width:200px;padding:11px 12px;border:1px solid var(--line);border-radius:2px;font-family:var(--sans);">' +
+      '<button type="submit" class="btn btn-ghost" style="padding:10px 18px;">Enviármelo</button></form>' +
+      '<p id="brujula-email-status" style="font-size:0.8rem;color:var(--ink-soft);margin:8px 0 0;"></p></div>' +
 
-    var p = document.createElement("p");
-    p.style.color = "var(--ink-soft)";
-    p.textContent = "Rutas que normalmente se evaluan para este perfil: " + copy.routes;
-    wrap.appendChild(p);
-
-    var callout = document.createElement("div");
-    callout.className = "callout";
-    if (tier === "strong") {
-      callout.textContent = "Con tu conexion actual y tu horizonte de tiempo, tiene sentido pasar directamente a una Evaluacion CLG con un abogado — asi validamos el detalle y te damos un plan por escrito.";
-    } else if (tier === "medium") {
-      callout.textContent = "Vas en buen camino. Con algunos datos adicionales de tu caso podemos precisar la ruta exacta y el momento correcto para iniciar.";
-    } else {
-      callout.textContent = "Aun no tienes todos los elementos, y eso es normal en esta etapa. Te compartimos el mapa de tu via para que sepas exactamente que construir primero.";
-    }
-    wrap.appendChild(callout);
-
-    var actions = document.createElement("div");
-    actions.className = "hero-actions";
-    actions.style.marginTop = "26px";
-
-    var waMsg = "Hola, complete la Evaluacion CLG. Mi resultado: " + copy.label + " (" + tierText + "). Me gustaria agendar una conversacion.";
-    var waLink = document.createElement("a");
-    waLink.className = "btn btn-whatsapp";
-    waLink.textContent = tier === "strong" ? "Agendar mi sesion de estrategia" : "Hablar con un asesor por WhatsApp";
-    waLink.href = "https://api.whatsapp.com/send?phone=17863016264&text=" + encodeURIComponent(waMsg);
-    waLink.target = "_blank"; waLink.rel = "noopener";
-    actions.appendChild(waLink);
-
-    var moreLink = document.createElement("a");
-    moreLink.className = "btn btn-ghost";
-    moreLink.textContent = "Ver esta via en detalle";
-    moreLink.href = copy.link;
-    actions.appendChild(moreLink);
-
-    wrap.appendChild(actions);
-
-    var restart = document.createElement("button");
-    restart.className = "btn btn-ghost";
-    restart.type = "button";
-    restart.style.marginTop = "18px";
-    restart.textContent = "Volver a empezar";
-    restart.addEventListener("click", function () {
-      state = { step: 0, answers: {}, path: { negocio: 0, profesional: 0, familia: 0 }, strength: 0 };
-      render();
-    });
-    wrap.appendChild(restart);
+      /* CTA principal: Fase 1 */
+      '<div class="hero-actions" style="margin-top:26px;">' +
+      '<a class="btn btn-primary btn-lg" href="' + FASE1_URL + '">Continuar a mi Evaluación CLG &rarr;</a>' +
+      '<a class="btn btn-ghost" href="' + r.link + '">Ver esta vía en detalle</a></div>' +
+      '<p style="font-size:0.8rem;color:var(--ink-soft);margin-top:14px;">Este resultado es orientativo. Tu estrategia real se diseña persona a persona en tu Evaluación CLG.</p>';
 
     root.appendChild(wrap);
+
+    /* país → video/testimonio */
+    var paisSel = document.getElementById("brujula-pais");
+    var slot = document.getElementById("proof-slot");
+    paisSel.addEventListener("change", function () {
+      var proof = COUNTRY_PROOF[paisSel.value];
+      if (!proof) { slot.innerHTML = ""; return; }
+      var html = "";
+      if (proof.video) {
+        html += '<div class="video-wrap" style="margin-top:14px;"><iframe src="https://www.youtube.com/embed/' + proof.video + '" title="Historia real de un cliente CLG" loading="lazy" allowfullscreen></iframe></div>';
+      }
+      html += '<p class="testi-quote" style="margin-top:12px;">"' + proof.quote + '"</p><p style="font-size:0.82rem;color:var(--ink-soft);">— ' + proof.who + '</p>';
+      slot.innerHTML = html;
+    });
+
+    /* captura de correo con tag de segmento */
+    var emailForm = document.getElementById("brujula-email-form");
+    emailForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = document.getElementById("brujula-email").value.trim();
+      var status = document.getElementById("brujula-email-status");
+      if (!email) return;
+      try {
+        localStorage.setItem("brujula_capture", JSON.stringify({ email: email, tag: r.tag, ts: Date.now() }));
+      } catch (err) {}
+      /* Static-site handoff: pre-filled WhatsApp message carries the tag so
+         the team can register it in CRM until the systeme.io form is wired. */
+      status.innerHTML = 'Listo. Para asegurar la entrega mientras activamos el envío automático, confírmalo en un clic: <a target="_blank" rel="noopener" style="font-weight:700;color:var(--gold-deep);" href="https://api.whatsapp.com/send?phone=' + WHATSAPP + '&text=' + encodeURIComponent("Hola, complete la Brújula CLG. Mi correo: " + email + " · Resultado: " + r.titulo + " · Tag: " + r.tag + " · Quiero recibir la Guía CLG 2026.") + '">enviar mi resultado por WhatsApp</a>.';
+    });
   }
 
   render();
