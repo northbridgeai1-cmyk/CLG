@@ -19,31 +19,66 @@ Edit NAV below to change the menu once, for the whole site.
 """
 import re, glob, sys, os
 
-ASSET_VERSION = "6"
+ASSET_VERSION = "7"
 
 LOGO = ("https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066"
         "-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp")
 
-# key, href, label, i18n key
+# The menu. Plain words a first-time visitor understands, and every page
+# reachable from here instead of hidden behind an anchor on the homepage.
+#
+# Two shapes:
+#   ("key", "href", "Label", "i18n_key")                      -> plain link
+#   ("key", None,   "Label", "i18n_key", [ ...children... ])  -> dropdown
+# A child is ("href", "Label", "one-line description") or ("--", "", "")
+# for a divider, or ("##", "Heading", "") for a small section heading.
 NAV = [
-    ("inicio",   "index.html",              "Inicio",    "nav_inicio"),
-    ("metas",    "metas-clg.html",          "Metas",     "nav_metas"),
-    ("vias",     "index.html#vias",         "Vías",      "nav_estrategias"),
-    ("casos",    "casos-de-exito.html",     "Casos",     "nav_casos"),
-    ("nosotros", "nosotros.html",           "Nosotros",  "nav_nosotros"),
-    ("recursos", "recursos.html",           "Recursos",  "nav_recursos"),
-    ("contacto", "contacto.html",           "Contacto",  "nav_contacto"),
+    ("inicio", "index.html", "Inicio", "nav_inicio"),
+
+    ("servicios", None, "Servicios", "nav_servicios", [
+        ("##", "¿Cuál es tu caso?", ""),
+        ("estrategias-empresarios.html", "Empresarios e inversionistas",
+         "Abrir, comprar o expandir un negocio"),
+        ("estrategias-profesionales.html", "Profesionales, artistas y deportistas",
+         "Trabajar desde tu propia trayectoria"),
+        ("estrategias-familias.html", "Familias",
+         "Estudios de tus hijos y residencia"),
+        ("--", "", ""),
+        ("metas-clg.html", "¿Qué quiero lograr?",
+         "Buscar por objetivo, no por tipo de visa"),
+        ("estrategia-honorarios.html", "Honorarios", "Qué cuesta y qué incluye"),
+    ]),
+
+    ("casos", "casos-de-exito.html", "Casos de Éxito", "nav_casos"),
+
+    ("nosotros", None, "Nosotros", "nav_nosotros", [
+        ("nosotros.html", "La firma y el equipo", "Quiénes somos y cómo trabajamos"),
+        ("continuidad-clg.html", "Continuidad CLG", "Qué pasa después de la aprobación"),
+        ("global-mobility.html", "Global Mobility", "Opciones fuera de Estados Unidos"),
+        ("socios.html", "Socios y referidos", "Para contadores y asesores patrimoniales"),
+    ]),
+
+    ("recursos", None, "Recursos", "nav_recursos", [
+        ("recursos.html", "Guías y eventos", "Guía CLG 2026, webinars y charlas"),
+        ("preguntas-frecuentes.html", "Preguntas frecuentes", "Lo que más nos preguntan"),
+        ("oportunidades.html", "Dónde instalarte", "Ciudades e industrias en EE.UU."),
+        ("https://www.visamiami.com/category/blog-clg", "Blog", "Inmigración estratégica"),
+    ]),
+
+    ("contacto", "contacto.html", "Contacto", "nav_contacto"),
 ]
 
-# Which nav key is "active" on each page. Pages not listed get no active item.
+CHEV = ('<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+        'stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>')
+
+# Which top-level nav item is highlighted on each page.
 ACTIVE = {
     "index.html": "inicio",
-    "metas-clg.html": "metas",
-    "estrategias-empresarios.html": "vias",
-    "estrategias-profesionales.html": "vias",
-    "estrategias-familias.html": "vias",
-    "estrategia-honorarios.html": "vias",
-    "oportunidades.html": "vias",
+    "metas-clg.html": "servicios",
+    "estrategias-empresarios.html": "servicios",
+    "estrategias-profesionales.html": "servicios",
+    "estrategias-familias.html": "servicios",
+    "estrategia-honorarios.html": "servicios",
     "casos-de-exito.html": "casos",
     "nosotros.html": "nosotros",
     "continuidad-clg.html": "nosotros",
@@ -51,6 +86,7 @@ ACTIVE = {
     "global-mobility.html": "nosotros",
     "recursos.html": "recursos",
     "preguntas-frecuentes.html": "recursos",
+    "oportunidades.html": "recursos",
     "contacto.html": "contacto",
     "evaluacion.html": None,
 }
@@ -64,9 +100,34 @@ SKIP = {"fase1-evaluacion-clg.html", "clg-homepage-prototype.html"}
 
 def header_html(active_key):
     items = []
-    for key, href, label, i18n in NAV:
-        cls = ' class="active"' if key == active_key else ""
-        items.append(f'      <a href="{href}"{cls} data-i18n="{i18n}">{label}</a>')
+    for entry in NAV:
+        key, href, label, i18n = entry[0], entry[1], entry[2], entry[3]
+        children = entry[4] if len(entry) > 4 else None
+        is_active = (key == active_key)
+
+        if not children:
+            cls = ' class="active"' if is_active else ""
+            items.append(f'      <a href="{href}"{cls} data-i18n="{i18n}">{label}</a>')
+            continue
+
+        sub = []
+        for c_href, c_label, c_desc in children:
+            if c_href == "--":
+                sub.append("          <hr>")
+            elif c_href == "##":
+                sub.append(f'          <div class="sub-head">{c_label}</div>')
+            else:
+                desc = f"<small>{c_desc}</small>" if c_desc else ""
+                sub.append(f'          <a href="{c_href}">{c_label}{desc}</a>')
+        item_cls = ' nav-item active' if is_active else ' nav-item'
+        items.append(
+            f'      <div class="{item_cls.strip()}">\n'
+            f'        <button class="nav-trigger" aria-expanded="false" data-i18n="{i18n}">{label}\n'
+            f'          {CHEV}\n'
+            f'        </button>\n'
+            f'        <div class="nav-sub">\n' + "\n".join(sub) + "\n"
+            f'        </div>\n'
+            f'      </div>')
     nav = "\n".join(items)
     return f'''<header class="site-header">
   <div class="container">

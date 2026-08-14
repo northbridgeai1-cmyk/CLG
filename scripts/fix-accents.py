@@ -165,7 +165,7 @@ SKIP = {
     'continuidad-clg.html',
 }
 
-ASSET_VERSION = "6"   # bump this whenever styles.css or the JS changes
+ASSET_VERSION = "7"   # bump this whenever styles.css or the JS changes
 
 def bust_cache(txt):
     """Append ?v=N to local css/js so browsers stop serving a stale stylesheet.

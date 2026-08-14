@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- ?v=N busts the browser cache. Bump this number on every CSS change. -->
-<link rel="stylesheet" href="assets/css/styles.css?v=6">
+<link rel="stylesheet" href="assets/css/styles.css?v=7">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -72,11 +72,48 @@
     </a>
     <nav class="main-nav">
       <a href="index.html" class="active" data-i18n="nav_inicio">Inicio</a>
-      <a href="metas-clg.html" data-i18n="nav_metas">Metas</a>
-      <a href="#vias" data-i18n="nav_estrategias">Vías</a>
-      <a href="casos-de-exito.html" data-i18n="nav_casos">Casos</a>
-      <a href="nosotros.html" data-i18n="nav_nosotros">Nosotros</a>
-      <a href="recursos.html" data-i18n="nav_recursos">Recursos</a>
+
+      <div class="nav-item">
+        <button class="nav-trigger" aria-expanded="false" data-i18n="nav_servicios">Servicios
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-sub">
+          <div class="sub-head">¿Cuál es tu caso?</div>
+          <a href="estrategias-empresarios.html">Empresarios e inversionistas<small>Abrir, comprar o expandir un negocio</small></a>
+          <a href="estrategias-profesionales.html">Profesionales, artistas y deportistas<small>Trabajar desde tu propia trayectoria</small></a>
+          <a href="estrategias-familias.html">Familias<small>Estudios de tus hijos y residencia</small></a>
+          <hr>
+          <a href="metas-clg.html">¿Qué quiero lograr?<small>Buscar por objetivo, no por tipo de visa</small></a>
+          <a href="estrategia-honorarios.html">Honorarios<small>Qué cuesta y qué incluye</small></a>
+        </div>
+      </div>
+
+      <a href="casos-de-exito.html" data-i18n="nav_casos">Casos de Éxito</a>
+
+      <div class="nav-item">
+        <button class="nav-trigger" aria-expanded="false" data-i18n="nav_nosotros">Nosotros
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-sub">
+          <a href="nosotros.html">La firma y el equipo<small>Quiénes somos y cómo trabajamos</small></a>
+          <a href="continuidad-clg.html">Continuidad CLG<small>Qué pasa después de la aprobación</small></a>
+          <a href="global-mobility.html">Global Mobility<small>Opciones fuera de Estados Unidos</small></a>
+          <a href="socios.html">Socios y referidos<small>Para contadores y asesores patrimoniales</small></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <button class="nav-trigger" aria-expanded="false" data-i18n="nav_recursos">Recursos
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-sub">
+          <a href="recursos.html">Guías y eventos<small>Guía CLG 2026, webinars y charlas</small></a>
+          <a href="preguntas-frecuentes.html">Preguntas frecuentes<small>Lo que más nos preguntan</small></a>
+          <a href="oportunidades.html">Dónde instalarte<small>Ciudades e industrias en EE.UU.</small></a>
+          <a href="https://www.visamiami.com/category/blog-clg">Blog<small>Inmigración estratégica</small></a>
+        </div>
+      </div>
+
       <a href="contacto.html" data-i18n="nav_contacto">Contacto</a>
     </nav>
     <div class="nav-cta">
@@ -571,7 +608,7 @@
   </a>
 </div>
 
-<script src="assets/js/i18n.js?v=6"></script>
-<script src="assets/js/main.js?v=6"></script>
+<script src="assets/js/i18n.js?v=7"></script>
+<script src="assets/js/main.js?v=7"></script>
 </body>
 </html>
