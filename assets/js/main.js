@@ -18,7 +18,7 @@ var CLG = {
 (function () {
   if (window.CLG_I18N) return;
   var s = document.createElement("script");
-  s.src = "assets/js/i18n.js?v=8";
+  s.src = "assets/js/i18n.js?v=9";
   document.head.appendChild(s);
 })();
 

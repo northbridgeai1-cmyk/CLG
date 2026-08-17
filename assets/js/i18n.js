@@ -60,7 +60,7 @@ window.CLG_I18N = {
 
       hero_eyebrow: "Immigration strategy, not visa sales",
       hero_h1: "We don't sell visas. We design your complete immigration strategy.",
-      hero_lede: "For business owners, professionals and families who need to make the right decision before investing time, money and years into an immigration process.",
+      hero_lede: "For the business owner, the professional, the artist or the family about to commit years and capital to this. And who wants to know what they're getting into before signing anything.",
       hero_step1: "We understand your profile",
       hero_step2: "We design the strategy",
       hero_step3: "We build the case",
@@ -71,12 +71,12 @@ window.CLG_I18N = {
       trust_3: "Multiple pathways", trust_3s: "investment, talent and family",
       trust_4: "U.S. based", trust_4s: "legal team in Doral, Florida",
 
-      problem_eyebrow: "It isn't urgency. It's an option you build with time.",
-      problem_h2: "This isn't about leaving tomorrow.",
-      problem_lede: "It's about the door already being open the day you decide it's time, for you, your business or your children. That's optionality: deciding with time, not under pressure.",
+      problem_eyebrow: "Not urgent. Just something that takes time to build.",
+      problem_h2: "Nobody lies awake over a visa category.",
+      problem_lede: "It's something else keeping you up. These six questions reach us every week, almost word for word.",
 
       path_h2: "Where are you today?",
-      path_lede: "Pick the one that sounds most like you.",
+      path_lede: "Pick whichever sounds most like you. And if you want to click the last one, relax: it's the one people click.",
       path_1: "I have a business or want to invest",
       path_2: "I have a professional, artistic or athletic career",
       path_3: "My family is the priority",
@@ -93,14 +93,14 @@ window.CLG_I18N = {
 
       pathways_h2: "Immigration pathways we design",
       method_h2: "The CLG Method™",
-      cases_h2: "Real people. Real journeys. Real strategies.",
+      cases_h2: "People with a name, a country and a visa",
       why_clg_h2: "Why families and business owners choose CLG",
       team_h2: "The people who will handle your case",
       fees_h2: "Clear fees, published before you pay anything",
       next_h2: "What happens after you click",
       faq_h2: "Questions we get most",
-      final_h2: "Your first decision shouldn't be which visa to file.",
-      final_lede: "It should be understanding which strategy is right for you.",
+      final_h2: "Start by knowing where you stand.",
+      final_lede: "What to file, when, and whether it's worth waiting a year: all of that gets decided later, and gets decided better.",
 
       popup_h3: "What will your immigration strategy be?",
       popup_p: "Every case is different. Tell us briefly about your situation and our team will guide you on the next steps.",
@@ -125,10 +125,51 @@ window.CLG_I18N = {
   var I = window.CLG_I18N;
   var STORE = "clg_lang";
 
+  /* Which language this page IS, judged by its own path. A page inside /en/
+     is English regardless of what the visitor picked last time. */
   function currentLang() {
-    var m = window.location.pathname.match(/^\/(es|en|it|pt|de|fr|ko)(\/|$)/);
-    if (m) return m[1];
+    if (/\/en\//.test(window.location.pathname)) return "en";
     try { return localStorage.getItem(STORE) || "es"; } catch (e) { return "es"; }
+  }
+
+  /* Spanish filename -> English filename. English URLs read in English,
+     which matters for search. Add a line here when a page is translated
+     and the switcher starts routing to it on its own. */
+  var EN_MAP = {
+    "index.html":                    "index.html",
+    "casos-de-exito.html":           "client-stories.html",
+    "estrategias-empresarios.html":  "business-owners.html",
+    "estrategias-profesionales.html":"professionals.html",
+    "estrategias-familias.html":     "families.html",
+    "nosotros.html":                 "about.html",
+    "contacto.html":                 "contact.html",
+    "fase1-evaluacion-clg.html":     "strategy-assessment.html"
+  };
+  var ES_MAP = {};
+  for (var k in EN_MAP) { if (EN_MAP.hasOwnProperty(k)) ES_MAP[EN_MAP[k]] = k; }
+
+  function fileName() {
+    var p = window.location.pathname.split("/").pop();
+    return p || "index.html";
+  }
+
+  /* Send the visitor to the same page in the other language. If it hasn't
+     been translated yet, stay put and say so rather than 404. */
+  function goToLang(code) {
+    var inEn = /\/en\//.test(window.location.pathname);
+    var file = fileName();
+    if (code === "en" && !inEn) {
+      var target = EN_MAP[file];
+      if (!target) return false;                       // not translated yet
+      window.location.href = "en/" + (target === "index.html" ? "" : target);
+      return true;
+    }
+    if (code !== "en" && inEn) {
+      var back = ES_MAP[file] || "index.html";
+      window.location.href = "../" + (back === "index.html" ? "" : back);
+      return true;
+    }
+    return false;
   }
 
   function apply(lang) {
@@ -223,10 +264,25 @@ window.CLG_I18N = {
         opt.addEventListener("click", function (e) {
           e.stopPropagation();
           var code = opt.getAttribute("data-set-lang");
+          try { localStorage.setItem(STORE, code); } catch (err) {}
+
+          /* Real page swap first. Only fall back to in-place text
+             replacement when this page has no translated twin. */
+          if (goToLang(code)) return;
+
           apply(code);
           closeAll();
           buildSwitcher();
-          notice(I.langs.filter(function (l) { return l.code === code; })[0]);
+          var meta = I.langs.filter(function (l) { return l.code === code; })[0];
+          if (code === "en" && !EN_MAP[fileName()]) {
+            var n = document.getElementById("i18n-notice");
+            if (n) {
+              n.textContent = "This page is still being translated. It's shown in Spanish for now — the Home page is available in English.";
+              n.style.display = "block";
+            }
+          } else {
+            notice(meta);
+          }
         });
       });
     });
