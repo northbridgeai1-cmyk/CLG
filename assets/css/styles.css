@@ -112,7 +112,23 @@ p { margin: 0 0 1em; }
   background: rgba(250,246,239,0.92); backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
-.site-header .container { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 24px; }
+.site-header .container { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 22px; }
+/* Between tablet and desktop the 7 links + language + CTA got squeezed and
+   the labels wrapped onto two lines. Tighten progressively instead. */
+@media (max-width: 1320px) {
+  .main-nav { gap: 17px; }
+  .main-nav > a { font-size: 0.82rem; }
+  .nav-cta .btn { padding: 12px 18px; font-size: 0.84rem; }
+}
+@media (max-width: 1180px) {
+  .site-header .container { gap: 14px; }
+  .main-nav { gap: 13px; }
+  .main-nav > a { font-size: 0.78rem; }
+  .nav-cta .btn { padding: 11px 14px; font-size: 0.78rem; }
+  .brand img { height: 36px; }
+}
+/* Never let a nav label break in half */
+.main-nav > a { white-space: nowrap; }
 /* FIX: the logo already contains the firm name. The duplicate text block
    beside it was colliding with the nav ("Law Inicio Group"). */
 .brand { display: flex; align-items: center; flex-shrink: 0; }

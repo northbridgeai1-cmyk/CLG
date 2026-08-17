@@ -36,31 +36,31 @@ LOGO = ("https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-306
 # stylesheet dumped every sub-link on top of the page. Seven links, plain
 # Spanish, each one a real page. No anchors.
 NAV = [
-    ("inicio",         "index.html",                   "Inicio",         "nav_inicio"),
-    ("inversionistas", "estrategias-empresarios.html", "Inversionistas", "nav_inversionistas"),
-    ("profesionales",  "estrategias-profesionales.html","Profesionales", "nav_profesionales"),
-    ("familias",       "estrategias-familias.html",    "Familias",       "nav_familias"),
-    ("casos",          "casos-de-exito.html",          "Casos de Éxito", "nav_casos"),
-    ("nosotros",       "nosotros.html",                "Nosotros",       "nav_nosotros"),
-    ("contacto",       "contacto.html",                "Contacto",       "nav_contacto"),
+    ("inicio",   "index.html",          "Inicio",         "nav_inicio"),
+    ("metas",    "metas-clg.html",      "Metas",          "nav_metas"),
+    ("vias",     "index.html#vias",     "Vías",           "nav_estrategias"),
+    ("casos",    "casos-de-exito.html", "Casos de Éxito", "nav_casos"),
+    ("nosotros", "nosotros.html",       "Nosotros",       "nav_nosotros"),
+    ("recursos", "recursos.html",       "Recursos",       "nav_recursos"),
+    ("contacto", "contacto.html",       "Contacto",       "nav_contacto"),
 ]
 
 # Which top-level nav item is highlighted on each page.
 ACTIVE = {
     "index.html": "inicio",
-    "estrategias-empresarios.html": "inversionistas",
-    "oportunidades.html": "inversionistas",
-    "estrategias-profesionales.html": "profesionales",
-    "estrategias-familias.html": "familias",
+    "metas-clg.html": "metas",
+    "estrategias-empresarios.html": "vias",
+    "estrategias-profesionales.html": "vias",
+    "estrategias-familias.html": "vias",
+    "estrategia-honorarios.html": "vias",
     "casos-de-exito.html": "casos",
     "nosotros.html": "nosotros",
     "continuidad-clg.html": "nosotros",
     "socios.html": "nosotros",
     "global-mobility.html": "nosotros",
-    "metas-clg.html": "nosotros",
-    "recursos.html": "nosotros",
-    "preguntas-frecuentes.html": "nosotros",
-    "estrategia-honorarios.html": "nosotros",
+    "recursos.html": "recursos",
+    "preguntas-frecuentes.html": "recursos",
+    "oportunidades.html": "recursos",
     "contacto.html": "contacto",
     "evaluacion.html": None,
 }
