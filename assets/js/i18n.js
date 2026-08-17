@@ -39,6 +39,10 @@ window.CLG_I18N = {
     /* ---------------- ENGLISH (complete) ---------------- */
     en: {
       nav_inicio: "Home",
+      nav_inversionistas: "Investors",
+      nav_profesionales: "Professionals",
+      nav_familias: "Families",
+      nav_servicios: "Services",
       nav_metas: "Goals",
       nav_estrategias: "Pathways",
       nav_oportunidades: "Opportunities",
@@ -139,37 +143,99 @@ window.CLG_I18N = {
     try { localStorage.setItem(STORE, lang); } catch (e) {}
   }
 
+  var GLOBE = '<svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' +
+              '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/>' +
+              '<path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>';
+  var CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">' +
+             '<path d="M6 9l6 6 6-6"/></svg>';
+
+  function notice(meta) {
+    var n = document.getElementById("i18n-notice");
+    if (!n) return;
+    if (meta && !meta.ready) {
+      /* Honest, not silent: tell the visitor rather than showing them
+         half-translated legal copy and pretending it's finished. */
+      n.textContent = meta.name + ": la traducción completa está en preparación. Por ahora el contenido se muestra en español.";
+      n.style.display = "block";
+    } else {
+      n.style.display = "none";
+    }
+  }
+
+  /* The open/closed state is set with INLINE styles, not just a class.
+     A class relies on the stylesheet being loaded; when it wasn't, every
+     language option spilled onto the page as raw text. Inline styles can't
+     fail that way. */
+  function setOpen(host, open) {
+    host.classList.toggle("open", open);
+    var menu = host.querySelector(".lang-menu");
+    if (menu) menu.style.display = open ? "block" : "none";
+    var btn = host.querySelector(".lang-toggle-btn");
+    if (btn) btn.setAttribute("aria-expanded", String(open));
+  }
+
+  function closeAll(except) {
+    document.querySelectorAll("[data-lang-switch]").forEach(function (h) {
+      if (h !== except) setOpen(h, false);
+    });
+  }
+
   function buildSwitcher() {
+    var cur = currentLang();
+    var curMeta = I.langs.filter(function (l) { return l.code === cur; })[0] || I.langs[0];
+
     document.querySelectorAll("[data-lang-switch]").forEach(function (host) {
-      var cur = currentLang();
-      host.innerHTML = I.langs.map(function (l) {
-        var cls = l.code === cur ? ' class="active"' : "";
-        var title = l.ready ? l.name : l.name + " (traducción en preparación)";
-        return '<a href="#" data-set-lang="' + l.code + '" title="' + title + '"' + cls + '>' + l.label + "</a>";
-      }).join("");
-      host.querySelectorAll("[data-set-lang]").forEach(function (a) {
-        a.addEventListener("click", function (e) {
-          e.preventDefault();
-          var code = a.getAttribute("data-set-lang");
+      host.classList.add("lang-switch");
+
+      /* Minimal inline styling so the control is usable even before the
+         stylesheet arrives. The stylesheet then refines it. */
+      host.setAttribute("style", "position:relative;display:inline-block;");
+
+      host.innerHTML =
+        '<button type="button" class="lang-toggle-btn" aria-haspopup="listbox" aria-expanded="false" ' +
+          'style="display:inline-flex;align-items:center;gap:7px;background:#fff;' +
+          'border:1px solid #e2d9c6;border-radius:2px;padding:8px 12px;font:700 .8rem ' +
+          'system-ui,sans-serif;color:#3c4f66;cursor:pointer;white-space:nowrap;">' +
+          GLOBE + '<span>' + curMeta.name + '</span>' + CHEV +
+        '</button>' +
+        '<div class="lang-menu" role="listbox" style="display:none;position:absolute;' +
+          'top:calc(100% + 8px);right:0;z-index:120;min-width:208px;background:#fff;' +
+          'border:1px solid #e2d9c6;border-radius:2px;padding:5px;' +
+          'box-shadow:0 20px 44px -18px rgba(15,30,51,.35);">' +
+          I.langs.map(function (l) {
+            return '<button type="button" role="option" data-set-lang="' + l.code + '"' +
+                   (l.code === cur ? ' aria-current="true"' : "") + '>' +
+                     '<span class="lang-name"><span class="lang-code">' + l.label + '</span>' + l.name + '</span>' +
+                     (l.ready ? "" : '<span class="pending">en preparación</span>') +
+                   '</button>';
+          }).join("") +
+        '</div>';
+
+      var btn = host.querySelector(".lang-toggle-btn");
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var isOpen = host.classList.contains("open");
+        closeAll(host);
+        setOpen(host, !isOpen);
+      });
+
+      host.querySelectorAll("[data-set-lang]").forEach(function (opt) {
+        opt.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var code = opt.getAttribute("data-set-lang");
           apply(code);
+          closeAll();
           buildSwitcher();
-          var meta = I.langs.filter(function (l) { return l.code === code; })[0];
-          if (meta && !meta.ready) {
-            /* Honest, not silent: tell the visitor rather than showing them
-               half-translated legal copy and pretending it's finished. */
-            var n = document.getElementById("i18n-notice");
-            if (n) {
-              n.textContent = meta.name + ": full translation in progress. Content is shown in Spanish for now.";
-              n.style.display = "block";
-            }
-          } else {
-            var n2 = document.getElementById("i18n-notice");
-            if (n2) n2.style.display = "none";
-          }
+          notice(I.langs.filter(function (l) { return l.code === code; })[0]);
         });
       });
     });
+
+    notice(curMeta);
   }
+
+  document.addEventListener("click", function () { closeAll(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAll(); });
 
   document.addEventListener("DOMContentLoaded", function () {
     apply(currentLang());

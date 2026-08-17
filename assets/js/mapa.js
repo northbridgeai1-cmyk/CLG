@@ -5,9 +5,9 @@
    Son afirmaciones sobre mercados, no asesoría legal, pero deben ser ciertas.
    ========================================================================== */
 (function () {
-  var svg = document.getElementById("us-map");
+  var list = document.querySelector(".region-list");
   var panel = document.getElementById("map-panel");
-  if (!svg || !panel) return;
+  if (!list || !panel) return;
 
   var DATA = {
     fl: { name: "Florida (Miami y Orlando)",
@@ -33,9 +33,9 @@
   function show(key) {
     var d = DATA[key];
     if (!d) return;
-    svg.querySelectorAll(".state").forEach(function (s) { s.classList.remove("active"); });
-    var el = svg.querySelector('[data-state="' + key + '"]');
-    if (el) el.classList.add("active");
+    list.querySelectorAll(".region-btn").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-state") === key);
+    });
     panel.innerHTML =
       '<div class="eyebrow">Oportunidades</div>' +
       "<h3>" + d.name + "</h3>" +
@@ -44,11 +44,8 @@
       '<a class="btn btn-purple btn-block" href="fase1-evaluacion-clg.html">Explorar mi estrategia aquí</a>';
   }
 
-  svg.querySelectorAll(".state").forEach(function (s) {
-    s.addEventListener("click", function () { show(s.getAttribute("data-state")); });
-    s.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(s.getAttribute("data-state")); }
-    });
+  list.querySelectorAll(".region-btn").forEach(function (b) {
+    b.addEventListener("click", function () { show(b.getAttribute("data-state")); });
   });
 
   show("fl");

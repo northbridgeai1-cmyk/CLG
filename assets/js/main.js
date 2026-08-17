@@ -11,6 +11,17 @@ var CLG = {
   endpoints: { popup: "", chat: "", contact: "" }
 };
 
+/* Pull in the language engine if the page didn't load it explicitly.
+   Older pages only reference main.js, and adding a second <script> tag to
+   every one of them by hand is exactly the kind of drift that made the nav
+   inconsistent in the first place. */
+(function () {
+  if (window.CLG_I18N) return;
+  var s = document.createElement("script");
+  s.src = "assets/js/i18n.js?v=8";
+  document.head.appendChild(s);
+})();
+
 /* ---------------- Scroll reveal ---------------- */
 (function () {
   var css = document.createElement("style");
@@ -48,6 +59,26 @@ document.addEventListener("DOMContentLoaded", function () {
       a.addEventListener("click", function () { document.body.classList.remove("menu-open"); });
     });
   }
+
+  /* Dropdown triggers. Hover handles desktop via CSS; this covers touch,
+     keyboard, and the mobile accordion. */
+  document.querySelectorAll(".nav-trigger").forEach(function (btn) {
+    var item = btn.closest(".nav-item");
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var wasOpen = item.classList.contains("open");
+      document.querySelectorAll(".nav-item.open").forEach(function (n) { n.classList.remove("open"); });
+      if (!wasOpen) item.classList.add("open");
+      btn.setAttribute("aria-expanded", String(!wasOpen));
+    });
+  });
+  document.addEventListener("click", function () {
+    document.querySelectorAll(".nav-item.open").forEach(function (n) { n.classList.remove("open"); });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") document.querySelectorAll(".nav-item.open").forEach(function (n) { n.classList.remove("open"); });
+  });
 
   /* ---------------- WhatsApp links ---------------- */
   document.querySelectorAll("[data-wa-link]").forEach(function (el) {
