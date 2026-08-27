@@ -1,0 +1,208 @@
+<!-- ==========================================================================
+     CLG — bloque de traducción automática para systeme.io
+     --------------------------------------------------------------------------
+     QUÉ ES
+     Un solo bloque de código para pegar en el PIE DE PÁGINA de systeme.io,
+     en Ajustes del sitio -> Código personalizado -> Footer. Se pega una vez
+     y aplica a todas las páginas.
+
+     NOTA: este archivo NO se usa en la versión de GitHub Pages. Solo hace
+     falta el día que el sitio se monte en systeme.io. No estorba si se sube.
+
+     QUÉ HACE
+     1. Marca los términos legales que NUNCA deben traducirse automáticamente.
+        Esta es la parte importante. Sin esto, "inversión sustancial" o
+        "dispensa de interés nacional" salen mal traducidos y la firma
+        responde por ello.
+     2. Carga el servicio de traducción que elijan (Weglot o ConveyThis).
+     3. Si no hay servicio configurado, no carga nada y no rompe nada.
+
+     ANTES DE PEGARLO
+     Elegir servicio y poner la clave abajo, en CONFIG. Con los dos vacíos
+     el bloque solo hace la parte 1, que igual sirve.
+     ========================================================================== -->
+
+<script>
+(function () {
+  "use strict";
+
+  /* ======================================================================
+     CONFIG — llenar solo UNA de las dos.
+     ====================================================================== */
+  var CONFIG = {
+    weglotKey:     "",   // p. ej. "wg_abc123..."  (weglot.com)
+    conveyThisKey: "",   // p. ej. "pub_xxxxx"     (conveythis.com)
+    idiomaOriginal: "es",
+    idiomas: ["en"]      // añadir "pt", "it", "de", "fr", "ko" cuando toque
+  };
+
+  /* ======================================================================
+     1. TÉRMINOS BLOQUEADOS
+     --------------------------------------------------------------------
+     Cualquier traductor automático respeta class="notranslate" y el
+     atributo translate="no". Esto recorre la página y protege:
+
+     - Nombres de categorías migratorias (E-2, EB-5, O-1...). Traducirlos
+       es directamente un error de hecho.
+     - Términos con peso jurídico donde una traducción aproximada cambia el
+       sentido legal.
+     - Nombres propios de la firma y sus productos.
+     - Cifras de honorarios, para que no se reformateen.
+
+     Si el equipo agrega un término nuevo al sitio, se agrega aquí también.
+     ====================================================================== */
+  var NO_TRADUCIR = [
+    // Categorías migratorias. Nunca se traducen, en ningún idioma.
+    "E-1", "E-2", "EB-1", "EB-1A", "EB-1B", "EB-1C", "EB-2", "EB-2 NIW",
+    "EB-3", "EB-5", "L-1", "O-1", "H-3", "TN", "F-1", "DS-160", "I-140",
+    "RFE", "NOID", "USCIS", "DOS", "TEA", "NIW", "221(g)", "Green Card",
+
+    // Términos jurídicos donde la traducción aproximada cambia el sentido.
+    "National Interest Waiver",
+    "Treaty Investor",
+    "Treaty Trader",
+    "extraordinary ability",
+    "substantial investment",
+    "adjustment of status",
+    "consular processing",
+    "dual intent",
+    "labor certification",
+    "Request for Evidence",
+
+    // Marcas y productos de la firma.
+    "Calderaro Law Group", "CLG", "Brújula CLG", "Evaluación CLG",
+    "Continuidad CLG", "Método CLG", "Global Expansion 360", "globalX360",
+    "Renata Calderaro", "Florida Bar", "Doral"
+  ];
+
+  function protegerTerminos(raiz) {
+    var patron = new RegExp(
+      "(" + NO_TRADUCIR
+        .sort(function (a, b) { return b.length - a.length; })  // los largos primero
+        .map(function (t) { return t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); })
+        .join("|") + ")", "g"
+    );
+
+    var walker = document.createTreeWalker(
+      raiz || document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (n) {
+          if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          var p = n.parentElement;
+          if (!p) return NodeFilter.FILTER_REJECT;
+          var tag = p.tagName;
+          if (tag === "SCRIPT" || tag === "STYLE" || tag === "TEXTAREA") return NodeFilter.FILTER_REJECT;
+          if (p.closest("[translate='no'], .notranslate")) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
+
+    var nodos = [];
+    var n;
+    while ((n = walker.nextNode())) {
+      if (patron.test(n.nodeValue)) { patron.lastIndex = 0; nodos.push(n); }
+      patron.lastIndex = 0;
+    }
+
+    nodos.forEach(function (nodo) {
+      var partes = nodo.nodeValue.split(patron);
+      if (partes.length < 2) return;
+      var frag = document.createDocumentFragment();
+      partes.forEach(function (parte) {
+        if (!parte) return;
+        if (NO_TRADUCIR.indexOf(parte) !== -1) {
+          var span = document.createElement("span");
+          span.className = "notranslate";
+          span.setAttribute("translate", "no");
+          span.textContent = parte;
+          frag.appendChild(span);
+        } else {
+          frag.appendChild(document.createTextNode(parte));
+        }
+      });
+      nodo.parentNode.replaceChild(frag, nodo);
+    });
+  }
+
+  /* Proteger montos de honorarios para que no se reformateen.
+     $15,800 no debe convertirse en $15.800 ni redondearse. */
+  function protegerMontos() {
+    document.querySelectorAll("*").forEach(function (el) {
+      if (el.children.length === 0 && /\$\s?[\d.,]{3,}/.test(el.textContent)) {
+        el.setAttribute("translate", "no");
+        el.classList.add("notranslate");
+      }
+    });
+  }
+
+  function aplicarProtecciones() {
+    try { protegerTerminos(document.body); protegerMontos(); }
+    catch (e) { /* nunca romper la página por esto */ }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", aplicarProtecciones);
+  } else {
+    aplicarProtecciones();
+  }
+
+  /* Systeme.io carga secciones dinámicamente. Volver a proteger cuando
+     aparezca contenido nuevo, si no el traductor lo agarra sin marcar. */
+  if (window.MutationObserver) {
+    var pendiente = null;
+    new MutationObserver(function () {
+      clearTimeout(pendiente);
+      pendiente = setTimeout(aplicarProtecciones, 400);
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+
+  /* ======================================================================
+     2. CARGAR EL SERVICIO DE TRADUCCIÓN
+     ====================================================================== */
+  if (CONFIG.weglotKey) {
+    var w = document.createElement("script");
+    w.src = "https://cdn.weglot.com/weglot.min.js";
+    w.onload = function () {
+      if (window.Weglot) {
+        window.Weglot.initialize({
+          api_key: CONFIG.weglotKey,
+          /* Weglot respeta estos selectores y no los toca. */
+          excluded_blocks: [{ value: ".notranslate" }, { value: "[translate='no']" }]
+        });
+      }
+    };
+    document.head.appendChild(w);
+
+  } else if (CONFIG.conveyThisKey) {
+    var c = document.createElement("script");
+    c.src = "https://cdn.conveythis.com/javascript/conveythis.js?api_key=" + CONFIG.conveyThisKey;
+    c.async = true;
+    document.head.appendChild(c);
+
+  } else {
+    /* Sin servicio configurado: solo quedan las protecciones puestas.
+       Útil igual, porque cuando se contrate el servicio los términos ya
+       están marcados y la primera traducción sale limpia. */
+    if (window.console && console.info) {
+      console.info("[CLG] Términos legales protegidos. Falta configurar el servicio de traducción en el bloque de systeme.io.");
+    }
+  }
+})();
+</script>
+
+<style>
+/* El selector de idioma que inyecta el servicio, alineado con la marca. */
+.weglot-container, #conveythis-wrapper {
+  font-family: "Public Sans", -apple-system, sans-serif !important;
+}
+.country-selector .wgcurrent,
+#conveythis-wrapper .ct-select {
+  border: 1px solid #e2d9c6 !important;
+  border-radius: 2px !important;
+  font-weight: 700 !important;
+  font-size: 0.8rem !important;
+  color: #3c4f66 !important;
+}
+/* Nunca ocultar visualmente los términos protegidos. */
+.notranslate { display: inline; }
+</style>

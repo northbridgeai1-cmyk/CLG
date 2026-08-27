@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Confirmation pages: no search value, and indexing them would let people
+# arrive from Google and register as fake conversions.
+Disallow: /gracias.html
+Disallow: /en/thank-you.html
+
+Sitemap: https://www.visamiami.com/sitemap.xml
