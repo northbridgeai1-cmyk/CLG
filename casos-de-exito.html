@@ -3,21 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Casos de Éxito | Clientes reales de Calderaro Law Group</title>
-<meta name="description" content="Historias reales de clientes de Calderaro Law Group en Colombia, Argentina, Perú, Ecuador, Japón y Canadá. Qué querían lograr, qué estrategia se diseñó y qué están haciendo hoy.">
+<title>Casos | Calderaro Law Group</title>
+<meta name="description" content="Registro de casos de Calderaro Law Group: país, vía migratoria, qué se diseñó y dónde está esa persona hoy. Colombia, Argentina, Perú, Ecuador, Japón y Canadá.">
 <meta name="theme-color" content="#0f1e33">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://www.visamiami.com/casos-de-exito.html">
 <link rel="alternate" hreflang="es" href="https://www.visamiami.com/casos-de-exito.html">
 <link rel="alternate" hreflang="en" href="https://www.visamiami.com/en/client-stories.html">
-<meta property="og:title" content="Casos de Éxito | Calderaro Law Group">
-<meta property="og:description" content="Personas reales, con nombre y país, y lo que están haciendo hoy en Estados Unidos.">
+<meta property="og:title" content="Casos | Calderaro Law Group">
+<meta property="og:description" content="País, vía y resultado. Seis casos con nombre.">
 <meta property="og:url" content="https://www.visamiami.com/casos-de-exito.html">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css?v=9">
+
+<!-- ==========================================================================
+     CSS solo de esta página. Va aquí y no en styles.css a propósito: es el
+     único sitio del sitio que usa el formato de registro, y meterlo en la
+     hoja global obligaría a subir el ?v= de los 24 archivos.
+
+     El registro NO es una cuadrícula de tarjetas. Es una tabla. Las tarjetas
+     iguales, con el mismo alto y el mismo radio, son la firma visual de una
+     plantilla, y era el motivo principal por el que el sitio se leía como
+     generado. Una tabla tiene filas de altos distintos porque los casos son
+     distintos, y eso no se puede fabricar.
+
+     TODO(CLG): falta la columna de fechas. Cuando la firma entregue mes y año
+     de presentación y de aprobación de cada caso, se añade <th>Presentado</th>
+     y <th>Aprobado</th> y el registro queda completo. No se inventan.
+     ========================================================================== -->
+<style>
+  .ledger-wrap { overflow-x: auto; margin-top: 34px; }
+  .ledger { width: 100%; border-collapse: collapse; font-size: .93rem; }
+  .ledger caption { text-align: left; font-size: .78rem; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-soft); padding-bottom: 12px; }
+  .ledger th { text-align: left; font-size: .7rem; text-transform: uppercase;
+    letter-spacing: .09em; color: var(--ink-soft); font-weight: 700;
+    border-bottom: 2px solid var(--ink); padding: 0 14px 9px 0; white-space: nowrap; }
+  .ledger td { padding: 16px 14px 16px 0; border-bottom: 1px solid var(--line);
+    vertical-align: top; }
+  .ledger tr.detail td { border-bottom: 1px solid var(--line);
+    padding-top: 0; color: var(--ink-soft); font-size: .89rem; }
+  .ref { font-variant-numeric: tabular-nums; font-weight: 700;
+    color: var(--gold-deep); white-space: nowrap; }
+  .via { font-weight: 700; white-space: nowrap; }
+  .who { font-weight: 700; white-space: nowrap; }
+  .who img { width: 18px; height: 12px; margin-right: 7px; vertical-align: baseline;
+    border: 1px solid var(--line); }
+  .ledger blockquote { margin: 9px 0 0; padding-left: 14px;
+    border-left: 2px solid var(--gold); font-family: var(--serif);
+    font-size: 1rem; color: var(--ink); }
+  @media (max-width: 760px) {
+    .ledger, .ledger tbody, .ledger tr, .ledger td { display: block; width: 100%; }
+    .ledger thead { display: none; }
+    .ledger td { border: none; padding: 3px 0; }
+    .ledger tr { border-bottom: 1px solid var(--line); padding: 20px 0; display: block; }
+    .ledger tr.detail { border-bottom: none; padding-top: 0; }
+  }
+</style>
 </head>
 <body>
 
@@ -27,17 +72,16 @@
       <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
     </a>
     <nav class="main-nav">
-      <a href="index.html" data-i18n="nav_inicio">Inicio</a>
-      <a href="metas-clg.html" data-i18n="nav_metas">Metas</a>
-      <a href="index.html#vias" data-i18n="nav_estrategias">Vías</a>
-      <a href="casos-de-exito.html" class="active" data-i18n="nav_casos">Casos de Éxito</a>
-      <a href="nosotros.html" data-i18n="nav_nosotros">Nosotros</a>
-      <a href="recursos.html" data-i18n="nav_recursos">Recursos</a>
-      <a href="contacto.html" data-i18n="nav_contacto">Contacto</a>
+      <a href="index.html">Inicio</a>
+      <a href="index.html#vias">Vías</a>
+      <a href="casos-de-exito.html" class="active">Casos</a>
+      <a href="estrategia-honorarios.html">Honorarios</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="contacto.html">Contacto</a>
     </nav>
     <div class="nav-cta">
       <span class="lang-switch" data-lang-switch></span>
-      <a href="fase1-evaluacion-clg.html" class="btn btn-primary" data-i18n="cta_main">Quiero conocer mi estrategia</a>
+      <a href="fase1-evaluacion-clg.html" class="btn btn-primary">Evaluación CLG</a>
     </div>
     <button class="mobile-toggle" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
@@ -45,151 +89,139 @@
 <p id="i18n-notice" style="display:none;background:#fdf6e8;border-bottom:1px solid var(--gold-deep);margin:0;padding:10px 20px;font-size:.85rem;text-align:center;"></p>
 
 <main>
-  <section class="hero" style="padding-bottom:30px;">
-    <div class="container container--narrow">
-      <div class="breadcrumb"><a href="index.html">Inicio</a> / Casos de Éxito</div>
-      <div class="eyebrow">Casos reales</div>
-      <h1>Personas reales, y lo que están haciendo hoy.</h1>
-      <p class="lede">No publicamos estadísticas genéricas. Cada historia tiene nombre, país, la estrategia que se diseñó y, sobre todo, dónde está esa persona ahora.</p>
+  <section class="hero" style="padding-bottom:20px;">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Inicio</a> / Casos</div>
+      <h1 style="max-width:760px;">Seis casos, con nombre y país.</h1>
+      <p class="lede" style="max-width:640px;">Cada fila es una persona que hoy vive o trabaja en Estados Unidos. La vía que aparece es la que se presentó, no la que se ofreció al principio.</p>
     </div>
   </section>
 
-  <section class="section" style="padding-top:40px;">
+  <section class="section" style="padding-top:10px;">
     <div class="container">
-      <div class="grid-2" style="gap:34px;">
 
-        <!-- JAVIER O. -->
-        <article class="case-card">
-          <!-- TODO(CLG): cuando la firma envíe el video de Javier, insertar
-               aquí un <div class="case-video"> con el iframe de YouTube.
-               Hasta entonces no se muestra nada: una caja vacía que dice
-               "pendiente" hace ver el sitio a medio terminar. -->
-          <div class="case-body">
-            <div style="display:flex;align-items:center;gap:9px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="Colombia">
-              <strong>Javier O.</strong>
-              <span style="font-size:.8rem;color:var(--ink-soft);">Colombia · Visa E-2</span>
-            </div>
-            <dl class="case-meta">
-              <dt>Perfil</dt><dd>Empresario con negocio propio en Colombia</dd>
-              <dt>Quería</dt><dd>Operar su propio negocio en Estados Unidos y mudarse con su familia</dd>
-              <dt>Estrategia</dt><dd>Compra de un negocio en marcha, estructurado desde el inicio para sostener una petición E-2</dd>
-            </dl>
-            <p class="case-now"><strong>Hoy</strong>Opera su negocio en Estados Unidos día a día, y su familia vive allá con él. Sus palabras: el proceso los dejó “viviendo de una manera cómoda”.</p>
-            <p class="case-quote">"Gracias a la asesoría de CLG y el acompañamiento del equipo compramos nuestro negocio, lo estamos operando y nos tiene viviendo de una manera cómoda en Estados Unidos."</p>
-          </div>
-        </article>
+      <div class="ledger-wrap">
+        <table class="ledger">
+          <caption>Registro de casos · Calderaro Law Group</caption>
+          <thead>
+            <tr>
+              <th scope="col">Ref.</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Vía</th>
+              <th scope="col">Perfil al llegar a CLG</th>
+              <th scope="col">Dónde está hoy</th>
+            </tr>
+          </thead>
+          <tbody>
 
-        <!-- SHIRO -->
-        <article class="case-card">
-          <div class="case-body">
-            <div style="display:flex;align-items:center;gap:9px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f43bca7bf_5a6cfc6-e57-8fb-4e1-08bc13af7765_Flag_of_Japan_bordered_.webp" alt="Japón">
-              <strong>Shiro</strong>
-              <span style="font-size:.8rem;color:var(--ink-soft);">Japón · Visa O y residencia</span>
-            </div>
-            <dl class="case-meta">
-              <dt>Perfil</dt><dd>Artista de graffiti, sin saber qué vía aplicaba a su caso</dd>
-              <dt>Quería</dt><dd>Vivir de su arte en Estados Unidos, sin depender de un empleador</dd>
-              <dt>Estrategia</dt><dd>Fase 1 identificó la Visa O como su mejor vía; después, camino a la residencia permanente</dd>
-            </dl>
-            <p class="case-now"><strong>Hoy</strong>Es ciudadana estadounidense y sigue exponiendo su obra. Su trabajo se ve en ciudades como Nueva York y Los Ángeles.</p>
-            <p class="case-quote">"I am very grateful with CLG. Thanks to them I am now living as a U.S. citizen based on my art."</p>
-          </div>
-        </article>
+            <tr>
+              <td class="ref">01</td>
+              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="Colombia" width="18" height="12">Javier O.</td>
+              <td class="via">E-2</td>
+              <td>Empresario con negocio propio en Colombia. Quería operar en Estados Unidos y mudarse con su familia.</td>
+              <td>Opera su negocio día a día. Su familia vive allá con él.</td>
+            </tr>
+            <tr class="detail">
+              <td></td>
+              <td colspan="4">
+                Estrategia: compra de un negocio en marcha, estructurado desde el inicio para sostener una petición E-2.
+                <blockquote>“Gracias a la asesoría de CLG y el acompañamiento del equipo compramos nuestro negocio, lo estamos operando y nos tiene viviendo de una manera cómoda en Estados Unidos.”</blockquote>
+              </td>
+            </tr>
 
-        <!-- GIANCARLOS C. -->
-        <article class="case-card">
-          <div class="case-body">
-            <div style="display:flex;align-items:center;gap:9px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="Perú">
-              <strong>Giancarlos C.</strong>
-              <span style="font-size:.8rem;color:var(--ink-soft);">Perú · Visa L-1</span>
-            </div>
-            <dl class="case-meta">
-              <dt>Perfil</dt><dd>Empresario con una operación ya funcionando fuera de Estados Unidos</dd>
-              <dt>Quería</dt><dd>Trasladarse con su familia sin improvisar y sin poner en riesgo el negocio</dd>
-              <dt>Estrategia</dt><dd>Estructura de traslado intracompañía con una L-1, planificada por etapas</dd>
-            </dl>
-            <p class="case-now"><strong>Hoy</strong>Completó el proceso de forma legal y planificada, con su familia acompañándolo en cada etapa.</p>
-            <p class="case-quote">"Se pusieron la camiseta de mi familia para lograr el objetivo y junto a los abogados hacer el proceso de forma legal y planificada."</p>
-          </div>
-        </article>
+            <tr>
+              <td class="ref">02</td>
+              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f43bca7bf_5a6cfc6-e57-8fb-4e1-08bc13af7765_Flag_of_Japan_bordered_.webp" alt="Japón" width="18" height="12">Shiro</td>
+              <td class="via">O, luego residencia</td>
+              <td>Artista de graffiti. Llegó sin saber qué vía aplicaba a su caso.</td>
+              <td>Ciudadana estadounidense. Sigue exponiendo en Nueva York y Los Ángeles.</td>
+            </tr>
+            <tr class="detail">
+              <td></td>
+              <td colspan="4">
+                Estrategia: la Fase 1 identificó la Visa O como la vía correcta; después, camino a la residencia permanente.
+                <blockquote>“I am very grateful with CLG. Thanks to them I am now living as a U.S. citizen based on my art.”</blockquote>
+              </td>
+            </tr>
 
-        <!-- CLAUDIA Y DIEGO -->
-        <article class="case-card">
-          <div class="case-body">
-            <div style="display:flex;align-items:center;gap:9px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f16daf301_41bd7-04c1-3c6-8475-73afbfb134e_Flag_of_Ecuador.webp" alt="Ecuador">
-              <strong>Claudia y Diego</strong>
-              <span style="font-size:.8rem;color:var(--ink-soft);">Ecuador · Residencia permanente</span>
-            </div>
-            <dl class="case-meta">
-              <dt>Perfil</dt><dd>Pareja planificando el futuro de su familia a largo plazo</dd>
-              <dt>Quería</dt><dd>Una estrategia completa, no una respuesta parcial en una sola reunión</dd>
-              <dt>Estrategia</dt><dd>Análisis del espectro completo del caso antes de elegir vía, con acompañamiento posterior a la llegada</dd>
-            </dl>
-            <p class="case-now"><strong>Hoy</strong>Ya en Estados Unidos con residencia permanente. El acompañamiento siguió después de llegar, guiándolos en el paso siguiente.</p>
-            <p class="case-quote">"Ustedes marcan una diferencia brutal, no solo se basan en una reunión para analizar el caso sino que ven todo el espectro y cuando llegamos a Estados Unidos nos brindaron la guía para el siguiente paso."</p>
-          </div>
-        </article>
+            <tr>
+              <td class="ref">03</td>
+              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="Perú" width="18" height="12">Giancarlos C.</td>
+              <td class="via">L-1</td>
+              <td>Empresario con una operación ya funcionando fuera de Estados Unidos.</td>
+              <td>Trasladado con su familia, sin interrumpir el negocio.</td>
+            </tr>
+            <tr class="detail">
+              <td></td>
+              <td colspan="4">
+                Estrategia: traslado intracompañía con una L-1, planificado por etapas.
+                <blockquote>“Se pusieron la camiseta de mi familia para lograr el objetivo y junto a los abogados hacer el proceso de forma legal y planificada.”</blockquote>
+              </td>
+            </tr>
 
-        <!-- LEANDRO C. -->
-        <article class="case-card">
-          <div class="case-body">
-            <div style="display:flex;align-items:center;gap:9px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f3ef46544_132adda-bb-d50f-31f-fe045b454ddb_Flag-Argentina.webp" alt="Argentina">
-              <strong>Leandro C.</strong>
-              <span style="font-size:.8rem;color:var(--ink-soft);">Argentina · Visa E-2</span>
-            </div>
-            <dl class="case-meta">
-              <dt>Perfil</dt><dd>Empresario argentino evaluando si el proceso era viable para él</dd>
-              <dt>Quería</dt><dd>Claridad antes que trámite: entender su caso antes de comprometer capital</dd>
-              <dt>Estrategia</dt><dd>Diagnóstico completo del perfil y del capital antes de definir la vía E-2</dd>
-            </dl>
-            <p class="case-now"><strong>Hoy</strong>Con su proceso migratorio realizado. Destaca que la primera reunión resolvió el 75% de sus dudas.</p>
-            <p class="case-quote">"Tuve la suerte de contar con Renata y su equipo para realizar mi proceso migratorio. Me sacaron del 75% de mis dudas en la primera reunión."</p>
-          </div>
-        </article>
+            <tr>
+              <td class="ref">04</td>
+              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f16daf301_41bd7-04c1-3c6-8475-73afbfb134e_Flag_of_Ecuador.webp" alt="Ecuador" width="18" height="12">Claudia y Diego</td>
+              <td class="via">Residencia permanente</td>
+              <td>Pareja planificando el futuro de su familia a largo plazo.</td>
+              <td>En Estados Unidos con residencia permanente.</td>
+            </tr>
+            <tr class="detail">
+              <td></td>
+              <td colspan="4">
+                Estrategia: análisis del espectro completo del caso antes de elegir vía, con acompañamiento posterior a la llegada.
+                <blockquote>“Ustedes marcan una diferencia brutal, no solo se basan en una reunión para analizar el caso sino que ven todo el espectro y cuando llegamos a Estados Unidos nos brindaron la guía para el siguiente paso.”</blockquote>
+              </td>
+            </tr>
 
-        <!-- BRYAN M. -->
-        <article class="case-card">
-          <div class="case-body">
-            <div style="display:flex;align-items:center;gap:9px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f48814874_f7fcf40-af84-ad5d-ac2f-cf22d2db2833_ca-flag.jpg" alt="Canadá">
-              <strong>Bryan M.</strong>
-              <span style="font-size:.8rem;color:var(--ink-soft);">Canadá · Visa E-2</span>
-            </div>
-            <dl class="case-meta">
-              <dt>Perfil</dt><dd>Inversionista canadiense</dd>
-              <dt>Quería</dt><dd>Un proceso de visa de inversión sin sobresaltos</dd>
-              <dt>Estrategia</dt><dd>Preparación y acompañamiento completos del expediente E-2</dd>
-            </dl>
-            <p class="case-now"><strong>Hoy</strong>Con su visa de inversionista aprobada. Describe el proceso como fluido y sin estrés.</p>
-            <p class="case-quote">"Thanks to CLG, my investor visa process was smooth and successful. Their expertise and support made the entire journey stress-free."</p>
-          </div>
-        </article>
+            <tr>
+              <td class="ref">05</td>
+              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f3ef46544_132adda-bb-d50f-31f-fe045b454ddb_Flag-Argentina.webp" alt="Argentina" width="18" height="12">Leandro C.</td>
+              <td class="via">E-2</td>
+              <td>Empresario evaluando si el proceso era viable antes de comprometer capital.</td>
+              <td>Proceso migratorio completado.</td>
+            </tr>
+            <tr class="detail">
+              <td></td>
+              <td colspan="4">
+                Estrategia: diagnóstico completo del perfil y del capital antes de definir la vía E-2.
+                <blockquote>“Tuve la suerte de contar con Renata y su equipo para realizar mi proceso migratorio. Me sacaron del 75% de mis dudas en la primera reunión.”</blockquote>
+              </td>
+            </tr>
 
+            <tr>
+              <td class="ref">06</td>
+              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f48814874_f7fcf40-af84-ad5d-ac2f-cf22d2db2833_ca-flag.jpg" alt="Canadá" width="18" height="12">Bryan M.</td>
+              <td class="via">E-2</td>
+              <td>Inversionista canadiense.</td>
+              <td>Visa de inversionista aprobada.</td>
+            </tr>
+            <tr class="detail">
+              <td></td>
+              <td colspan="4">
+                Estrategia: preparación y acompañamiento completos del expediente E-2.
+                <blockquote>“Thanks to CLG, my investor visa process was smooth and successful. Their expertise and support made the entire journey stress-free.”</blockquote>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
       </div>
 
-    </div>
-  </section>
+      <p style="margin-top:26px;font-size:.85rem;color:var(--ink-soft);max-width:640px;">
+        Seis de los casos que la firma autorizó a publicar con nombre. Los resultados anteriores no garantizan resultados similares en casos futuros: cada expediente depende de hechos, país y momento distintos.
+      </p>
 
-  <section class="section section--card">
-    <div class="container center" style="max-width:680px;">
-      <div class="eyebrow center" style="justify-content:center;">La constante</div>
-      <h2>Ninguno tuvo que irse corriendo</h2>
-      <p class="lede center">La opcionalidad no se siente el día que la usas, se siente antes, sabiendo que está ahí. Detrás de cada expediente hay una familia o un fundador que quería tener la puerta abierta, sin la presión de cruzarla de inmediato. Por eso Shiro, que llegó de Japón como artista de graffiti con una Visa O, hoy es ciudadana americana: no porque tuviera que irse, sino porque construyó la opción con tiempo.</p>
     </div>
   </section>
 
   <section class="section section--ink">
-    <div class="container center" style="max-width:640px;">
-      <h2>¿Quieres ser la próxima historia?</h2>
-      <p class="lede center">Empieza por entender qué vía se ajusta a tu perfil. Dos minutos, sin costo.</p>
-      <div class="hero-actions" style="justify-content:center;">
-        <a href="fase1-evaluacion-clg.html" class="btn btn-primary btn-lg">Quiero conocer mi estrategia</a>
-        <a href="evaluacion.html" class="btn btn-ghost btn-lg">Empezar por la Brújula CLG</a>
+    <div class="container" style="max-width:640px;">
+      <h2>¿Cuál de estas seis filas se parece a la tuya?</h2>
+      <p class="lede">Si ninguna se parece, esa también es una respuesta útil, y la Brújula te la da en dos minutos sin costo.</p>
+      <div class="hero-actions">
+        <a href="fase1-evaluacion-clg.html" class="btn btn-primary btn-lg">Evaluación CLG · $2,500</a>
+        <a href="evaluacion.html" class="btn btn-ghost btn-lg">Brújula CLG · gratis</a>
       </div>
     </div>
   </section>
@@ -197,7 +229,7 @@
 
 <footer class="site-footer">
   <div class="container">
-    <div class="footer-grid">
+    <div class="footer-grid" style="grid-template-columns:1.6fr 1fr 1fr 1fr;">
       <div class="footer-brand">
         <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
         <p>Estrategia migratoria para empresarios, profesionales, artistas, deportistas y familias. Doral, Florida.</p>
@@ -209,35 +241,30 @@
         </div>
       </div>
       <div>
-        <h4>Estrategias</h4>
-        <a href="metas-clg.html">Metas CLG</a>
-        <a href="estrategias-empresarios.html">Empresarios e Inversionistas</a>
-        <a href="estrategias-profesionales.html">Profesionales, Artistas y Deportistas</a>
-        <a href="estrategias-familias.html">Familias y Planificación</a>
-        <a href="oportunidades.html">Oportunidades por ciudad</a>
+        <h4>Vías</h4>
+        <a href="estrategias-empresarios.html">Empresarios e inversionistas</a>
+        <a href="estrategias-profesionales.html">Profesionales y artistas</a>
+        <a href="estrategias-familias.html">Familias</a>
         <a href="estrategia-honorarios.html">Honorarios</a>
       </div>
       <div>
         <h4>Firma</h4>
         <a href="nosotros.html">Nosotros</a>
-        <a href="continuidad-clg.html">Continuidad CLG</a>
-        <a href="global-mobility.html">Global Mobility</a>
-        <a href="socios.html">Socios y Referidos</a>
-        <a href="recursos.html">Recursos y Eventos</a>
-        <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
+        <a href="casos-de-exito.html">Casos</a>
+        <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
       </div>
       <div>
         <h4>Empezar</h4>
         <a href="fase1-evaluacion-clg.html">Evaluación CLG</a>
-        <a href="evaluacion.html">Brújula CLG (gratis)</a>
-        <a href="contacto.html">Agendar cita</a>
-        <a href="https://api.whatsapp.com/send?phone=17863016264" data-wa-link="Hola, quiero conocer mi estrategia migratoria.">WhatsApp</a>
+        <a href="evaluacion.html">Brújula CLG</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="https://api.whatsapp.com/send?phone=17863016264" data-wa-link="Hola, vi los casos y quiero conocer mi estrategia.">WhatsApp</a>
         <a href="mailto:info@visamiami.com">info@visamiami.com</a>
       </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Calderaro Law Group. Todos los derechos reservados.</span>
-      <span>3105 NW 107th Ave Suite 452, Doral, FL 33172 · ¿Tu prioridad no es exclusivamente EE.UU.? También conversamos sobre opciones en EAU y España. · Los resultados anteriores no garantizan resultados similares en casos futuros.</span>
+      <span>3105 NW 107th Ave Suite 452, Doral, FL 33172 · Los resultados anteriores no garantizan resultados similares en casos futuros.</span>
     </div>
   </div>
 </footer>
@@ -261,7 +288,7 @@
       <circle cx="8.4" cy="10.8" r="1.05" fill="#0f1e33"/><circle cx="12" cy="10.8" r="1.05" fill="#0f1e33"/><circle cx="15.6" cy="10.8" r="1.05" fill="#0f1e33"/>
     </svg>
   </button>
-  <a class="wa-fab" data-wa-link="Hola, vi los casos de éxito y quiero conocer mi estrategia." aria-label="WhatsApp">
+  <a class="wa-fab" href="https://api.whatsapp.com/send?phone=17863016264" data-wa-link="Hola, vi los casos y quiero conocer mi estrategia." aria-label="WhatsApp">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.87.5 3.62 1.4 5.13L2 22l5.02-1.36A9.95 9.95 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2Zm5.9 14.24c-.25.7-1.45 1.34-2 1.42-.53.08-1.2.11-1.94-.12-.45-.14-1.02-.33-1.76-.65-3.1-1.34-5.12-4.46-5.28-4.67-.15-.21-1.26-1.68-1.26-3.2s.79-2.28 1.07-2.59c.28-.31.6-.38.8-.38h.58c.19 0 .44-.07.68.53.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.09.2-.14.33-.28.5-.14.17-.29.38-.42.51-.14.14-.28.29-.12.57.15.28.68 1.15 1.47 1.87 1.01.93 1.87 1.22 2.15 1.36.28.14.44.12.6-.07.17-.2.71-.85.9-1.14.19-.29.38-.24.63-.14.25.09 1.6.78 1.87.92.28.14.46.21.53.33.07.12.07.68-.18 1.38Z"/></svg>
   </a>
 </div>

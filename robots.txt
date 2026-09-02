@@ -6,4 +6,9 @@ Allow: /
 Disallow: /gracias.html
 Disallow: /en/thank-you.html
 
+# Página de error. GitHub Pages la sirve con estado 404, así que Google no la
+# indexaría de todos modos, pero si el sitio pasa a un hosting mal configurado
+# que la devuelva con estado 200, esta línea evita que entre al índice.
+Disallow: /404.html
+
 Sitemap: https://www.visamiami.com/sitemap.xml

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página no encontrada | Calderaro Law Group</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- ==========================================================================
+     POR QUÉ ESTE ARCHIVO LLEVA SU CSS ADENTRO
+     GitHub Pages sirve este mismo 404 para CUALQUIER ruta que no exista,
+     incluidas rutas profundas como /CLG/en/algo-que-no-existe.html. El
+     navegador conserva esa URL, así que un <link href="assets/css/..."> se
+     resolvería contra la carpeta equivocada y la página saldría sin estilos.
+     Los estilos van aquí dentro para que esta página nunca se rompa.
+     Los colores son los mismos de styles.css.
+     ========================================================================== -->
+<style>
+  :root{
+    --ink:#0f1e33; --ink-soft:#3c4f66; --cream:#faf6ef; --paper:#fff;
+    --gold:#b8863b; --gold-deep:#8f6526; --line:#e2d9c6;
+    --serif:"Newsreader",Georgia,serif; --sans:"Public Sans",-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--cream);
+       line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  header{background:var(--paper);border-bottom:1px solid var(--line);padding:18px 0}
+  header .wrap{display:flex;align-items:center}
+  header img{height:40px;width:auto;display:block}
+  main{padding:64px 0 72px}
+  .code{font-family:var(--serif);font-size:3.4rem;color:var(--gold);margin:0 0 6px;line-height:1}
+  h1{font-family:var(--serif);font-weight:500;font-size:1.9rem;margin:0 0 14px;letter-spacing:-.01em}
+  p{margin:0 0 14px;color:var(--ink-soft)}
+  .en{margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
+  .en h2{font-family:var(--serif);font-weight:500;font-size:1.35rem;margin:0 0 10px;color:var(--ink)}
+  .links{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 0}
+  .btn{display:inline-block;padding:13px 22px;border-radius:2px;font-weight:600;
+       font-size:.92rem;text-decoration:none;border:1px solid transparent}
+  .btn-primary{background:var(--gold);color:var(--ink)}
+  .btn-ghost{background:transparent;border-color:rgba(15,30,51,.25);color:var(--ink)}
+  .contact{margin-top:34px;padding:20px 22px;background:var(--paper);
+           border:1px solid var(--line);border-radius:2px;font-size:.94rem}
+  .contact a{color:var(--gold-deep);font-weight:700;text-decoration:none}
+  footer{border-top:1px solid var(--line);padding:24px 0;font-size:.8rem;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a id="logo-link" href="/">
+      <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="code">404</p>
+    <h1>Esta página no existe</h1>
+    <p>Puede que el enlace esté roto o que la página haya cambiado de dirección. Nada de lo que buscabas se perdió: el sitio sigue completo desde el inicio.</p>
+    <div class="links">
+      <a class="btn btn-primary" id="es-home" href="/">Ir al inicio</a>
+      <a class="btn btn-ghost" id="es-contact" href="/">Contacto</a>
+    </div>
+
+    <div class="contact">
+      Si necesitas hablar con alguien ahora:<br>
+      <a href="https://api.whatsapp.com/send?phone=17863016264">WhatsApp +1 (786) 301-6264</a> ·
+      <a href="mailto:info@visamiami.com">info@visamiami.com</a><br>
+      3105 NW 107th Ave Suite 452, Doral, FL 33172
+    </div>
+
+    <div class="en">
+      <h2>Page not found</h2>
+      <p>The link may be broken, or the page may have moved. Everything else on the site is still where it was.</p>
+      <div class="links">
+        <a class="btn btn-ghost" id="en-home" href="/">Go to the English home page</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    &copy; 2026 Calderaro Law Group · Doral, Florida
+  </div>
+</footer>
+
+<script>
+/* Los enlaces de arriba apuntan a "/" para que funcionen aunque este script
+   no corra. Aquí los corregimos según dónde esté publicado el sitio:
+
+   - En GitHub Pages de proyecto la URL es usuario.github.io/CLG/, así que
+     la raíz del sitio es /CLG/ y no /.
+   - En un dominio propio (visamiami.com) la raíz sí es /.
+
+   Sin esto, un 404 en /CLG/en/loquesea.html mandaría al visitante a la raíz
+   del dominio, que en GitHub Pages no es el sitio de la firma. */
+(function () {
+  var base = "/";
+  if (/\.github\.io$/i.test(location.hostname)) {
+    var first = location.pathname.split("/").filter(Boolean)[0];
+    if (first) base = "/" + first + "/";
+  }
+  var set = function (id, path) {
+    var el = document.getElementById(id);
+    if (el) el.setAttribute("href", base + path);
+  };
+  set("logo-link", "");
+  set("es-home", "");
+  set("es-contact", "contacto.html");
+  set("en-home", "en/");
+})();
+</script>
+</body>
+</html>

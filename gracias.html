@@ -31,44 +31,44 @@
 </header>
 
 <main>
-  <section class="section" style="padding-top:80px;">
-    <div class="container container--narrow center">
-      <div style="width:64px;height:64px;border-radius:50%;background:var(--cream-2);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--gold-deep)" stroke-width="2.2"><path d="M4 12.5l5.5 5.5L20 7"/></svg>
-      </div>
-      <div class="eyebrow center" style="justify-content:center;">Recibido</div>
-      <h1>Gracias. Ya está con nosotros.</h1>
-      <p class="lede center">Un asesor de CLG revisa tu perfil y te contacta. No es un correo automático: alguien del equipo lee lo que escribiste.</p>
+  <section class="section" style="padding-top:72px;padding-bottom:0;">
+    <div class="container container--narrow">
+      <h1 style="margin-bottom:18px;">Recibimos tus datos</h1>
+      <p class="lede">Tu perfil entró a la lista de revisión de esta semana. Un abogado del equipo lo lee, decide si el caso tiene una vía viable y te escribe al correo o al teléfono que dejaste.</p>
+      <p>Revisamos los perfiles en orden de llegada. Si tu situación tiene una fecha de por medio —un permiso que vence, un viaje ya comprado, una oferta con plazo— escríbenos por WhatsApp y dinos la fecha. Eso cambia el orden.</p>
+      <p style="margin-top:22px;">
+        <a href="https://api.whatsapp.com/send?phone=17863016264" class="btn btn-whatsapp" data-wa-link="Hola, acabo de enviar mis datos en la web y tengo una fecha de por medio.">WhatsApp +1 (786) 301-6264</a>
+      </p>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0;">
+  <!-- TODO(CLG): en cuanto la firma confirme el tiempo real de respuesta
+       (¿48 horas hábiles? ¿5 días?), ponerlo arriba, en la primera línea.
+       Es el dato que más tranquiliza a alguien que acaba de dejar sus datos,
+       y ahora mismo es lo único que falta en esta página. -->
+
+  <section class="section">
     <div class="container container--narrow">
-      <div class="eyebrow">Mientras tanto</div>
-      <h2>Tres cosas que puedes hacer ahora</h2>
-      <div class="next-grid" style="grid-template-columns:1fr 1fr 1fr;margin-top:28px;">
-        <div class="next-item">
-          <h3>Adelanta la conversación</h3>
-          <p>Si prefieres no esperar, escríbenos por WhatsApp y seguimos por ahí.</p>
-          <p style="margin-top:10px;"><a href="https://api.whatsapp.com/send?phone=17863016264" class="btn btn-whatsapp" data-wa-link="Hola, acabo de enviar mis datos en la web y quiero adelantar la conversación.">WhatsApp</a></p>
-        </div>
-        <div class="next-item">
-          <h3>Ubica tu vía</h3>
-          <p>La Brújula CLG toma dos minutos y te da algo concreto que traer a la llamada.</p>
-          <p style="margin-top:10px;"><a href="evaluacion.html" class="btn btn-ghost">Hacer la Brújula</a></p>
-        </div>
-        <div class="next-item">
-          <h3>Mira casos reales</h3>
-          <p>Gente con nombre, país y visa, y lo que están haciendo hoy.</p>
-          <p style="margin-top:10px;"><a href="casos-de-exito.html" class="btn btn-ghost">Ver casos</a></p>
-        </div>
+      <h2>Mientras esperas</h2>
+      <p>Las dos cosas que más ayudan a que la primera llamada sirva:</p>
+
+      <div style="margin-top:26px;border-left:2px solid var(--gold);padding-left:20px;">
+        <h3 style="margin:0 0 8px;">La Brújula CLG</h3>
+        <p style="margin:0 0 14px;">Diez preguntas, dos minutos. Al final tienes por escrito qué vías encajan con tu perfil y cuáles no. Llegar a la llamada con eso en la mano ahorra la mitad de la conversación.</p>
+        <a href="evaluacion.html" class="btn btn-ghost">Hacer la Brújula</a>
+      </div>
+
+      <div style="margin-top:26px;border-left:2px solid var(--line);padding-left:20px;">
+        <h3 style="margin:0 0 8px;">Los casos que ya cerramos</h3>
+        <p style="margin:0 0 14px;">Gente con nombre, país, visa y a qué se dedica hoy en Estados Unidos. Busca el que se parezca al tuyo.</p>
+        <a href="casos-de-exito.html" class="btn btn-ghost">Ver casos</a>
       </div>
     </div>
   </section>
 
   <section class="section section--card">
-    <div class="container container--narrow center">
-      <p style="color:var(--ink-soft);margin:0;">¿Enviaste algo por error o quieres corregir un dato? Escríbenos a <a href="mailto:info@visamiami.com" style="font-weight:700;">info@visamiami.com</a> y lo arreglamos.</p>
+    <div class="container container--narrow">
+      <p style="color:var(--ink-soft);margin:0;">¿Enviaste algo por error o quieres corregir un dato? Escribe a <a href="mailto:info@visamiami.com" style="font-weight:700;">info@visamiami.com</a> y lo arreglamos antes de que el perfil llegue a revisión.</p>
     </div>
   </section>
 </main>
