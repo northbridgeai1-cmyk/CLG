@@ -188,7 +188,19 @@
         dots.appendChild(d);
       });
 
-      ui.appendChild(dots); ui.appendChild(arrows);
+      /* With one case on screen there is no row to count along, so state
+         the position outright. */
+      var count = document.createElement("span");
+      count.className = "swipe-count";
+      count.setAttribute("aria-hidden", "true");
+
+      var dotWrap = document.createElement("div");
+      dotWrap.style.display = "flex";
+      dotWrap.style.alignItems = "center";
+      dotWrap.appendChild(dots);
+      dotWrap.appendChild(count);
+
+      ui.appendChild(dotWrap); ui.appendChild(arrows);
       shell.appendChild(ui);
 
       function step(dir) {
@@ -203,7 +215,12 @@
            clientWidth by a hair even when nothing is actually clipped. */
         var overflows = track.scrollWidth > track.clientWidth + 2;
         shell.classList.toggle("has-overflow", overflows);
-        if (!overflows) return;
+        if (!overflows) {
+          /* No overflow means no scrolling, so nothing would ever be marked
+             current and every card would sit dimmed at .35 forever. */
+          cards.forEach(function (c, i) { c.classList.toggle("is-current", i === 0); });
+          return;
+        }
 
         var x = track.scrollLeft;
         var active = 0, best = Infinity;
@@ -214,9 +231,18 @@
         Array.prototype.forEach.call(dots.children, function (d, i) {
           d.setAttribute("aria-current", i === active ? "true" : "false");
         });
+        cards.forEach(function (c, i) {
+          c.classList.toggle("is-current", i === active);
+        });
+        count.innerHTML = "<strong>" + String(active + 1).padStart(2, "0") +
+                          "</strong> / " + String(cards.length).padStart(2, "0");
         prev.disabled = x <= 2;
         next.disabled = x + track.clientWidth >= track.scrollWidth - 2;
       }
+
+      /* Opt the shell into the dimmed/current treatment only now that the
+         wiring above is in place and sync() is about to mark one. */
+      shell.classList.add("swipe-ready");
 
       var ticking = false;
       track.addEventListener("scroll", function () {

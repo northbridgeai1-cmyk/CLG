@@ -1139,3 +1139,69 @@ html.motion-ready .word.is-in > i { transform: translateY(0); }
   font-family: var(--serif); font-size: 1.02rem; line-height: 1.5;
   color: var(--ink);
 }
+
+/* ── Client stories: one case at a time ───────────────────────────────────
+   Single slide filling the track. Native scroll-snap still does the moving,
+   so the touch swipe keeps its real momentum — the transition below is
+   layered on top of that rather than replacing it with a JS animation. */
+.story-swipe,
+.story-swipe.story-swipe { grid-auto-columns: 100%; }
+
+/* At full container width a single stacked card leaves a long ragged column
+   of text, so the card becomes two columns: identity and facts on the left,
+   the strategy and the client's own words on the right. */
+@media (min-width: 820px) {
+  .case-story {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "top   strategy"
+      "who   strategy"
+      "facts quote";
+    column-gap: var(--s-10);
+    row-gap: var(--s-4);
+    align-content: start;
+    padding: var(--s-10);
+    min-height: 340px;
+  }
+  .case-story-top      { grid-area: top; justify-content: flex-start; gap: var(--s-4); }
+  .case-story-who      { grid-area: who; }
+  .case-story-facts    { grid-area: facts; }
+  .case-story-strategy { grid-area: strategy; border-top: 0; padding-top: 0; }
+  .case-story blockquote { grid-area: quote; align-self: end; font-size: 1.12rem; }
+  .case-story-ref { font-size: 2.8rem; }
+}
+
+/* The transition between cases. A slide that is not current sits slightly
+   back and dimmed; the current one comes forward. Because scroll-snap is
+   what moves the track, these two states cross over during the swipe itself
+   rather than firing once it lands. */
+/* Scoped to .swipe-ready, which swipe() adds to the shell once it has
+   actually marked a slide current. Without a card ever getting .is-current,
+   these rules would dim every case to .35 permanently — so the resting
+   state has to be "fully visible", and the dimming opts in.
+
+   This was first tied to .motion-ready, which is wrong: that class is set by
+   the headline splitter, so on any page whose h1 has no data-split it never
+   appeared and the transition silently did nothing. A feature's guard has to
+   be owned by that feature. */
+.swipe-shell.swipe-ready .case-story {
+  opacity: .35;
+  transform: scale(.965);
+  transition: opacity 520ms var(--ease-exit),
+              transform 520ms var(--ease-exit);
+}
+.swipe-shell.swipe-ready .case-story.is-current { opacity: 1; transform: scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .case-story { opacity: 1 !important; transform: none !important; transition: none; }
+}
+
+/* Position readout beside the dots, e.g. "02 / 06". With one case on screen
+   there is no longer a visible row to count along. */
+.swipe-count {
+  font-family: var(--serif); font-size: var(--fs-sm);
+  color: var(--ink-soft); font-variant-numeric: tabular-nums;
+  margin-left: var(--s-3);
+}
+.swipe-count strong { color: var(--ink); font-weight: 600; }
