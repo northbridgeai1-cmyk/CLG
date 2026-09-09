@@ -20,7 +20,7 @@ var CLG = {
   function need(flag, file) {
     if (window[flag]) return;
     var s = document.createElement("script");
-    s.src = base + file + "?v=14";
+    s.src = base + file + "?v=15";
     document.head.appendChild(s);
   }
   need("CLG_I18N", "i18n.js");

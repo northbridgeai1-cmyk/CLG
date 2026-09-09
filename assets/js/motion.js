@@ -150,6 +150,34 @@
   }
 
 
+
+  /* ---- Controlled slide animation -------------------------------------
+     `scroll-behavior: smooth` hands the timing to the browser, and it is
+     disabled outright when the OS has Reduce Motion on — which makes the
+     move between cases an instant jump with nothing to see. This animates
+     scrollLeft ourselves over a fixed duration so the travel is always
+     deliberate and always the same length.
+
+     Reduce Motion is still respected: we jump instantly in that case,
+     because that is what the setting is asking for. */
+  function slideTo(track, left, ms) {
+    if (REDUCED) { track.scrollLeft = left; return; }
+    var start = track.scrollLeft;
+    var delta = left - start;
+    if (!delta) return;
+    var t0 = null;
+    /* easeInOutCubic: settles at both ends, so it reads as one movement
+       rather than a snap. */
+    function ease(p) { return p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3) / 2; }
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / ms, 1);
+      track.scrollLeft = start + delta * ease(p);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   /* ---- 5. Casos swipe ---------------------------------------------------
      Progressive enhancement over a CSS scroll-snap track. The track already
      scrolls without any of this; the arrows and dots are affordances laid
@@ -183,7 +211,7 @@
         d.type = "button";
         d.setAttribute("aria-label", "Ir al caso " + (i + 1));
         d.addEventListener("click", function () {
-          track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: "smooth" });
+          slideTo(track, card.offsetLeft - track.offsetLeft, 620);
         });
         dots.appendChild(d);
       });
@@ -205,7 +233,7 @@
 
       function step(dir) {
         var w = cards[0].getBoundingClientRect().width + 24;
-        track.scrollBy({ left: dir * w, behavior: "smooth" });
+        slideTo(track, track.scrollLeft + dir * w, 620);
       }
       prev.addEventListener("click", function () { step(-1); });
       next.addEventListener("click", function () { step(1); });
