@@ -20,7 +20,7 @@ var CLG = {
   function need(flag, file) {
     if (window[flag]) return;
     var s = document.createElement("script");
-    s.src = base + file + "?v=9";
+    s.src = base + file + "?v=11";
     document.head.appendChild(s);
   }
   need("CLG_I18N", "i18n.js");
@@ -32,33 +32,86 @@ var CLG = {
      homepage only, which meant English visitors got neither. Injected now
      so every page in both languages has them. */
   need("CLG_WIDGETS", "widgets.js");
+  /* Motion: headline split, hero counters, scroll progress, parallax.
+     Loaded here for the same reason as the others - so all 26 pages get it
+     without hand-editing a script tag into each one. */
+  need("CLG_MOTION", "motion.js");
 })();
 
-/* ---------------- Scroll reveal ---------------- */
+/* ---------------- Scroll reveal ------------------------------------------
+   Rewritten in the design pass.
+
+   The old version put one animation — fade up 24px, 700ms — on every h2,
+   every lede and every card on the page, then staggered them by (index % 4)
+   * 70ms. That blanket sweep is the single loudest "this was generated"
+   signal a site can have: everything moves the same distance at the same
+   speed regardless of what it is, and the modulo stagger produces visible
+   groups of four that correspond to nothing in the layout.
+
+   This version assigns motion by what the element *is*:
+     rise   — text settles a short distance (12px). Headings and prose.
+     bloom  — media scales up from .985. Photos and video.
+     draw   — rules and dividers draw themselves left to right.
+
+   Stagger is per-group and capped, so a row of three cards ripples but a
+   long list does not turn into a 2-second wave.
+   -------------------------------------------------------------------- */
 (function () {
-  var css = document.createElement("style");
-  css.textContent =
-    ".rvl{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}" +
-    ".rvl.in{opacity:1;transform:none}" +
-    "@media (prefers-reduced-motion: reduce){.rvl{opacity:1;transform:none;transition:none}}";
-  document.head.appendChild(css);
   function arm() {
-    if (!("IntersectionObserver" in window)) return;
-    var t = document.querySelectorAll(
-      ".section .card, .section .path-card, .section .pathway-card, .section .why-item," +
-      ".section .method-step, .section .case-card, .section .team-card, .section .next-item," +
-      ".section .industry-tile, .section .resource-card, .section .event-item, .section h2, .section .lede"
-    );
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { threshold: .12 });
-    t.forEach(function (el, i) {
-      el.classList.add("rvl");
-      el.style.transitionDelay = (i % 4) * 70 + "ms";
-      io.observe(el);
+    var reduced = window.matchMedia &&
+                  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* Assign a behaviour to anything that hasn't been given one by hand. */
+    var rules = [
+      ["bloom", ".hero-media, .video-wrap, .doc-photo, .person figure, .case-video"],
+      ["draw",  ".strip"],
+      ["rise",  ".section h2, .section .lede, .section .card, .section .path-card," +
+                ".section .pathway-card, .section .why-item, .section .method-step," +
+                ".section .case-card, .section .team-card, .section .person," +
+                ".section .next-item, .section .industry-tile, .section .resource-card," +
+                ".section .event-item, .section .cred, .section .price-card," +
+                ".creds-grid"]
+    ];
+    rules.forEach(function (r) {
+      document.querySelectorAll(r[1]).forEach(function (el) {
+        if (!el.hasAttribute("data-anim")) el.setAttribute("data-anim", r[0]);
+      });
+    });
+
+    var targets = document.querySelectorAll("[data-anim]");
+    if (reduced || !("IntersectionObserver" in window)) {
+      targets.forEach(function (el) { el.classList.add("is-in"); });
+      return;
+    }
+
+    /* Stagger within a shared parent, not across the whole document. */
+    var seen = new Map();
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        var parent = el.parentElement || document.body;
+        var n = seen.get(parent) || 0;
+        seen.set(parent, n + 1);
+        el.style.transitionDelay = Math.min(n, 5) * 60 + "ms";
+        el.classList.add("is-in");
+        io.unobserve(el);
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+    targets.forEach(function (el) { io.observe(el); });
+
+    /* Anything already in view on load should not wait for a scroll. */
+    requestAnimationFrame(function () {
+      targets.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.9) { el.classList.add("is-in"); io.unobserve(el); }
+      });
     });
   }
-  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", arm) : arm();
+  document.readyState === "loading"
+    ? document.addEventListener("DOMContentLoaded", arm)
+    : arm();
 })();
 
 document.addEventListener("DOMContentLoaded", function () {

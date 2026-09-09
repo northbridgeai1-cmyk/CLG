@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css?v=9">
+<link rel="stylesheet" href="../assets/css/styles.css?v=11">
 
 <!-- Page-only CSS. See the Spanish twin (casos-de-exito.html) for the full
      reasoning: this is the one page that uses the record format, and putting
@@ -61,15 +61,15 @@
 <header class="site-header">
   <div class="container">
     <a href="index.html" class="brand" aria-label="Calderaro Law Group, home">
-      <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+      <img src="../assets/img/clg-logo.png" alt="Calderaro Law Group">
     </a>
     <nav class="main-nav">
-      <a href="index.html">Home</a>
-      <a href="index.html#vias">Routes</a>
-      <a href="client-stories.html" class="active">Cases</a>
+      <a href="index.html" data-i18n="nav_inicio">Home</a>
+      <a href="index.html#pathways" data-i18n="nav_estrategias">Pathways</a>
+      <a href="client-stories.html" class="active" data-i18n="nav_casos">Client Stories</a>
+      <a href="about.html" data-i18n="nav_nosotros">About</a>
       <a href="fees.html">Fees</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="contact.html" data-i18n="nav_contacto">Contact</a>
     </nav>
     <div class="nav-cta">
       <span class="lang-switch" data-lang-switch></span>
@@ -81,10 +81,11 @@
 <p id="i18n-notice" style="display:none;background:#fdf6e8;border-bottom:1px solid var(--gold-deep);margin:0;padding:10px 20px;font-size:.85rem;text-align:center;"></p>
 
 <main>
-  <section class="hero" style="padding-bottom:20px;">
+  <section class="hero hero--dark" style="padding-bottom:20px;">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="container">
       <div class="breadcrumb"><a href="index.html">Home</a> / Cases</div>
-      <h1 style="max-width:760px;">Six cases, with names and countries.</h1>
+      <h1 data-split style="max-width:760px;">Six cases, with names and countries.</h1>
       <p class="lede" style="max-width:640px;">Every row is a person now living or working in the United States. The route listed is the one that was filed, not the one first discussed.</p>
     </div>
   </section>
@@ -108,7 +109,7 @@
 
             <tr>
               <td class="ref">01</td>
-              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="Colombia" width="18" height="12">Javier O.</td>
+              <td class="who"><img src="../assets/img/flags/colombia.webp" alt="Colombia" width="18" height="12">Javier O.</td>
               <td class="via">E-2</td>
               <td>Business owner in Colombia. Wanted to operate in the United States and move with his family.</td>
               <td>Runs his business day to day. His family lives there with him.</td>
@@ -123,7 +124,7 @@
 
             <tr>
               <td class="ref">02</td>
-              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f43bca7bf_5a6cfc6-e57-8fb-4e1-08bc13af7765_Flag_of_Japan_bordered_.webp" alt="Japan" width="18" height="12">Shiro</td>
+              <td class="who"><img src="../assets/img/flags/japon.webp" alt="Japan" width="18" height="12">Shiro</td>
               <td class="via">O, then residency</td>
               <td>Graffiti artist. Arrived without knowing which route applied to her case.</td>
               <td>A U.S. citizen. Still exhibiting in New York and Los Angeles.</td>
@@ -138,7 +139,7 @@
 
             <tr>
               <td class="ref">03</td>
-              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="Peru" width="18" height="12">Giancarlos C.</td>
+              <td class="who"><img src="../assets/img/flags/peru.webp" alt="Peru" width="18" height="12">Giancarlos C.</td>
               <td class="via">L-1</td>
               <td>Business owner with an operation already running outside the United States.</td>
               <td>Relocated with his family, without interrupting the business.</td>
@@ -153,7 +154,7 @@
 
             <tr>
               <td class="ref">04</td>
-              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f16daf301_41bd7-04c1-3c6-8475-73afbfb134e_Flag_of_Ecuador.webp" alt="Ecuador" width="18" height="12">Claudia and Diego</td>
+              <td class="who"><img src="../assets/img/flags/ecuador.webp" alt="Ecuador" width="18" height="12">Claudia and Diego</td>
               <td class="via">Permanent residency</td>
               <td>A couple planning their family's future over the long term.</td>
               <td>In the United States with permanent residency.</td>
@@ -168,7 +169,7 @@
 
             <tr>
               <td class="ref">05</td>
-              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f3ef46544_132adda-bb-d50f-31f-fe045b454ddb_Flag-Argentina.webp" alt="Argentina" width="18" height="12">Leandro C.</td>
+              <td class="who"><img src="../assets/img/flags/argentina.webp" alt="Argentina" width="18" height="12">Leandro C.</td>
               <td class="via">E-2</td>
               <td>Business owner weighing whether the process was viable before committing capital.</td>
               <td>Immigration process completed.</td>
@@ -183,7 +184,7 @@
 
             <tr>
               <td class="ref">06</td>
-              <td class="who"><img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f48814874_f7fcf40-af84-ad5d-ac2f-cf22d2db2833_ca-flag.jpg" alt="Canada" width="18" height="12">Bryan M.</td>
+              <td class="who"><img src="../assets/img/flags/canada.jpg" alt="Canada" width="18" height="12">Bryan M.</td>
               <td class="via">E-2</td>
               <td>Canadian investor.</td>
               <td>Investor visa approved.</td>
@@ -221,9 +222,9 @@
 
 <footer class="site-footer">
   <div class="container">
-    <div class="footer-grid" style="grid-template-columns:1.6fr 1fr 1fr 1fr;">
+    <div class="footer-grid">
       <div class="footer-brand">
-        <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+        <img src="../assets/img/clg-logo.png" alt="Calderaro Law Group">
         <p>Immigration strategy for business owners, professionals, artists, athletes and families. Doral, Florida.</p>
         <div class="footer-social">
           <a href="https://www.facebook.com/calderarolawgroup.esp" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.54-1.5H16.7V4.6c-.29-.04-1.27-.12-2.42-.12-2.4 0-4.03 1.46-4.03 4.15v2.31H7.5V14h2.75v8h3.25Z"/></svg></a>
@@ -285,7 +286,7 @@
   </a>
 </div>
 
-<script src="../assets/js/i18n.js?v=9"></script>
-<script src="../assets/js/main.js?v=9"></script>
+<script src="../assets/js/i18n.js?v=11"></script>
+<script src="../assets/js/main.js?v=11"></script>
 </body>
 </html>
