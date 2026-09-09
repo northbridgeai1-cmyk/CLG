@@ -1205,3 +1205,38 @@ html.motion-ready .word.is-in > i { transform: translateY(0); }
   margin-left: var(--s-3);
 }
 .swipe-count strong { color: var(--ink); font-weight: 600; }
+
+/* ── Tap-target sizes (WCAG 2.2 SC 2.5.8, minimum 24x24) ──────────────────
+   Found by audit. Each was a real control smaller than a fingertip. The
+   visual size is unchanged in every case — only the hit area grows. */
+
+/* Carousel dots measured 7x7 (11x11 active). The dot stays 7px; the button
+   around it becomes 24x24 and transparent. */
+.swipe-dots { gap: 0; }
+.swipe-dots button {
+  width: 24px; height: 24px; padding: 0; border: 0;
+  background: none; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer;
+}
+.swipe-dots button::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--line);
+  transition: background var(--dur-fast) var(--ease-exit),
+              transform var(--dur-fast) var(--ease-exit);
+}
+.swipe-dots button[aria-current="true"] { background: none; transform: none; }
+.swipe-dots button[aria-current="true"]::before {
+  background: var(--gold); transform: scale(1.5);
+}
+
+/* Footer navigation links measured 230x23 — one pixel under, and they are
+   standalone navigation, not links inside a sentence. */
+.footer-grid a { padding: 4px 0; margin-bottom: 6px; }
+
+/* Breadcrumb ("Inicio", 32x15) and standalone links in a callout
+   ("Brujula CLG", 87x17). */
+.breadcrumb a, .callout a { display: inline-block; padding-block: 5px; }
+
+/* The WhatsApp link in the fase-1 nav measured 314x23 — standalone control,
+   one pixel under the 24px minimum. */
+.nav-wa { display: inline-block; padding-block: 4px; }
