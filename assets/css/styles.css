@@ -1025,7 +1025,12 @@ html.motion-ready .word.is-in > i { transform: translateY(0); }
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  /* No `scroll-behavior: smooth` here on purpose. motion.js animates
+     scrollLeft itself over a fixed 620ms so the movement between cases is
+     always the same and does not vanish when the OS disables smooth
+     scrolling. Leaving it smooth would make every assignment inside that
+     animation start its own nested animation, and the two fight. Native
+     touch momentum is unaffected — that is the snap type, not this. */
   scrollbar-width: none;
   padding-bottom: var(--s-2);
 }
