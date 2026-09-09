@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css?v=11">
+<link rel="stylesheet" href="../assets/css/styles.css?v=12">
 
 <!-- Page-only CSS. See the Spanish twin (casos-de-exito.html) for the full
      reasoning: this is the one page that uses the record format, and putting
@@ -93,112 +93,87 @@
   <section class="section" style="padding-top:10px;">
     <div class="container">
 
-      <div class="ledger-wrap">
-        <table class="ledger">
-          <caption>Case record · Calderaro Law Group</caption>
-          <thead>
-            <tr>
-              <th scope="col">Ref.</th>
-              <th scope="col">Client</th>
-              <th scope="col">Route</th>
-              <th scope="col">Profile on arrival at CLG</th>
-              <th scope="col">Where they are today</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr>
-              <td class="ref">01</td>
-              <td class="who"><img src="../assets/img/flags/colombia.webp" alt="Colombia" width="18" height="12">Javier O.</td>
-              <td class="via">E-2</td>
-              <td>Business owner in Colombia. Wanted to operate in the United States and move with his family.</td>
-              <td>Runs his business day to day. His family lives there with him.</td>
-            </tr>
-            <tr class="detail">
-              <td></td>
-              <td colspan="4">
-                Strategy: purchase of a going concern, structured from the outset to support an E-2 petition.
-                <blockquote>“Gracias a la asesoría de CLG y el acompañamiento del equipo compramos nuestro negocio, lo estamos operando y nos tiene viviendo de una manera cómoda en Estados Unidos.”</blockquote>
-              </td>
-            </tr>
-
-            <tr>
-              <td class="ref">02</td>
-              <td class="who"><img src="../assets/img/flags/japon.webp" alt="Japan" width="18" height="12">Shiro</td>
-              <td class="via">O, then residency</td>
-              <td>Graffiti artist. Arrived without knowing which route applied to her case.</td>
-              <td>A U.S. citizen. Still exhibiting in New York and Los Angeles.</td>
-            </tr>
-            <tr class="detail">
-              <td></td>
-              <td colspan="4">
-                Strategy: Phase 1 identified the O visa as the right route; then the path to permanent residency.
-                <blockquote>“I am very grateful with CLG. Thanks to them I am now living as a U.S. citizen based on my art.”</blockquote>
-              </td>
-            </tr>
-
-            <tr>
-              <td class="ref">03</td>
-              <td class="who"><img src="../assets/img/flags/peru.webp" alt="Peru" width="18" height="12">Giancarlos C.</td>
-              <td class="via">L-1</td>
-              <td>Business owner with an operation already running outside the United States.</td>
-              <td>Relocated with his family, without interrupting the business.</td>
-            </tr>
-            <tr class="detail">
-              <td></td>
-              <td colspan="4">
-                Strategy: intracompany transfer on an L-1, planned in stages.
-                <blockquote>“Se pusieron la camiseta de mi familia para lograr el objetivo y junto a los abogados hacer el proceso de forma legal y planificada.”</blockquote>
-              </td>
-            </tr>
-
-            <tr>
-              <td class="ref">04</td>
-              <td class="who"><img src="../assets/img/flags/ecuador.webp" alt="Ecuador" width="18" height="12">Claudia and Diego</td>
-              <td class="via">Permanent residency</td>
-              <td>A couple planning their family's future over the long term.</td>
-              <td>In the United States with permanent residency.</td>
-            </tr>
-            <tr class="detail">
-              <td></td>
-              <td colspan="4">
-                Strategy: full-spectrum analysis of the case before choosing a route, with support continuing after arrival.
-                <blockquote>“Ustedes marcan una diferencia brutal, no solo se basan en una reunión para analizar el caso sino que ven todo el espectro y cuando llegamos a Estados Unidos nos brindaron la guía para el siguiente paso.”</blockquote>
-              </td>
-            </tr>
-
-            <tr>
-              <td class="ref">05</td>
-              <td class="who"><img src="../assets/img/flags/argentina.webp" alt="Argentina" width="18" height="12">Leandro C.</td>
-              <td class="via">E-2</td>
-              <td>Business owner weighing whether the process was viable before committing capital.</td>
-              <td>Immigration process completed.</td>
-            </tr>
-            <tr class="detail">
-              <td></td>
-              <td colspan="4">
-                Strategy: full diagnostic of the profile and the capital before settling on the E-2 route.
-                <blockquote>“Tuve la suerte de contar con Renata y su equipo para realizar mi proceso migratorio. Me sacaron del 75% de mis dudas en la primera reunión.”</blockquote>
-              </td>
-            </tr>
-
-            <tr>
-              <td class="ref">06</td>
-              <td class="who"><img src="../assets/img/flags/canada.jpg" alt="Canada" width="18" height="12">Bryan M.</td>
-              <td class="via">E-2</td>
-              <td>Canadian investor.</td>
-              <td>Investor visa approved.</td>
-            </tr>
-            <tr class="detail">
-              <td></td>
-              <td colspan="4">
-                Strategy: full preparation and handling of the E-2 file.
-                <blockquote>“Thanks to CLG, my investor visa process was smooth and successful. Their expertise and support made the entire journey stress-free.”</blockquote>
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
+      <div class="swipe-shell">
+        <div class="case-swipe story-swipe" role="group" aria-label="Client cases">
+          <article class="case-story">
+            <div class="case-story-top">
+              <span class="case-story-ref">01</span>
+              <span class="case-story-via">E-2</span>
+            </div>
+            <h3 class="case-story-who"><img src="../assets/img/flags/colombia.webp" alt="Colombia" width="20" height="14" loading="lazy">Javier O.</h3>
+            <dl class="case-story-facts">
+              <div><dt>Profile on arrival</dt><dd>Business owner with his own company in Colombia. Wanted to operate in the United States and move with his family.</dd></div>
+              <div><dt>Where they are today</dt><dd>Runs his business day to day. His family lives there with him.</dd></div>
+            </dl>
+            <p class="case-story-strategy"><strong>Strategy:</strong> Purchase of a going concern, structured from the outset to support an E-2 petition.</p>
+            <blockquote>&ldquo;Thanks to CLG's guidance and the team's support we bought our business, we are operating it, and it has us living comfortably in the United States.&rdquo;</blockquote>
+          </article>
+          <article class="case-story">
+            <div class="case-story-top">
+              <span class="case-story-ref">02</span>
+              <span class="case-story-via">O, then residency</span>
+            </div>
+            <h3 class="case-story-who"><img src="../assets/img/flags/japon.webp" alt="Japan" width="20" height="14" loading="lazy">Shiro</h3>
+            <dl class="case-story-facts">
+              <div><dt>Profile on arrival</dt><dd>Graffiti artist. Arrived without knowing which route applied to her case.</dd></div>
+              <div><dt>Where they are today</dt><dd>A U.S. citizen. Still exhibiting in New York and Los Angeles.</dd></div>
+            </dl>
+            <p class="case-story-strategy"><strong>Strategy:</strong> Phase 1 identified the O visa as the right route; then the path to permanent residency.</p>
+            <blockquote>&ldquo;I am very grateful with CLG. Thanks to them I am now living as a U.S. citizen based on my art.&rdquo;</blockquote>
+          </article>
+          <article class="case-story">
+            <div class="case-story-top">
+              <span class="case-story-ref">03</span>
+              <span class="case-story-via">L-1</span>
+            </div>
+            <h3 class="case-story-who"><img src="../assets/img/flags/peru.webp" alt="Peru" width="20" height="14" loading="lazy">Giancarlos C.</h3>
+            <dl class="case-story-facts">
+              <div><dt>Profile on arrival</dt><dd>Business owner with an operation already running outside the United States.</dd></div>
+              <div><dt>Where they are today</dt><dd>Relocated with his family, without interrupting the business.</dd></div>
+            </dl>
+            <p class="case-story-strategy"><strong>Strategy:</strong> Intracompany transfer on an L-1, planned in stages.</p>
+            <blockquote>&ldquo;They put on my family's shirt to reach the goal, and together with the attorneys made the process legal and planned.&rdquo;</blockquote>
+          </article>
+          <article class="case-story">
+            <div class="case-story-top">
+              <span class="case-story-ref">04</span>
+              <span class="case-story-via">Permanent residency</span>
+            </div>
+            <h3 class="case-story-who"><img src="../assets/img/flags/ecuador.webp" alt="Ecuador" width="20" height="14" loading="lazy">Claudia and Diego</h3>
+            <dl class="case-story-facts">
+              <div><dt>Profile on arrival</dt><dd>A couple planning their family's long-term future.</dd></div>
+              <div><dt>Where they are today</dt><dd>In the United States with permanent residency.</dd></div>
+            </dl>
+            <p class="case-story-strategy"><strong>Strategy:</strong> Analysis of the full spectrum of the case before choosing a route, with support after arrival.</p>
+            <blockquote>&ldquo;You make a brutal difference. You don't just rely on one meeting to analyse the case, you see the whole spectrum, and when we arrived in the United States you gave us the guidance for the next step.&rdquo;</blockquote>
+          </article>
+          <article class="case-story">
+            <div class="case-story-top">
+              <span class="case-story-ref">05</span>
+              <span class="case-story-via">E-2</span>
+            </div>
+            <h3 class="case-story-who"><img src="../assets/img/flags/argentina.webp" alt="Argentina" width="20" height="14" loading="lazy">Leandro C.</h3>
+            <dl class="case-story-facts">
+              <div><dt>Profile on arrival</dt><dd>Business owner assessing whether the process was viable before committing capital.</dd></div>
+              <div><dt>Where they are today</dt><dd>Immigration process completed.</dd></div>
+            </dl>
+            <p class="case-story-strategy"><strong>Strategy:</strong> Full diagnosis of the profile and the capital before defining the E-2 route.</p>
+            <blockquote>&ldquo;I was lucky to have Renata and her team for my immigration process. They cleared 75% of my doubts in the first meeting.&rdquo;</blockquote>
+          </article>
+          <article class="case-story">
+            <div class="case-story-top">
+              <span class="case-story-ref">06</span>
+              <span class="case-story-via">E-2</span>
+            </div>
+            <h3 class="case-story-who"><img src="../assets/img/flags/canada.jpg" alt="Canada" width="20" height="14" loading="lazy">Bryan M.</h3>
+            <dl class="case-story-facts">
+              <div><dt>Profile on arrival</dt><dd>Canadian investor.</dd></div>
+              <div><dt>Where they are today</dt><dd>Investor visa approved.</dd></div>
+            </dl>
+            <p class="case-story-strategy"><strong>Strategy:</strong> Full preparation and support of the E-2 file.</p>
+            <blockquote>&ldquo;Thanks to CLG, my investor visa process was smooth and successful. Their expertise and support made the entire journey stress-free.&rdquo;</blockquote>
+          </article>
+        </div>
       </div>
 
       <p style="margin-top:26px;font-size:.85rem;color:var(--ink-soft);max-width:640px;">
@@ -210,7 +185,7 @@
 
   <section class="section section--ink">
     <div class="container" style="max-width:640px;">
-      <h2>Which of these six rows looks like yours?</h2>
+      <h2>Which of these six cases looks like yours?</h2>
       <p class="lede">If none of them do, that is useful to know too, and the Brújula tells you in two minutes at no cost.</p>
       <div class="hero-actions">
         <a href="strategy-assessment.html" class="btn btn-primary btn-lg">CLG Assessment · $2,500</a>
@@ -286,7 +261,7 @@
   </a>
 </div>
 
-<script src="../assets/js/i18n.js?v=11"></script>
-<script src="../assets/js/main.js?v=11"></script>
+<script src="../assets/js/i18n.js?v=12"></script>
+<script src="../assets/js/main.js?v=12"></script>
 </body>
 </html>

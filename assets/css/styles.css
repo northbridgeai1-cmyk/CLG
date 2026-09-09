@@ -1070,3 +1070,72 @@ html.motion-ready .word.is-in > i { transform: translateY(0); }
 .swipe-arrows button:disabled { opacity: .3; cursor: default; }
 
 @media (prefers-reduced-motion: reduce) { .case-swipe { scroll-behavior: auto; } }
+
+/* ── Client stories slider ────────────────────────────────────────────────
+   The six cases were a <table>. A table is genuinely good for scanning and
+   comparing, so this keeps every field the table had — reference, route,
+   profile on arrival, where they are today, strategy, and the client's own
+   words — rather than trimming the content down to fit a card.
+
+   Reuses .case-swipe from the homepage for the scroll mechanics, so there
+   is one carousel implementation on the site, not two. */
+/* A `min` of 0 let grid shrink all six tracks to fit the container, so the
+   row never overflowed and the carousel silently disabled itself. The
+   floor is what forces the overflow the slider depends on. */
+.story-swipe { grid-auto-columns: minmax(360px, 400px); }
+@media (max-width: 900px) { .story-swipe { grid-auto-columns: 86%; } }
+@media (max-width: 560px) { .story-swipe { grid-auto-columns: 90%; } }
+
+.case-story {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--r-sm);
+  padding: var(--s-8) var(--s-6) var(--s-6);
+  display: flex; flex-direction: column; gap: var(--s-4);
+  transition: border-color var(--dur-base) var(--ease-exit),
+              box-shadow var(--dur-base) var(--ease-exit),
+              transform var(--dur-base) var(--ease-exit);
+}
+.case-story:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px -22px rgba(15,30,51,.45);
+}
+
+.case-story-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3); }
+.case-story-ref {
+  font-family: var(--serif); font-size: 2.1rem; line-height: 1;
+  color: var(--gold); font-variant-numeric: tabular-nums;
+}
+.case-story-via {
+  font-size: var(--fs-micro); font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink);
+  background: var(--cream-2); border: 1px solid var(--line);
+  border-radius: var(--r-full); padding: 5px 12px; white-space: nowrap;
+}
+
+.case-story-who {
+  display: flex; align-items: center; gap: var(--s-2);
+  font-family: var(--serif); font-size: var(--fs-h4); margin: 0;
+}
+.case-story-who img { width: 20px; height: 14px; border: 1px solid var(--line); flex: none; }
+
+.case-story-facts { margin: 0; display: grid; gap: var(--s-3); }
+.case-story-facts dt {
+  font-size: var(--fs-micro); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gold-deep); font-weight: 700; margin-bottom: 2px;
+}
+.case-story-facts dd { margin: 0; font-size: var(--fs-sm); color: var(--ink-soft); }
+
+.case-story-strategy {
+  margin: 0; font-size: var(--fs-sm); color: var(--ink-soft);
+  padding-top: var(--s-4); border-top: 1px solid var(--line);
+}
+.case-story-strategy strong { color: var(--ink); }
+
+.case-story blockquote {
+  margin: auto 0 0; padding-left: var(--s-4);
+  border-left: 2px solid var(--gold);
+  font-family: var(--serif); font-size: 1.02rem; line-height: 1.5;
+  color: var(--ink);
+}
