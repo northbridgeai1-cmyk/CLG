@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=9">
+<link rel="stylesheet" href="assets/css/styles.css?v=11">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -39,15 +39,15 @@
 <header class="site-header">
   <div class="container">
     <a href="index.html" class="brand" aria-label="Calderaro Law Group, inicio">
-      <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+      <img src="assets/img/clg-logo.png" alt="Calderaro Law Group">
     </a>
     <nav class="main-nav">
-      <a href="index.html">Inicio</a>
-      <a href="index.html#vias" class="active">Vías</a>
-      <a href="casos-de-exito.html">Casos</a>
+      <a href="index.html" data-i18n="nav_inicio">Inicio</a>
+      <a href="index.html#vias" data-i18n="nav_estrategias">Vías</a>
+      <a href="casos-de-exito.html" data-i18n="nav_casos">Casos de Éxito</a>
+      <a href="nosotros.html" data-i18n="nav_nosotros">Nosotros</a>
       <a href="estrategia-honorarios.html">Honorarios</a>
-      <a href="nosotros.html">Nosotros</a>
-      <a href="contacto.html">Contacto</a>
+      <a href="contacto.html" data-i18n="nav_contacto">Contacto</a>
     </nav>
     <div class="nav-cta">
       <span class="lang-switch" data-lang-switch></span>
@@ -59,7 +59,8 @@
 <p id="i18n-notice" style="display:none;background:#fdf6e8;border-bottom:1px solid var(--gold-deep);margin:0;padding:10px 20px;font-size:.85rem;text-align:center;"></p>
 
 <main>
-  <section class="hero" style="padding-bottom:0;">
+  <section class="hero hero--dark">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="container">
       <div class="breadcrumb"><a href="index.html">Inicio</a> / Estrategias / Empresarios e Inversionistas</div>
       <div class="pill-nav">
@@ -67,7 +68,7 @@
         <a href="estrategias-profesionales.html">Profesionales y Talento</a>
         <a href="estrategias-familias.html">Familias y Planificación</a>
       </div>
-      <h1 style="max-width:820px;">Tu negocio ya sabe crecer. Nosotros diseñamos la estrategia para que ese crecimiento te lleve a Estados Unidos.</h1>
+      <h1 data-split style="max-width:820px;">Tu negocio ya sabe crecer. Nosotros diseñamos la estrategia para que ese crecimiento te lleve a Estados Unidos.</h1>
       <p class="lede">A través de inversión, expansión de tu empresa, exportaciones o la compra de un negocio en marcha, existen vías reales para instalarte legalmente en Estados Unidos. La pregunta no es si existe una vía: es cuál es la correcta para tu capital, tu industria y tu calendario. Y si tu empresa ya está establecida en Estados Unidos y necesita traer talento desde el exterior, también diseñamos esa estrategia.</p>
       <div class="hero-actions">
         <a href="evaluacion.html" class="btn btn-primary btn-lg">Evaluar mi perfil de inversionista</a>
@@ -121,21 +122,21 @@
         <div class="testi-card">
           <p class="testi-quote">"Gracias a la asesoría de CLG y el acompañamiento del equipo compramos nuestro negocio, lo estamos operando y nos tiene viviendo de una manera cómoda en Estados Unidos."</p>
           <div class="testi-meta">
-            <img class="testi-flag" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="Bandera de Colombia">
+            <img class="testi-flag" src="assets/img/flags/colombia.webp" alt="Bandera de Colombia">
             <div><strong>Javier O.</strong><span>Colombia — Visa E-2</span></div>
           </div>
         </div>
         <div class="testi-card">
           <p class="testi-quote">"Se pusieron la camiseta de mi familia para lograr el objetivo y junto a los abogados hacer el proceso de forma legal y planificada."</p>
           <div class="testi-meta">
-            <img class="testi-flag" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="Bandera de Perú">
+            <img class="testi-flag" src="assets/img/flags/peru.webp" alt="Bandera de Perú">
             <div><strong>Giancarlos C.</strong><span>Perú — Visa L-1</span></div>
           </div>
         </div>
         <div class="testi-card">
           <p class="testi-quote">"Thanks to CLG, my investor visa process was smooth and successful. Their expertise and support made the entire journey stress-free."</p>
           <div class="testi-meta">
-            <img class="testi-flag" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f48814874_f7fcf40-af84-ad5d-ac2f-cf22d2db2833_ca-flag.jpg" alt="Bandera de Canadá">
+            <img class="testi-flag" src="assets/img/flags/canada.jpg" alt="Bandera de Canadá">
             <div><strong>Bryan M.</strong><span>Canadá — Visa E-2</span></div>
           </div>
         </div>
@@ -180,7 +181,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+        <img src="assets/img/clg-logo.png" alt="Calderaro Law Group">
         <p>Estrategia migratoria para empresarios, profesionales y familias de Latinoamérica. Doral, Florida.</p>
         <div class="footer-social">
           <a href="https://www.facebook.com/calderarolawgroup.esp" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.54-1.5H16.7V4.6c-.29-.04-1.27-.12-2.42-.12-2.4 0-4.03 1.46-4.03 4.15v2.31H7.5V14h2.75v8h3.25Z"/></svg></a>
@@ -241,7 +242,7 @@
   </a>
 </div>
 
-<script src="assets/js/i18n.js?v=9"></script>
-<script src="assets/js/main.js?v=9"></script>
+<script src="assets/js/i18n.js?v=11"></script>
+<script src="assets/js/main.js?v=11"></script>
 </body>
 </html>

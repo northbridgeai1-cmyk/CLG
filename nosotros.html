@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=9">
+<link rel="stylesheet" href="assets/css/styles.css?v=11">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -28,7 +28,7 @@
       "name": "Renata Calderaro",
       "jobTitle": "CEO",
       "worksFor": { "@id": "https://www.visamiami.com/#org" },
-      "image": "https://d1yei2z3i6k35z.cloudfront.net/11877462/6811df0f6a6fe_5514b37-804b-7a0-af77-745a5f57d27_team-mesa-de-trabajo-1.jpg"
+      "image": "assets/img/renata-calderaro.jpg"
     }
   ]
 }
@@ -38,15 +38,15 @@
 <header class="site-header">
   <div class="container">
     <a href="index.html" class="brand" aria-label="Calderaro Law Group, inicio">
-      <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+      <img src="assets/img/clg-logo.png" alt="Calderaro Law Group">
     </a>
     <nav class="main-nav">
-      <a href="index.html">Inicio</a>
-      <a href="index.html#vias">Vías</a>
-      <a href="casos-de-exito.html">Casos</a>
+      <a href="index.html" data-i18n="nav_inicio">Inicio</a>
+      <a href="index.html#vias" data-i18n="nav_estrategias">Vías</a>
+      <a href="casos-de-exito.html" data-i18n="nav_casos">Casos de Éxito</a>
+      <a href="nosotros.html" class="active" data-i18n="nav_nosotros">Nosotros</a>
       <a href="estrategia-honorarios.html">Honorarios</a>
-      <a href="nosotros.html" class="active">Nosotros</a>
-      <a href="contacto.html">Contacto</a>
+      <a href="contacto.html" data-i18n="nav_contacto">Contacto</a>
     </nav>
     <div class="nav-cta">
       <span class="lang-switch" data-lang-switch></span>
@@ -58,14 +58,15 @@
 <p id="i18n-notice" style="display:none;background:#fdf6e8;border-bottom:1px solid var(--gold-deep);margin:0;padding:10px 20px;font-size:.85rem;text-align:center;"></p>
 
 <main>
-  <section class="hero">
+  <section class="hero hero--dark">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div>
-        <h1>Casi dos décadas ayudando a familias, profesionales y empresarios a construir su futuro en Estados Unidos.</h1>
+        <h1 data-split>Casi dos décadas ayudando a familias, profesionales y empresarios a construir su futuro en Estados Unidos.</h1>
         <p class="lede">Somos una firma legal especializada en soluciones migratorias integrales. Nuestro equipo desarrolla estrategias personalizadas que se adaptan a la situación de cada cliente, nunca una plantilla genérica.</p>
       </div>
       <div class="hero-media">
-        <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6811df0f6a6fe_5514b37-804b-7a0-af77-745a5f57d27_team-mesa-de-trabajo-1.jpg" alt="Renata Calderaro, CEO de Calderaro Law Group">
+        <img src="assets/img/renata-calderaro.jpg" alt="Renata Calderaro, CEO de Calderaro Law Group">
         <div class="hero-media-tag">Renata Calderaro, CEO.</div>
       </div>
     </div>
@@ -108,22 +109,22 @@
       <h2>Especialistas dedicados a tu caso, no un buzón genérico</h2>
       <div class="grid-4" style="margin-top:34px;">
         <div class="team-card">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6811df0f6a6fe_5514b37-804b-7a0-af77-745a5f57d27_team-mesa-de-trabajo-1.jpg" alt="Renata Calderaro">
+          <img src="assets/img/renata-calderaro.jpg" alt="Renata Calderaro">
           <strong>Renata Calderaro</strong>
           <span>CEO</span>
         </div>
         <div class="team-card">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6a022bc2d991e1.44551858_Capturadepantalla2026-05-11alas9.19.25p.m..png" alt="Gianfranco Frazzetta">
+          <img src="assets/img/equipo-gianfranco.jpg" alt="Gianfranco Frazzetta">
           <strong>Gianfranco Frazzetta</strong>
           <span>Case Manager</span>
         </div>
         <div class="team-card">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6a0232d384e767.73464873_luisa.jpg" alt="Luisa Anzola">
+          <img src="assets/img/equipo-luisa.jpg" alt="Luisa Anzola">
           <strong>Luisa Anzola</strong>
           <span>Directora de Desarrollo de Negocios / Consultora Senior de Inmigración</span>
         </div>
         <div class="team-card">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6a0230c74ebe11.02646214_luli1.jpg" alt="Lucila Sabato">
+          <img src="assets/img/equipo-luli.jpg" alt="Lucila Sabato">
           <strong>Lucila Sabato</strong>
           <span>Consultora de Inmigración de Negocios</span>
         </div>
@@ -158,7 +159,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+        <img src="assets/img/clg-logo.png" alt="Calderaro Law Group">
         <p>Estrategia migratoria para empresarios, profesionales y familias de Latinoamérica. Doral, Florida.</p>
         <div class="footer-social">
           <a href="https://www.facebook.com/calderarolawgroup.esp" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.54-1.5H16.7V4.6c-.29-.04-1.27-.12-2.42-.12-2.4 0-4.03 1.46-4.03 4.15v2.31H7.5V14h2.75v8h3.25Z"/></svg></a>
@@ -219,7 +220,7 @@
   </a>
 </div>
 
-<script src="assets/js/i18n.js?v=9"></script>
-<script src="assets/js/main.js?v=9"></script>
+<script src="assets/js/i18n.js?v=11"></script>
+<script src="assets/js/main.js?v=11"></script>
 </body>
 </html>

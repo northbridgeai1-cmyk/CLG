@@ -11,6 +11,7 @@
    ========================================================================== */
 
 :root {
+  /* — Palette. CLG's own navy / cream / brass. Untouched. — */
   --ink: #0f1e33;
   --ink-2: #16283f;
   --ink-soft: #3c4f66;
@@ -23,10 +24,63 @@
   --line: #e2d9c6;
   --line-dark: #2a3d54;
   --success: #4c6b4f;
-  --radius: 2px;
   --serif: "Newsreader", Georgia, "Times New Roman", serif;
   --sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --maxw: 1180px;
+
+  /* ── Type scale ────────────────────────────────────────────────────────
+     Structure borrowed from DESIGN.md: named steps, a real jump between
+     display and heading, tracking that tightens as size grows. Sizes are
+     retuned for Newsreader — a serif needs less negative tracking than the
+     geometric sans that scale was measured on, and it sets larger on the
+     body. The old file had three ad-hoc clamps and nothing else, which is
+     why every page read at the same volume. */
+  --fs-display:  clamp(2.6rem, 5.1vw, 4.25rem);
+  --fs-h1:       clamp(2.1rem, 3.8vw, 3.1rem);
+  --fs-h2:       clamp(1.7rem, 2.7vw, 2.35rem);
+  --fs-h3:       clamp(1.3rem, 1.8vw, 1.6rem);
+  --fs-h4:       1.3rem;
+  --fs-h5:       1.0625rem;
+  --fs-subtitle: 1.1875rem;
+  --fs-body:     1rem;
+  --fs-sm:       0.9rem;
+  --fs-caption:  0.8125rem;
+  --fs-micro:    0.75rem;
+  --fs-eyebrow:  0.7rem;
+
+  --ls-display: -0.032em;
+  --ls-h1:      -0.026em;
+  --ls-h2:      -0.019em;
+  --ls-h3:      -0.011em;
+  --ls-eyebrow:  0.15em;
+
+  --lh-display: 1.02;
+  --lh-h1:      1.07;
+  --lh-h2:      1.14;
+  --lh-h3:      1.26;
+  --lh-body:    1.65;
+
+  /* Measure. Prose that runs the full 1180px container is the single most
+     reliable tell of a template. */
+  --measure: 68ch;
+
+  /* ── Spacing: 4px base, per DESIGN.md ── */
+  --s-1: 4px;  --s-2: 8px;   --s-3: 12px;  --s-4: 16px;  --s-5: 20px;
+  --s-6: 24px; --s-8: 32px;  --s-10: 40px; --s-12: 48px;
+  --s-section-sm: 48px; --s-section: 72px; --s-section-lg: 104px; --s-hero: 128px;
+
+  /* ── Radius ── */
+  --r-xs: 2px; --r-sm: 4px; --r-md: 6px; --r-lg: 10px; --r-full: 9999px;
+  --radius: 2px;               /* kept: older rules still reference it */
+
+  /* ── Motion ──────────────────────────────────────────────────────────
+     Two curves, used deliberately. --ease-exit is for things leaving or
+     settling; --ease-enter has a touch of overshoot for things arriving. */
+  --ease-enter: cubic-bezier(.16, 1, .3, 1);
+  --ease-exit:  cubic-bezier(.4, 0, .2, 1);
+  --dur-fast:   140ms;
+  --dur-base:   240ms;
+  --dur-slow:   780ms;
 }
 
 * { box-sizing: border-box; }
@@ -34,26 +88,42 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--sans);
+  font-size: var(--fs-body);
   color: var(--ink);
   background: var(--cream);
-  line-height: 1.6;
+  line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
+
 h1, h2, h3, h4 {
   font-family: var(--serif);
   font-weight: 500;
-  line-height: 1.15;
-  margin: 0 0 0.5em;
-  letter-spacing: -0.01em;
+  margin: 0 0 var(--s-4);
+  text-wrap: balance;          /* no orphaned single word on a heading */
 }
-h1 { font-size: clamp(2.4rem, 4.5vw, 3.8rem); font-weight: 460; }
-h2 { font-size: clamp(1.9rem, 3vw, 2.6rem); }
-h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
-p { margin: 0 0 1em; }
-:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); font-weight: 460; }
+h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-h2); }
+h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--ls-h3); }
+h4 { font-size: var(--fs-h4); line-height: 1.3; }
+p  { margin: 0 0 1em; }
+
+/* Prose caps its own measure wherever it sits. */
+.section p, .lede, .callout p, .note { max-width: var(--measure); }
+
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: var(--r-xs); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 .container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
 .container--narrow { max-width: 820px; }
@@ -586,3 +656,417 @@ body.menu-open .nav-sub {
 body.menu-open .nav-item:hover .nav-sub { display: none; }
 body.menu-open .nav-item.open .nav-sub { display: block; }
 body.menu-open .nav-sub a { padding: 9px 10px; }
+
+/* ==========================================================================
+   LAYER 2 — added in the design pass.
+   Everything below either retunes a rule above using the new scale, or adds
+   a component the site needed and did not have. Later in the file, so it
+   wins on source order without an !important anywhere.
+   ========================================================================== */
+
+/* ── Section rhythm on the 4px system ─────────────────────────────────── */
+.section       { padding: var(--s-section-lg) 0; }
+.section--tight{ padding: var(--s-section) 0; }
+@media (max-width: 700px) {
+  .section        { padding: var(--s-section) 0; }
+  .section--tight { padding: var(--s-section-sm) 0; }
+}
+
+.eyebrow {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  margin-bottom: var(--s-4);
+}
+/* The eyebrow gets a hairline rule instead of sitting naked above the
+   heading. Small, but it is the kind of detail a template never has. */
+.eyebrow::after {
+  content: ""; width: 24px; height: 1px;
+  background: currentColor; opacity: .45;
+}
+
+.lede {
+  font-size: var(--fs-subtitle);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+.hero h1 {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+}
+/* Optical alignment: the quote/cap of a serif display line sits visually
+   indented against the container edge. Pull it back by a hair. */
+.hero h1 { margin-left: -0.02em; }
+
+/* ── Credentials strip ────────────────────────────────────────────────────
+   The firm is an AILA member, Florida Bar admitted, in the Entrepreneurs'
+   Organization, and admitted to the Supreme Court of Florida. None of that
+   was anywhere on the new site. Set as type rather than a logo bar: the
+   marks belong to those bodies, and a typographic strip reads more like a
+   practice and less like a badge collection. */
+.creds {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: var(--s-6) 0;
+}
+.creds-grid {
+  display: grid; gap: var(--s-6) var(--s-8);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.cred { display: grid; gap: 2px; }
+.cred-label {
+  font-size: var(--fs-micro); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gold-deep); font-weight: 700;
+}
+.cred-body { font-size: var(--fs-sm); color: var(--ink-soft); line-height: 1.45; }
+.cred-body strong { color: var(--ink); font-weight: 600; }
+
+/* ── Team, with faces ─────────────────────────────────────────────────── */
+.team-grid {
+  display: grid; gap: var(--s-8);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.person figure { margin: 0 0 var(--s-4); }
+.person img {
+  width: 100%; aspect-ratio: 1/1; object-fit: cover;
+  border-radius: var(--r-sm);
+  filter: saturate(.92) contrast(1.02);
+  transition: filter var(--dur-slow) var(--ease-exit),
+              transform var(--dur-slow) var(--ease-exit);
+}
+.person:hover img { filter: saturate(1) contrast(1.04); transform: scale(1.012); }
+.person h3 { margin-bottom: 2px; font-size: var(--fs-h4); }
+.person .role {
+  font-size: var(--fs-micro); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gold-deep); font-weight: 700; margin-bottom: var(--s-3);
+}
+.person p { font-size: var(--fs-sm); color: var(--ink-soft); }
+
+/* ── Documentary photo block ──────────────────────────────────────────── */
+.doc-photo { margin: 0; }
+.doc-photo img { width: 100%; border-radius: var(--r-sm); }
+.doc-photo figcaption {
+  margin-top: var(--s-3);
+  font-size: var(--fs-caption); color: var(--ink-soft);
+  padding-left: var(--s-3); border-left: 2px solid var(--gold);
+  max-width: 46ch;
+}
+
+/* ── Motion primitives ────────────────────────────────────────────────────
+   Replaces the blanket ".rvl on every h2 and card" sweep. Three named
+   behaviours, applied to the specific things they suit, so movement means
+   something instead of happening everywhere at once. */
+[data-anim] { will-change: transform, opacity; }
+
+/* Text rises a short distance. Headings should feel like they settle, not fly. */
+[data-anim="rise"]  { opacity: 0; transform: translateY(12px); }
+/* Media scales up from just under 1. Reads as a lens settling, not a card sliding. */
+[data-anim="bloom"] { opacity: 0; transform: scale(.985); }
+/* A rule or divider draws itself. */
+[data-anim="draw"]  { transform: scaleX(0); transform-origin: left center; }
+
+[data-anim].is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-slow) var(--ease-enter),
+              transform var(--dur-slow) var(--ease-enter);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] { opacity: 1 !important; transform: none !important; }
+}
+
+/* Tap feedback. Every actionable thing acknowledges the press. */
+.btn, .quiz-option, .choice, .ai-choice, .region-btn, .faq-item > summary,
+.card, .path-card, .person, .nav-item {
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active, .quiz-option:active, .choice:active,
+.ai-choice:active, .region-btn:active {
+  transform: scale(.975);
+  transition: transform 70ms var(--ease-exit);
+}
+
+/* ── Mobile overflow fixes ────────────────────────────────────────────────
+   Measured at 375px: document scrollWidth was 439px. The header was the
+   cause — brand + language button + a 212px full-sentence CTA + the menu
+   toggle cannot share 375px, so the toggle was pushed off-screen and the
+   floating buttons inherited the widened containing block. */
+@media (max-width: 640px) {
+  /* Drop the CTA from the bar. The identical CTA sits in the hero directly
+     below, inside the open menu, and the WhatsApp button is always on
+     screen — so nothing is lost and the hamburger becomes reachable. */
+  .nav-cta .btn-primary { display: none; }
+
+}
+
+/* Headline before video on phone AND tablet. The old rule (.hero-media
+   {order:-1}) pushed a YouTube embed above the h1, so the first thing on a
+   phone was a thumbnail rather than what the firm does.
+   Note: .hero-grid must stay `grid`. Switching it to flex collapses
+   .hero-media to 0x0, because .video-wrap sizes itself with a
+   `padding-top:56.25%` ratio trick that resolves against a parent width
+   that a flex item with no intrinsic content width cannot supply. */
+@media (max-width: 1080px) {
+  .hero-media { order: 0; }
+}
+
+/* Belt and braces. `clip` rather than `hidden` so position:sticky keeps
+   working — `hidden` on an ancestor silently kills it. */
+html { overflow-x: clip; }
+
+/* `draw` collapses an element to zero width until it is observed. That is
+   fine for a hairline divider and dangerous for anything containing text —
+   if the observer never fires (JS error, old browser), the content is
+   simply gone. Restrict it structurally so it can only ever hit a divider. */
+section[data-anim="draw"], [data-anim="draw"]:has(p),
+[data-anim="draw"]:has(h1,h2,h3) { transform: none !important; opacity: 1 !important; }
+
+/* The source photograph is close to square (1200x1182), which at full column
+   width made it ~1180px tall and turned a supporting image into the loudest
+   thing on the page. Crop to a 3:2 editorial ratio and cap the width so it
+   supports the prose rather than interrupting it. */
+.doc-photo img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center 38%;   /* keeps the subject, drops empty tablecloth */
+}
+.doc-photo { max-width: 720px; }
+@media (max-width: 640px) {
+  .doc-photo img { aspect-ratio: 4 / 3; }
+}
+
+/* The width/height attributes on these <img> tags are presentational hints.
+   `width:100%` overrides the width hint, but nothing was overriding the
+   height hint — so `aspect-ratio` was silently ignored and the photo kept
+   its full 1182px intrinsic height. `height:auto` hands control back to
+   aspect-ratio. (The attributes stay: they reserve layout space and stop
+   the page shifting while the image loads.) */
+.doc-photo img, .person img { height: auto; }
+
+/* ==========================================================================
+   LAYER 3 — the visible pass.
+   Layer 2 retuned proportions, which reads as "cleaner" but not as
+   "different". This layer changes what the page actually looks like.
+   ========================================================================== */
+
+/* ── Dark hero ────────────────────────────────────────────────────────── */
+.hero--dark {
+  position: relative;
+  background: var(--ink);
+  color: var(--cream);
+  padding: clamp(64px, 9vw, 132px) 0 clamp(56px, 7vw, 104px);
+  overflow: hidden;
+}
+/* A single soft brass light, off-centre. Gives the flat navy some depth
+   without a gradient that screams "CSS gradient". */
+.hero-glow {
+  position: absolute; top: -30%; right: -10%; width: 780px; height: 780px;
+  background: radial-gradient(circle, rgba(184,134,59,.20) 0%, rgba(184,134,59,0) 68%);
+  pointer-events: none;
+}
+.hero--dark .container { position: relative; z-index: 1; }
+.hero--dark .eyebrow { color: var(--gold-light); }
+.hero--dark h1 { color: var(--paper); }
+.hero--dark .lede { color: #c2cddb; max-width: 52ch; }
+
+.hero--dark .hero-grid {
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+/* Ghost button has to invert on the dark field or it disappears. */
+.hero--dark .btn-ghost {
+  border-color: rgba(250,246,239,.35); color: var(--cream); background: transparent;
+}
+.hero--dark .btn-ghost:hover {
+  border-color: var(--gold-light); color: var(--gold-light); background: rgba(184,134,59,.08);
+}
+
+/* ── Figures ──────────────────────────────────────────────────────────── */
+.hero-stats {
+  display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 56px);
+  margin: var(--s-10) 0 0; padding-top: var(--s-6);
+  border-top: 1px solid rgba(250,246,239,.16);
+}
+.hero-stats div { display: grid; gap: 2px; }
+.hero-stats dt {
+  font-family: var(--serif); font-size: clamp(2rem, 3.4vw, 2.9rem);
+  line-height: 1; color: var(--gold-light); font-weight: 500;
+  font-variant-numeric: tabular-nums;   /* stops width jitter while counting */
+}
+.hero-stats dd {
+  margin: 0; font-size: var(--fs-caption); color: #9fb0c4;
+  letter-spacing: .04em; max-width: 18ch;
+}
+
+/* ── Portrait ─────────────────────────────────────────────────────────── */
+.hero-portrait { margin: 0; position: relative; }
+.hero-portrait img {
+  width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover;
+  object-position: center 18%;
+  border-radius: var(--r-sm);
+  filter: saturate(.9) contrast(1.04);
+}
+/* Brass rule offset behind the portrait — an intentional, hand-placed
+   detail rather than a drop shadow. */
+.hero-portrait::before {
+  content: ""; position: absolute; inset: 18px -18px -18px 18px;
+  border: 1px solid rgba(184,134,59,.55); border-radius: var(--r-sm);
+  z-index: -1;
+}
+.hero-portrait figcaption {
+  margin-top: var(--s-4); display: grid; gap: 1px;
+  font-size: var(--fs-caption);
+}
+.hero-portrait figcaption strong { color: var(--paper); font-weight: 600; }
+.hero-portrait figcaption span { color: #9fb0c4; }
+
+@media (max-width: 900px) {
+  .hero--dark .hero-grid { grid-template-columns: 1fr; }
+  .hero-portrait { max-width: 340px; order: 0; }
+  .hero-portrait::before { inset: 14px -14px -14px 14px; }
+}
+
+/* ── Headline word reveal ─────────────────────────────────────────────────
+   Each word rises behind a mask. This is the animation you actually notice,
+   and it only ever runs on the one headline — not on every element. */
+.word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.word > i { display: inline-block; font-style: inherit; }
+
+/* The offscreen resting state is scoped to .motion-ready, which motion.js
+   puts on <html>. Without that class the words simply render in place.
+   Reason: translateY(105%) as the *default* means a headline that is
+   invisible until JS says otherwise — and requestAnimationFrame is
+   suspended entirely in a background or hidden tab, so "otherwise" can be
+   a long time. The headline is the single most important element on the
+   page; it must never depend on a frame callback to exist. */
+html.motion-ready .word > i {
+  transform: translateY(105%);
+  transition: transform 1040ms cubic-bezier(.16, 1, .3, 1);
+}
+html.motion-ready .word.is-in > i { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .word > i { transform: none !important; transition: none !important; }
+}
+
+/* ── Scroll progress ──────────────────────────────────────────────────── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 100%;
+  transform: scaleX(0); transform-origin: left center;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-light));
+  z-index: 200; pointer-events: none;
+}
+
+/* ── Richer hover on the path/vía cards ───────────────────────────────── */
+.path-card, .card, .person {
+  transition: transform var(--dur-base) var(--ease-exit),
+              box-shadow var(--dur-base) var(--ease-exit),
+              border-color var(--dur-base) var(--ease-exit);
+}
+.path-card:hover, .card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+  box-shadow: 0 18px 40px -22px rgba(15,30,51,.45);
+}
+
+/* ── Inner-page elements on the dark hero ─────────────────────────────────
+   The dark band is now on every page, so the components that live inside a
+   hero — breadcrumb, pill nav, the portrait tag — need their dark-field
+   treatment or they render as near-black text on navy. */
+.hero--dark .breadcrumb { color: #8fa2b8; }
+.hero--dark .breadcrumb a { color: var(--gold-light); }
+
+.hero--dark .pill-nav a {
+  border-color: rgba(250,246,239,.22);
+  color: #c2cddb;
+  background: rgba(250,246,239,.04);
+}
+.hero--dark .pill-nav a:hover {
+  border-color: var(--gold-light); color: var(--gold-light);
+}
+.hero--dark .pill-nav a.active {
+  background: var(--gold); border-color: var(--gold); color: var(--ink);
+}
+
+.hero--dark .hero-media {
+  box-shadow: 0 30px 70px -30px rgba(0,0,0,.65);
+}
+.hero--dark .hero-media-tag {
+  background: rgba(15,30,51,.82); color: var(--cream);
+  backdrop-filter: blur(6px);
+}
+.hero--dark .hero-proof { border-top-color: rgba(250,246,239,.16); }
+.hero--dark .hero-proof div strong { color: var(--gold-light); }
+.hero--dark .hero-proof div span  { color: #9fb0c4; }
+
+/* WhatsApp green holds its own on navy; the primary brass button does too.
+   Only the plain ghost needed inverting, handled in Layer 3. */
+
+/* Inner headlines run long (the Nosotros h1 is 17 words). Without a cap the
+   per-word delay pushes the last word past a second and a half, which stops
+   reading as one gesture. */
+
+/* ── Casos: swipeable client track ────────────────────────────────────────
+   Native scroll-snap rather than a carousel library: real touch momentum,
+   works with a trackpad, keyboard-scrollable, and if the JS never runs it
+   degrades to a plain scrollable row instead of a dead widget.
+
+   Sized so three cards fit exactly on desktop — at that width the track has
+   no overflow, and the arrows/dots hide themselves. A carousel where
+   everything already fits is worse than a grid. */
+.case-swipe {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--s-6);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding-bottom: var(--s-2);
+}
+.case-swipe::-webkit-scrollbar { display: none; }
+.case-swipe > * { scroll-snap-align: start; min-width: 0; }
+
+@media (max-width: 1000px) {
+  /* 84% leaves a sliver of the next card visible. That peek is what tells
+     a thumb there is more to the right — dots alone do not. */
+  .case-swipe { grid-auto-columns: 84%; }
+}
+@media (max-width: 620px) { .case-swipe { grid-auto-columns: 88%; } }
+
+.swipe-shell { position: relative; }
+.swipe-ui {
+  display: none;                 /* JS turns this on only when it overflows */
+  align-items: center; justify-content: space-between;
+  gap: var(--s-4); margin-top: var(--s-5);
+}
+.swipe-shell.has-overflow .swipe-ui { display: flex; }
+
+.swipe-dots { display: flex; gap: 7px; }
+.swipe-dots button {
+  width: 7px; height: 7px; padding: 0; border-radius: 50%;
+  border: 0; background: var(--line); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-exit),
+              transform var(--dur-fast) var(--ease-exit);
+}
+.swipe-dots button[aria-current="true"] { background: var(--gold); transform: scale(1.5); }
+
+.swipe-arrows { display: flex; gap: var(--s-2); }
+.swipe-arrows button {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+  cursor: pointer; font-size: 1rem; line-height: 1;
+  transition: border-color var(--dur-fast) var(--ease-exit),
+              background var(--dur-fast) var(--ease-exit),
+              transform var(--dur-fast) var(--ease-exit);
+}
+.swipe-arrows button:hover:not(:disabled) { border-color: var(--gold); background: var(--cream-2); }
+.swipe-arrows button:active:not(:disabled) { transform: scale(.92); }
+.swipe-arrows button:disabled { opacity: .3; cursor: default; }
+
+@media (prefers-reduced-motion: reduce) { .case-swipe { scroll-behavior: auto; } }

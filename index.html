@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- ?v=N busts the browser cache. Bump this number on every CSS change. -->
-<link rel="stylesheet" href="assets/css/styles.css?v=9">
+<link rel="stylesheet" href="assets/css/styles.css?v=11">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -32,7 +32,7 @@
     { "@type": "Organization", "@id": "https://www.visamiami.com/#org",
       "name": "Calderaro Law Group", "alternateName": "CLG",
       "url": "https://www.visamiami.com/",
-      "logo": "https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp",
+      "logo": "https://www.visamiami.com/assets/img/clg-logo.png",
       "sameAs": ["https://www.facebook.com/calderarolawgroup.esp","https://www.instagram.com/calderarolawgroup.esp/","https://www.youtube.com/@calderarolawgroup9174","https://www.linkedin.com/company/calderaro-law-group"],
       "founder": { "@type": "Person", "name": "Renata Calderaro", "jobTitle": "Fundadora y CEO" } },
     { "@type": "LegalService", "@id": "https://www.visamiami.com/#service",
@@ -66,7 +66,7 @@
   <div class="container">
     <!-- El logo ya contiene el nombre de la firma. No repetirlo en texto. -->
     <a href="index.html" class="brand" aria-label="Calderaro Law Group, inicio">
-      <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+      <img src="assets/img/clg-logo.png" alt="Calderaro Law Group">
     </a>
     <nav class="main-nav">
       <a href="index.html" class="active" data-i18n="nav_inicio">Inicio</a>
@@ -88,21 +88,81 @@
 
 <main>
 
-  <!-- 01 HERO -->
-  <section class="hero">
+  <!-- 01 HERO -----------------------------------------------------------
+       Rebuilt in the design pass. The old hero was a cream box with a
+       YouTube thumbnail beside the headline — the same shape as every
+       template. This one leads on a dark field with the firm's own
+       photograph, sets the headline at display size, and carries three
+       figures that are all verifiable from the firm's own copy. -->
+  <section class="hero hero--dark">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="container hero-grid">
-      <div>
-        <h1 data-i18n="hero_h1">No vendemos visas. Diseñamos tu estrategia migratoria.</h1>
-        <p class="lede">Somos una firma de inmigración con oficina en Doral, Florida. Renata Calderaro ejerce inmigración desde 2002 y fundó CLG para trabajar con empresarios, profesionales, artistas, deportistas y familias de Latinoamérica.</p>
+      <div class="hero-copy">
+        <span class="eyebrow">Doral, Florida &middot; Ejerciendo desde 2002</span>
+        <h1 data-i18n="hero_h1" data-split>No vendemos visas. Diseñamos tu estrategia migratoria.</h1>
+        <p class="lede">Somos una firma de inmigración con oficina en Doral, Florida. Renata
+           Calderaro ejerce inmigración desde 2002 y fundó CLG para trabajar con empresarios,
+           profesionales, artistas, deportistas y familias de Latinoamérica.</p>
         <div class="hero-actions">
           <a href="fase1-evaluacion-clg.html" class="btn btn-primary btn-lg" data-i18n="cta_main">Quiero conocer mi estrategia</a>
           <a href="evaluacion.html" class="btn btn-ghost btn-lg">Hacer la Brújula CLG, gratis</a>
         </div>
+
+        <!-- Every figure here is derivable from the firm's own copy:
+             2002 start, a team of four, and the seven countries already
+             listed in "La firma". Nothing invented. -->
+        <dl class="hero-stats">
+          <div><dt data-count="24">24</dt><dd>Años ejerciendo inmigración</dd></div>
+          <div><dt data-count="4">4</dt><dd>Personas en el equipo</dd></div>
+          <div><dt data-count="7">7</dt><dd>Países de origen de clientes</dd></div>
+        </dl>
       </div>
-      <div class="hero-media">
-        <!-- TODO(CLG): reemplazar por el video institucional cuando esté grabado. -->
-        <div class="video-wrap">
-          <iframe src="https://www.youtube.com/embed/c7Ax1yagoyY" title="Calderaro Law Group" loading="lazy" allowfullscreen></iframe>
+
+      <figure class="hero-portrait">
+        <img src="assets/img/renata-calderaro.jpg" width="900" height="900"
+             fetchpriority="high" decoding="async"
+             alt="Renata Calderaro, fundadora de Calderaro Law Group">
+        <figcaption><strong>Renata Calderaro</strong><span>Fundadora &middot; Florida Bar</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Testimonios en video. Bajado del hero: era lo primero que se veía y
+       competía con el titular. Aquí funciona como prueba, no como adorno. -->
+  <section class="section section--tight">
+    <div class="container container--narrow">
+      <span class="eyebrow">En video</span>
+      <h2>Clientes contándolo ellos mismos</h2>
+      <div class="video-wrap" style="margin-top:var(--s-6);">
+        <iframe src="https://www.youtube.com/embed/c7Ax1yagoyY" title="Testimonios de clientes de Calderaro Law Group"
+                loading="lazy" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01b CREDENCIALES ---------------------------------------------------
+       Institutional membership was on the old site and had not been carried
+       across. It is the strongest third-party proof the firm has: verifiable
+       by anyone, unlike a testimonial. Set as type rather than a logo bar —
+       those marks belong to the bodies that own them. -->
+  <section class="creds">
+    <div class="container">
+      <div class="creds-grid">
+        <div class="cred">
+          <div class="cred-label">Colegiación</div>
+          <div class="cred-body"><strong>The Florida Bar</strong><br>Renata Calderaro, colegiada</div>
+        </div>
+        <div class="cred">
+          <div class="cred-label">Admisión</div>
+          <div class="cred-body"><strong>Supreme Court of Florida</strong><br>Admitida a ejercer</div>
+        </div>
+        <div class="cred">
+          <div class="cred-label">Membresía</div>
+          <div class="cred-body"><strong>American Immigration Lawyers Association</strong><br>AILA</div>
+        </div>
+        <div class="cred">
+          <div class="cred-label">Membresía</div>
+          <div class="cred-body"><strong>Entrepreneurs&rsquo; Organization</strong><br>EO</div>
         </div>
       </div>
     </div>
@@ -116,6 +176,17 @@
       <p>El equipo son cuatro personas. Cuando abres un caso, tu abogado y tu case manager quedan asignados por nombre desde la primera reunión, y son los mismos hasta que el caso se resuelve.</p>
       <p>Atendemos en español y en inglés, presencialmente en Doral o por video llamada. La mayoría de nuestros clientes escriben desde México, Colombia, Ecuador, Bolivia, Argentina, Chile y Perú. También damos charlas presenciales en esos países.</p>
       <p><a href="nosotros.html" style="font-weight:700;color:var(--gold-deep);">Conoce al equipo &rarr;</a></p>
+
+      <!-- Documentary photograph, not stock. Renata during one of the firm's
+           in-person sessions in Latin America. The old site leaned on an
+           AI-generated boardroom for this slot; a real room with real people
+           is what makes a page read as a firm. -->
+      <figure class="doc-photo" style="margin-top:var(--s-10);">
+        <img src="assets/img/charla-clg.jpg" width="1200" height="1182"
+             loading="lazy" decoding="async"
+             alt="Renata Calderaro conversando con asistentes durante una sesión presencial de Calderaro Law Group">
+        <figcaption>Renata Calderaro en una de las sesiones presenciales de la firma en Latinoamérica.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -223,11 +294,12 @@
     <div class="container">
       <h2>Clientes</h2>
       <p class="lede" style="margin-bottom:40px;">Personas reales, con su país y la visa que obtuvieron.</p>
-      <div class="grid-3">
+      <div class="swipe-shell">
+        <div class="case-swipe">
         <article class="case-card">
           <div class="case-body">
             <div style="display:flex;align-items:center;gap:10px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f28cc541c_0a2fdaa-40ba-5e75-b51-4ee70a3de0e1_Flag_of_Colombia.webp" alt="Colombia">
+              <img class="case-flag" width="19" height="13" src="assets/img/flags/colombia.webp" alt="Colombia">
               <strong>Javier O.</strong>
               <span style="font-size:.8rem;color:var(--ink-soft);">Colombia · E-2</span>
             </div>
@@ -238,7 +310,7 @@
         <article class="case-card">
           <div class="case-body">
             <div style="display:flex;align-items:center;gap:10px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f43bca7bf_5a6cfc6-e57-8fb-4e1-08bc13af7765_Flag_of_Japan_bordered_.webp" alt="Japón">
+              <img class="case-flag" width="19" height="13" src="assets/img/flags/japon.webp" alt="Japón">
               <strong>Shiro</strong>
               <span style="font-size:.8rem;color:var(--ink-soft);">Japón · Visa O</span>
             </div>
@@ -249,7 +321,7 @@
         <article class="case-card">
           <div class="case-body">
             <div style="display:flex;align-items:center;gap:10px;">
-              <img class="case-flag" width="19" height="13" src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810f2f8da70f_51716cd-b0d7-61ad-2cb-6ea3bfddfb3_Flag-Peru.webp" alt="Perú">
+              <img class="case-flag" width="19" height="13" src="assets/img/flags/peru.webp" alt="Perú">
               <strong>Giancarlos C.</strong>
               <span style="font-size:.8rem;color:var(--ink-soft);">Perú · L-1</span>
             </div>
@@ -257,6 +329,7 @@
             <p class="case-quote">"Se pusieron la camiseta de mi familia para lograr el objetivo y junto a los abogados hacer el proceso de forma legal y planificada."</p>
           </div>
         </article>
+      </div>
       </div>
       <div style="margin-top:26px;"><a href="casos-de-exito.html" class="btn btn-ghost">Ver los seis casos &rarr;</a></div>
     </div>
@@ -279,31 +352,49 @@
     </div>
   </section>
 
-  <!-- 08 EQUIPO -->
+  <!-- 08 EQUIPO ---------------------------------------------------------
+       Photographs are now local (assets/img/), not hot-linked to the
+       systeme.io CDN. Every face here is a real photograph of a real member
+       of the firm — no stock, no generated imagery. -->
   <section class="section">
     <div class="container">
+      <span class="eyebrow">El equipo</span>
       <h2>Quién lleva tu caso</h2>
-      <div class="grid-4" style="margin-top:34px;">
-        <div class="team-card">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6811df0f6a6fe_5514b37-804b-7a0-af77-745a5f57d27_team-mesa-de-trabajo-1.jpg" alt="Renata Calderaro">
-          <strong>Renata Calderaro</strong>
-          <span>Fundadora y CEO</span>
-          <p>Florida Bar. Ejerciendo inmigración desde 2002. University of Miami School of Law.</p>
+      <p class="lede">Cuatro personas. Tu abogado y tu case manager quedan asignados por
+         nombre desde la primera reunión y son los mismos hasta que el caso se resuelve.</p>
+
+      <div class="team-grid" style="margin-top:var(--s-10);">
+        <div class="person">
+          <figure><img src="assets/img/renata-calderaro.jpg" width="900" height="900"
+                       loading="lazy" decoding="async" alt="Renata Calderaro"></figure>
+          <h3>Renata Calderaro</h3>
+          <div class="role">Fundadora y CEO</div>
+          <p>Colegiada en el Florida Bar y admitida ante la Corte Suprema de Florida.
+             Ejerce inmigración desde 2002. Egresada de University of Miami School of Law.</p>
         </div>
-        <div class="team-card">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6a022bc2d991e1.44551858_Capturadepantalla2026-05-11alas9.19.25p.m..png" alt="Gianfranco Frazzetta">
-          <strong>Gianfranco Frazzetta</strong>
-          <span>Case Manager</span>
+        <div class="person">
+          <figure><img src="assets/img/equipo-gianfranco.jpg" width="600" height="600"
+                       loading="lazy" decoding="async" alt="Gianfranco Frazzetta"></figure>
+          <h3>Gianfranco Frazzetta</h3>
+          <div class="role">Case Manager</div>
+          <p>Coordina la evidencia, los plazos y la comunicación con USCIS durante toda
+             la vida del caso.</p>
         </div>
-        <div class="team-card">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6a0232d384e767.73464873_luisa.jpg" alt="Luisa Anzola">
-          <strong>Luisa Anzola</strong>
-          <span>Directora de Desarrollo de Negocios</span>
+        <div class="person">
+          <figure><img src="assets/img/equipo-luisa.jpg" width="600" height="600"
+                       loading="lazy" decoding="async" alt="Luisa Anzola"></figure>
+          <h3>Luisa Anzola</h3>
+          <div class="role">Directora de Desarrollo de Negocios</div>
+          <p>Primer contacto de la firma. Conduce la Evaluación CLG y las charlas
+             presenciales en Latinoamérica.</p>
         </div>
-        <div class="team-card">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6a0230c74ebe11.02646214_luli1.jpg" alt="Lucila Sabato">
-          <strong>Lucila Sabato</strong>
-          <span>Consultora de Inmigración de Negocios</span>
+        <div class="person">
+          <figure><img src="assets/img/equipo-luli.jpg" width="600" height="600"
+                       loading="lazy" decoding="async" alt="Lucila Sabato"></figure>
+          <h3>Lucila Sabato</h3>
+          <div class="role">Consultora de Inmigración de Negocios</div>
+          <p>Trabaja los perfiles de empresarios e inversionistas: estructura del negocio,
+             origen de fondos y plan de inversión.</p>
         </div>
       </div>
     </div>
@@ -352,7 +443,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="https://d1yei2z3i6k35z.cloudfront.net/11877462/6810bc61b7b83_3adb0d-3066-a746-5c6-e5a55d3118de_6521b685-8df6-4fb0-a423-a0a4aa41272f.webp" alt="Calderaro Law Group">
+        <img src="assets/img/clg-logo.png" alt="Calderaro Law Group">
         <p>3105 NW 107th Ave Suite 452<br>Doral, FL 33172<br>+1 (786) 301-6264</p>
         <div class="footer-social">
           <a href="https://www.facebook.com/calderarolawgroup.esp" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.54-1.5H16.7V4.6c-.29-.04-1.27-.12-2.42-.12-2.4 0-4.03 1.46-4.03 4.15v2.31H7.5V14h2.75v8h3.25Z"/></svg></a>
@@ -416,7 +507,7 @@
   </a>
 </div>
 
-<script src="assets/js/i18n.js?v=9"></script>
-<script src="assets/js/main.js?v=9"></script>
+<script src="assets/js/i18n.js?v=11"></script>
+<script src="assets/js/main.js?v=11"></script>
 </body>
 </html>
