@@ -1265,3 +1265,166 @@ body.menu-open .main-nav {
   top: 76px; bottom: 0; height: auto; max-height: calc(100vh - 76px);
   max-height: calc(100dvh - 76px);
 }
+
+/* ==========================================================================
+   LAYER 4 — breaking the metronome.
+   The homepage was section / card-section / section / card-section, each
+   one an h2 over a grid of equal boxes. Four sections now each use a
+   different structure: an asymmetric split, a bento, a diagram beside a
+   list, and one large number on a dark field.
+   ========================================================================== */
+
+/* Rhythm: not every section gets the same padding. */
+.section--loose { padding: var(--s-hero) 0; }
+@media (max-width: 700px) { .section--loose { padding: var(--s-section-lg) 0; } }
+
+/* Section header as a two-column row: heading left, lede right. Breaks the
+   "everything stacked and centred" pattern without any extra ornament. */
+.head-row {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--s-8);
+  align-items: end; margin-bottom: var(--s-10);
+}
+.head-row h2 { margin-bottom: 0; }
+.head-row .lede { margin: 0; padding-bottom: 6px; }
+@media (max-width: 800px) { .head-row { grid-template-columns: 1fr; gap: var(--s-4); } }
+
+/* ── 02  Asymmetric split ─────────────────────────────────────────────── */
+.split { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+.h-display {
+  font-size: clamp(1.6rem, 2.6vw, 2.25rem); line-height: 1.22;
+  letter-spacing: var(--ls-h2); font-weight: 460; text-wrap: pretty;
+}
+.split-lead .lede { margin-top: var(--s-5); }
+.split-aside { display: grid; gap: var(--s-8); padding-top: 6px; }
+.aside-title {
+  font-family: var(--sans); font-size: var(--fs-micro); letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gold-deep); font-weight: 700; margin-bottom: var(--s-3);
+}
+.tick-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+.tick-list li {
+  position: relative; padding-left: 22px; font-size: var(--fs-sm); color: var(--ink-soft); line-height: 1.5;
+}
+.tick-list li::before {
+  content: ""; position: absolute; left: 0; top: .55em; width: 11px; height: 1.5px; background: var(--gold);
+}
+.fact-row {
+  display: flex; flex-wrap: wrap; gap: var(--s-6) var(--s-8); margin: 0;
+  padding-top: var(--s-6); border-top: 1px solid var(--line);
+}
+.fact-row dt { font-size: var(--fs-micro); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.fact-row dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.05rem; color: var(--ink); }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+/* ── 04  Bento ────────────────────────────────────────────────────────── */
+.bento {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--s-4);
+  grid-auto-rows: minmax(150px, auto);
+}
+.bento-cell {
+  display: flex; flex-direction: column; gap: var(--s-3);
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: var(--s-6); color: inherit; grid-column: span 2;
+  transition: transform var(--dur-base) var(--ease-exit), border-color var(--dur-base) var(--ease-exit),
+              box-shadow var(--dur-base) var(--ease-exit);
+}
+.bento-cell:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 18px 40px -22px rgba(15,30,51,.45); }
+.bento-cell--wide { grid-column: span 4; }
+.bento-cell--tall { grid-column: span 2; grid-row: span 2; }
+.bento-cell--half { grid-column: span 3; }
+.bento-cell--featured { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.bento-cell--featured h3, .bento-cell--featured .code { color: var(--paper); }
+.bento-cell--featured p { color: #c2cddb; }
+.bento-cell--featured .link { color: var(--gold-light); }
+.bento-cell--featured:hover { border-color: var(--gold); }
+.bento-cell .code {
+  font-family: var(--serif); font-size: 1.5rem; line-height: 1; color: var(--ink);
+}
+/* Must come after .bento-cell .code — equal specificity, so source order
+   decides, and the earlier featured rule was losing: navy text on navy. */
+.bento-cell--featured .code { color: var(--paper); }
+.bento-cell h3 { font-size: var(--fs-h4); margin: 0; }
+.bento-cell p { margin: 0; font-size: var(--fs-sm); color: var(--ink-soft); }
+.bento-cell p.muted { font-size: var(--fs-caption); opacity: .75; }
+.bento-cell .link { margin-top: auto; padding-top: var(--s-2); font-weight: 700; font-size: var(--fs-sm); color: var(--gold-deep); }
+.bento-top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); flex-wrap: wrap; }
+.bento-top .price {
+  font-family: var(--serif); font-size: 1.35rem; color: var(--gold-light); white-space: nowrap;
+}
+.bento-top .price small { font-family: var(--sans); font-size: var(--fs-micro); letter-spacing: .08em; text-transform: uppercase; color: #9fb0c4; margin-left: 4px; }
+@media (max-width: 900px) {
+  .bento { grid-template-columns: 1fr 1fr; }
+  .bento-cell, .bento-cell--wide, .bento-cell--tall, .bento-cell--half { grid-column: span 1; grid-row: auto; }
+  .bento-cell--wide { grid-column: span 2; }
+}
+@media (max-width: 560px) { .bento { grid-template-columns: 1fr; } .bento-cell--wide { grid-column: span 1; } }
+
+/* ── 05  Wheel + list ─────────────────────────────────────────────────── */
+.method { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.wheel { margin: 0; }
+.wheel svg { width: 100%; height: auto; display: block; }
+.method-copy h2 { margin-bottom: var(--s-8); }
+.phase-list { list-style: none; margin: 0; padding: 0; counter-reset: ph; display: grid; gap: var(--s-5); }
+.phase-list li {
+  counter-increment: ph; display: grid; grid-template-columns: 44px 1fr; gap: var(--s-3); align-items: baseline;
+  padding-bottom: var(--s-5); border-bottom: 1px solid var(--line);
+}
+.phase-list li::before {
+  content: counter(ph, decimal-leading-zero); font-family: var(--serif); font-size: 1.45rem;
+  color: var(--gold); line-height: 1; grid-row: span 2;
+}
+.phase-list strong { display: block; font-family: var(--serif); font-weight: 500; font-size: var(--fs-h4); color: var(--ink); }
+.phase-list span { grid-column: 2; font-size: var(--fs-sm); color: var(--ink-soft); }
+.phase-cont { margin-top: var(--s-6); font-size: var(--fs-sm); color: var(--ink-soft); }
+.phase-cont a { color: var(--gold-deep); font-weight: 700; }
+
+/* The sequence arcs draw themselves when the wheel scrolls into view. */
+.wheel-seq { stroke-dasharray: 300; stroke-dashoffset: 300; }
+.wheel-cont { opacity: 0; }
+.wheel-cont-label { opacity: 0; }
+.wheel-node { opacity: 0; transform: scale(.92); transform-origin: center; transform-box: fill-box; }
+.wheel.is-in .wheel-seq { animation: wheel-draw 900ms var(--ease-exit) forwards; }
+.wheel.is-in .wheel-seq:nth-of-type(2) { animation-delay: 220ms; }
+.wheel.is-in .wheel-seq:nth-of-type(3) { animation-delay: 440ms; }
+.wheel.is-in .wheel-node { animation: wheel-pop 520ms var(--ease-enter) forwards; }
+.wheel.is-in .wheel-node:nth-of-type(1) { animation-delay: 0ms; }
+.wheel.is-in .wheel-node:nth-of-type(2) { animation-delay: 240ms; }
+.wheel.is-in .wheel-node:nth-of-type(3) { animation-delay: 480ms; }
+.wheel.is-in .wheel-node:nth-of-type(4) { animation-delay: 720ms; }
+.wheel.is-in .wheel-cont, .wheel.is-in .wheel-cont-label { animation: wheel-fade 700ms ease 1100ms forwards; }
+@keyframes wheel-draw { to { stroke-dashoffset: 0; } }
+@keyframes wheel-pop  { to { opacity: 1; transform: scale(1); } }
+@keyframes wheel-fade { to { opacity: 1; } }
+/* No JS, or reduced motion: the finished diagram, always. */
+@media (prefers-reduced-motion: reduce) {
+  .wheel-seq { stroke-dashoffset: 0 !important; animation: none !important; }
+  .wheel-node, .wheel-cont, .wheel-cont-label { opacity: 1 !important; transform: none !important; animation: none !important; }
+}
+html:not(.motion-ready) .wheel-seq { stroke-dashoffset: 0; }
+html:not(.motion-ready) .wheel-node, html:not(.motion-ready) .wheel-cont, html:not(.motion-ready) .wheel-cont-label { opacity: 1; transform: none; }
+@media (max-width: 860px) {
+  .method { grid-template-columns: 1fr; }
+  .wheel { max-width: 420px; margin: 0 auto; }
+}
+
+/* ── 07  One number on a dark field ───────────────────────────────────── */
+.fees-band { padding: clamp(64px, 8vw, 112px) 0; }
+.fees { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(40px, 7vw, 104px); align-items: center; }
+.fees-band .eyebrow { color: var(--gold-light); }
+.fees-figure {
+  font-family: var(--serif); font-size: clamp(4.5rem, 11vw, 8.5rem); line-height: .95;
+  letter-spacing: -0.03em; color: var(--paper); font-variant-numeric: tabular-nums; margin: var(--s-2) 0 var(--s-4);
+}
+.fees-figure .cur { font-size: .5em; vertical-align: .55em; color: var(--gold-light); margin-right: .06em; }
+.fees-what { font-family: var(--serif); font-size: clamp(1.2rem, 1.9vw, 1.5rem); color: var(--cream); max-width: 26ch; line-height: 1.3; }
+.fees-what em { color: var(--gold-light); font-style: normal; }
+.fees-why { color: #9fb0c4; font-size: var(--fs-sm); max-width: 48ch; margin-top: var(--s-5); }
+.fees-list { margin: 0 0 var(--s-6); display: grid; }
+.fees-list div {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-4);
+  padding: var(--s-4) 0; border-bottom: 1px solid rgba(250,246,239,.14);
+}
+.fees-list div:first-child { border-top: 1px solid rgba(250,246,239,.14); }
+.fees-list dt { color: #c2cddb; font-size: var(--fs-sm); }
+.fees-list dd { margin: 0; font-family: var(--serif); font-size: 1.25rem; color: var(--paper); white-space: nowrap; }
+.fees-band .note { color: #8fa2b8; font-size: var(--fs-caption); margin-bottom: var(--s-6); }
+@media (max-width: 800px) { .fees { grid-template-columns: 1fr; } }
