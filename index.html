@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- ?v=N busts the browser cache. Bump this number on every CSS change. -->
-<link rel="stylesheet" href="assets/css/styles.css?v=16">
+<link rel="stylesheet" href="assets/css/styles.css?v=17">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -171,22 +171,47 @@
     </div>
   </section>
 
-  <!-- 02 QUIÉNES SOMOS — prosa, sin tarjetas -->
-  <section class="section">
-    <div class="container container--narrow">
-      <h2>La firma</h2>
-      <p>Calderaro Law Group está en 3105 NW 107th Ave, Suite 452, Doral, Florida. Renata Calderaro es la fundadora, está colegiada en el Florida Bar y es egresada de University of Miami School of Law.</p>
-      <p>El equipo son cuatro personas. Cuando abres un caso, tu abogado y tu case manager quedan asignados por nombre desde la primera reunión, y son los mismos hasta que el caso se resuelve.</p>
-      <p>Atendemos en español y en inglés, presencialmente en Doral o por video llamada. La mayoría de nuestros clientes escriben desde México, Colombia, Ecuador, Bolivia, Argentina, Chile y Perú. También damos charlas presenciales en esos países.</p>
-      <p><a href="nosotros.html" style="font-weight:700;color:var(--gold-deep);">Conoce al equipo &rarr;</a></p>
-
-      <!-- Documentary photograph, not stock. Renata during one of the firm's
-           in-person sessions in Latin America. The old site leaned on an
-           AI-generated boardroom for this slot; a real room with real people
-           is what makes a page read as a firm. -->
-      <figure class="doc-photo" style="margin-top:var(--s-10);">
-        <img src="assets/img/charla-clg.jpg" width="1200" height="1182"
-             loading="lazy" decoding="async"
+  <!-- 02 QUÉ HACEMOS, PARA QUIÉN --------------------------------------
+       Was three paragraphs of prose about the office address. A visitor
+       needs two things answered in the first screen after the hero: what
+       is the product, and is it for me. Asymmetric 5/7 split so it does
+       not read as another centred block. -->
+  <section class="section split-section">
+    <div class="container split">
+      <div class="split-lead">
+        <span class="eyebrow">Qué hacemos</span>
+        <h2 class="h-display">Diseñamos la estrategia legal para que tengas la opción de vivir o invertir en Estados Unidos, lista para cuando decidas usarla.</h2>
+        <p class="lede">No tramitamos visas sueltas. Construimos un plan escrito con vía principal, vía alterna, calendario y costo total, y lo llevamos hasta la decisión. La visa es el mecanismo; la estrategia es el producto.</p>
+      </div>
+      <div class="split-aside">
+        <div class="aside-block">
+          <h3 class="aside-title">Para quién</h3>
+          <ul class="tick-list">
+            <li>Empresarios e inversionistas que quieren operar o invertir en EE.UU.</li>
+            <li>Profesionales, artistas y deportistas con trayectoria demostrable</li>
+            <li>Familias que planifican su residencia a largo plazo</li>
+            <li>Empresas en EE.UU. que necesitan traer talento del exterior</li>
+          </ul>
+        </div>
+        <div class="aside-block">
+          <h3 class="aside-title">Qué recibes</h3>
+          <ul class="tick-list">
+            <li>Un Informe de Ruta Migratoria por escrito, con categorías priorizadas</li>
+            <li>Calendario real y costo total hasta la residencia</li>
+            <li>Abogado y case manager asignados por nombre desde la primera reunión</li>
+            <li>Honorarios publicados, a tarifa plana</li>
+          </ul>
+        </div>
+        <dl class="fact-row">
+          <div><dt>Oficina</dt><dd>Doral, Florida</dd></div>
+          <div><dt>Ejerciendo desde</dt><dd>2002</dd></div>
+          <div><dt>Idiomas</dt><dd>Español e inglés</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="container">
+      <figure class="doc-photo" style="margin-top:var(--s-12);">
+        <img src="assets/img/charla-clg.jpg" width="1200" height="1182" loading="lazy" decoding="async"
              alt="Renata Calderaro conversando con asistentes durante una sesión presencial de Calderaro Law Group">
         <figcaption>Renata Calderaro en una de las sesiones presenciales de la firma en Latinoamérica.</figcaption>
       </figure>
@@ -219,76 +244,117 @@
     </div>
   </section>
 
-  <!-- 04 VÍAS -->
-  <section class="section" id="vias">
+  <!-- 04 VÍAS — bento --------------------------------------------------
+       Six equal cards in a 3x2 grid is the most recognisable generated
+       pattern there is. The two routes with published flat fees (E-2 and
+       EB-2 NIW) are the firm's actual products, so they get the room. -->
+  <section class="section section--loose" id="vias">
     <div class="container">
-      <h2>Las vías que trabajamos</h2>
-      <p class="lede" style="margin-bottom:40px;">Estas son las categorías que presentamos con más frecuencia.</p>
-      <div class="grid-3">
-        <div class="pathway-card">
-          <span class="code">E-2</span>
-          <span class="best">Empresarios e inversionistas</span>
-          <p>Invertir y operar un negocio propio en Estados Unidos. No hay monto mínimo fijo en la ley, pero la inversión debe ser sustancial y el negocio tiene que operar de verdad. Solo aplica a nacionales de países con tratado.</p>
-          <a href="estrategias-empresarios.html" class="link">Ver E-2 &rarr;</a>
+      <div class="head-row">
+        <div>
+          <span class="eyebrow">Las vías</span>
+          <h2>Seis categorías. Dos con precio publicado.</h2>
         </div>
-        <div class="pathway-card">
-          <span class="code">L-1</span>
-          <span class="best">Empresas y ejecutivos</span>
-          <p>Trasladar personal ejecutivo, gerencial o especializado entre tu empresa en el exterior y tu operación en Estados Unidos. También sirve si tu empresa ya está aquí y necesita traer talento.</p>
-          <a href="estrategias-empresarios.html" class="link">Ver L-1 &rarr;</a>
-        </div>
-        <div class="pathway-card">
-          <span class="code">EB-5</span>
-          <span class="best">Inversionistas</span>
-          <p>Inversión mayor con creación de empleo, que lleva directo a la residencia permanente para ti y tu familia. El monto mínimo se ajusta por inflación a partir del 1 de enero de 2027.</p>
-          <a href="estrategias-empresarios.html" class="link">Ver EB-5 &rarr;</a>
-        </div>
-        <div class="pathway-card">
-          <span class="code">O-1</span>
-          <span class="best">Artistas, deportistas y talento</span>
-          <p>Vivir y trabajar ejerciendo tu disciplina, con base en una trayectoria demostrable y un patrocinador o agente. No exige fama masiva; exige evidencia.</p>
-          <a href="estrategias-profesionales.html" class="link">Ver O-1 &rarr;</a>
-        </div>
-        <div class="pathway-card">
-          <span class="code">EB-2 NIW</span>
-          <span class="best">Profesionales</span>
-          <p>Residencia permanente sin oferta de empleo ni certificación laboral, cuando tu trabajo tiene mérito sustancial e importancia nacional para Estados Unidos.</p>
-          <a href="estrategias-profesionales.html" class="link">Ver EB-2 NIW &rarr;</a>
-        </div>
-        <div class="pathway-card">
-          <span class="code">Familiar</span>
-          <span class="best">Familias</span>
-          <p>Peticiones familiares, estudios de tus hijos y planificación de residencia a largo plazo. Los tiempos varían mucho según el parentesco y el país de origen.</p>
-          <a href="estrategias-familias.html" class="link">Ver vías familiares &rarr;</a>
-        </div>
+        <p class="lede">La vía correcta sale del diagnóstico, no del catálogo. Estas son las que presentamos con más frecuencia.</p>
+      </div>
+
+      <div class="bento">
+        <a href="estrategias-empresarios.html" class="bento-cell bento-cell--wide bento-cell--featured">
+          <div class="bento-top"><span class="code">E-2</span><span class="price">$15,800 <small>tarifa plana</small></span></div>
+          <h3>Inversionista de tratado</h3>
+          <p>Invertir y operar un negocio propio en Estados Unidos. No hay monto mínimo fijo en la ley, pero la inversión debe ser sustancial y el negocio tiene que operar de verdad. Solo para nacionales de países con tratado.</p>
+          <span class="link">Ver E-2 &rarr;</span>
+        </a>
+        <a href="estrategias-profesionales.html" class="bento-cell bento-cell--tall bento-cell--featured">
+          <div class="bento-top"><span class="code">EB-2 NIW</span><span class="price">$18,500 <small>tarifa plana</small></span></div>
+          <h3>Interés nacional</h3>
+          <p>Residencia permanente por oferta de empleo o certificación laboral, cuando tu trabajo tiene mérito sustancial e importancia nacional para Estados Unidos.</p>
+          <p class="muted">La categoría que más ha crecido en nuestra práctica desde 2024.</p>
+          <span class="link">Ver EB-2 NIW &rarr;</span>
+        </a>
+        <a href="estrategias-empresarios.html" class="bento-cell">
+          <span class="code">L-1</span><h3>Traslado intracompañía</h3>
+          <p>Mover personal ejecutivo o especializado entre tu empresa en el exterior y tu operación en EE.UU.</p>
+        </a>
+        <a href="estrategias-empresarios.html" class="bento-cell">
+          <span class="code">EB-5</span><h3>Inversión con empleo</h3>
+          <p>Inversión mayor con creación de empleo, directo a la residencia permanente. Mínimo ajustado por inflación desde 2027.</p>
+        </a>
+        <a href="estrategias-profesionales.html" class="bento-cell bento-cell--half">
+          <span class="code">O-1</span><h3>Habilidad extraordinaria</h3>
+          <p>Artistas, deportistas y profesionales con reconocimiento demostrable en su campo.</p>
+        </a>
+        <a href="estrategias-familias.html" class="bento-cell bento-cell--half">
+          <span class="code">Familiar</span><h3>Peticiones familiares</h3>
+          <p>Residencia por matrimonio, padres o hijos. Los tiempos varían según parentesco y país de origen.</p>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- 05 MÉTODO -->
+  <!-- 05 MÉTODO — the wheel ------------------------------------------
+       Four phases around a hub, connected in sequence, with a faint closing
+       arc for Continuidad. A diagram is remembered; a row of four cards is
+       not. The list beside it carries the detail the wheel cannot. -->
   <section class="section section--card" id="metodo">
-    <div class="container">
-      <h2>El Método CLG&trade;</h2>
-      <p class="lede" style="margin-bottom:40px;">Cuatro fases, y una quinta después de la aprobación.</p>
-      <div class="method-grid">
-        <div class="method-step">
-          <div class="step-no">01</div><h3>Diagnóstico</h3>
-          <p>Revisamos tu perfil completo: profesión, negocio, estructura corporativa y origen de fondos.</p>
-        </div>
-        <div class="method-step">
-          <div class="step-no">02</div><h3>Diseño</h3>
-          <p>Elegimos vía principal y alterna, y estructuramos capital, empresa y calendario.</p>
-        </div>
-        <div class="method-step">
-          <div class="step-no">03</div><h3>Documentación</h3>
-          <p>Construimos el expediente: plan de negocio, constitución, cartas, financieros, credenciales.</p>
-        </div>
-        <div class="method-step">
-          <div class="step-no">04</div><h3>Presentación</h3>
-          <p>Presentamos, te preparamos para la entrevista y respondemos cualquier RFE.</p>
-        </div>
+    <div class="container method">
+      <figure class="wheel" data-anim="rise" aria-labelledby="wheel-title">
+        <svg viewBox="0 0 520 520" role="img" aria-describedby="wheel-desc">
+          <title id="wheel-title">El Método CLG</title>
+          <desc id="wheel-desc">Cuatro fases en secuencia: Diagnóstico, Diseño, Documentación y Presentación. Un arco final, Continuidad CLG, vuelve al inicio.</desc>
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#0f1e33"/>
+            </marker>
+          </defs>
+          <!-- faint full ring -->
+          <circle cx="260" cy="260" r="180" fill="none" stroke="#e2d9c6" stroke-width="1.5"/>
+          <!-- closing arc: Continuidad, phase 4 back to phase 1 -->
+          <path class="wheel-cont" d="M 80 260 A 180 180 0 0 1 260 80" fill="none" stroke="#b8863b" stroke-width="2" stroke-dasharray="5 7"/>
+          <text class="wheel-cont-label" x="112" y="118" fill="#8f6526" font-size="12" font-weight="700" letter-spacing="1.6" transform="rotate(-45 112 118)">CONTINUIDAD CLG</text>
+          <!-- main sequence: three quarter turns, clockwise, with arrowheads -->
+          <path class="wheel-seq" d="M 260 80 A 180 180 0 0 1 440 260" fill="none" stroke="#0f1e33" stroke-width="2.5" marker-end="url(#arr)"/>
+          <path class="wheel-seq" d="M 440 260 A 180 180 0 0 1 260 440" fill="none" stroke="#0f1e33" stroke-width="2.5" marker-end="url(#arr)"/>
+          <path class="wheel-seq" d="M 260 440 A 180 180 0 0 1 80 260" fill="none" stroke="#0f1e33" stroke-width="2.5" marker-end="url(#arr)"/>
+          <!-- hub -->
+          <circle cx="260" cy="260" r="64" fill="#0f1e33"/>
+          <text x="260" y="254" text-anchor="middle" fill="#faf6ef" font-family="Newsreader, Georgia, serif" font-size="22">Método</text>
+          <text x="260" y="280" text-anchor="middle" fill="#d9b877" font-family="Newsreader, Georgia, serif" font-size="22">CLG</text>
+          <!-- phase nodes -->
+          <g class="wheel-node" font-family="Public Sans, system-ui, sans-serif">
+            <circle cx="260" cy="80" r="54" fill="#ffffff" stroke="#b8863b" stroke-width="2"/>
+            <text x="260" y="70" text-anchor="middle" fill="#8f6526" font-size="11" font-weight="700" letter-spacing="1.5">01</text>
+            <text x="260" y="92" text-anchor="middle" fill="#0f1e33" font-family="Newsreader, Georgia, serif" font-size="18">Diagnóstico</text>
+          </g>
+          <g class="wheel-node" font-family="Public Sans, system-ui, sans-serif">
+            <circle cx="440" cy="260" r="54" fill="#ffffff" stroke="#b8863b" stroke-width="2"/>
+            <text x="440" y="250" text-anchor="middle" fill="#8f6526" font-size="11" font-weight="700" letter-spacing="1.5">02</text>
+            <text x="440" y="272" text-anchor="middle" fill="#0f1e33" font-family="Newsreader, Georgia, serif" font-size="18">Diseño</text>
+          </g>
+          <g class="wheel-node" font-family="Public Sans, system-ui, sans-serif">
+            <circle cx="260" cy="440" r="54" fill="#ffffff" stroke="#b8863b" stroke-width="2"/>
+            <text x="260" y="430" text-anchor="middle" fill="#8f6526" font-size="11" font-weight="700" letter-spacing="1.5">03</text>
+            <text x="260" y="452" text-anchor="middle" fill="#0f1e33" font-family="Newsreader, Georgia, serif" font-size="16">Documentación</text>
+          </g>
+          <g class="wheel-node" font-family="Public Sans, system-ui, sans-serif">
+            <circle cx="80" cy="260" r="54" fill="#ffffff" stroke="#b8863b" stroke-width="2"/>
+            <text x="80" y="250" text-anchor="middle" fill="#8f6526" font-size="11" font-weight="700" letter-spacing="1.5">04</text>
+            <text x="80" y="272" text-anchor="middle" fill="#0f1e33" font-family="Newsreader, Georgia, serif" font-size="17">Presentación</text>
+          </g>
+        </svg>
+      </figure>
+
+      <div class="method-copy">
+        <span class="eyebrow">El Método CLG&trade;</span>
+        <h2>Cuatro fases. Una quinta, después de la aprobación.</h2>
+        <ol class="phase-list">
+          <li><strong>Diagnóstico</strong><span>Revisamos tu perfil completo: profesión, negocio, estructura corporativa y origen de fondos.</span></li>
+          <li><strong>Diseño</strong><span>Elegimos vía principal y alterna, y estructuramos capital, empresa y calendario.</span></li>
+          <li><strong>Documentación</strong><span>Construimos el expediente: plan de negocio, constitución, cartas, financieros, credenciales.</span></li>
+          <li><strong>Presentación</strong><span>Presentamos el caso, te preparamos para la entrevista y te acompañamos hasta la decisión.</span></li>
+        </ol>
+        <p class="phase-cont"><strong>Continuidad CLG</strong> es la vuelta siguiente de la misma rueda, para clientes con caso aprobado: renovaciones en calendario, y tu familia y tu empresa dentro del mismo expediente. <a href="estrategia-honorarios.html">$950 USD al año &rarr;</a></p>
       </div>
-      <p style="margin-top:26px;">La quinta fase es <a href="estrategia-honorarios.html" style="font-weight:700;color:var(--gold-deep);">Continuidad CLG</a>, para clientes con caso aprobado: renovaciones en calendario y tu familia y tu empresa dentro del mismo expediente. $950 USD al año.</p>
     </div>
   </section>
 
@@ -338,20 +404,29 @@
     </div>
   </section>
 
-  <!-- 07 HONORARIOS — cifras concretas, sin tarjetas -->
-  <section class="section section--card">
-    <div class="container container--narrow">
-      <h2>Honorarios</h2>
-      <p class="lede">Publicamos los precios porque no decirlos genera más ansiedad que la cifra.</p>
-      <table class="value-table" style="margin-top:20px;">
-        <tr><td>Brújula CLG</td><td class="num">Gratis</td></tr>
-        <tr><td>Evaluación CLG, se acredita completa a tu honorario</td><td class="num">$2,500 USD</td></tr>
-        <tr><td>Vía E-2, tarifa plana</td><td class="num">$15,800 USD</td></tr>
-        <tr><td>Vía EB-2 NIW, tarifa plana</td><td class="num">$18,500 USD</td></tr>
-        <tr><td>Continuidad CLG, después de la aprobación</td><td class="num">$950 USD / año</td></tr>
-      </table>
-      <p class="note">Los costos de gobierno de USCIS y del Departamento de Estado se cotizan aparte. El rango para vías familiares u otras categorías se confirma en tu sesión de estrategia.</p>
-      <p style="margin-top:18px;"><a href="estrategia-honorarios.html" class="btn btn-purple">Ver qué incluye cada honorario</a></p>
+  <!-- 07 HONORARIOS — one number, set large ------------------------------
+       A dark band mid-page, so the rhythm is not cream/card/cream/card all
+       the way down. The $2,500 is the whole thesis: it ends free
+       consultations and is credited back in full, so for a client who
+       proceeds it costs nothing. -->
+  <section class="section section--ink fees-band">
+    <div class="container fees">
+      <div class="fees-big">
+        <span class="eyebrow">Honorarios publicados</span>
+        <div class="fees-figure"><span class="cur">$</span>2,500</div>
+        <p class="fees-what">Evaluación CLG. Se acredita <em>completa</em> a tu honorario si el caso avanza.</p>
+        <p class="fees-why">No ofrecemos consultas gratis. En veinte minutos no se puede revisar tu estructura financiera ni tu historial migratorio, que es lo que determina la respuesta. La evaluación es rigor, no una barrera.</p>
+      </div>
+      <div class="fees-rest">
+        <dl class="fees-list">
+          <div><dt>Brújula CLG</dt><dd>Gratis</dd></div>
+          <div><dt>Vía E-2, tarifa plana</dt><dd>$15,800</dd></div>
+          <div><dt>Vía EB-2 NIW, tarifa plana</dt><dd>$18,500</dd></div>
+          <div><dt>Continuidad CLG, al año</dt><dd>$950</dd></div>
+        </dl>
+        <p class="note">Costos de gobierno (USCIS, Departamento de Estado) aparte. Vías familiares y otras categorías se cotizan en tu sesión de estrategia.</p>
+        <a href="estrategia-honorarios.html" class="btn btn-primary">Ver qué incluye cada honorario</a>
+      </div>
     </div>
   </section>
 
@@ -510,7 +585,7 @@
   </a>
 </div>
 
-<script src="assets/js/i18n.js?v=16"></script>
-<script src="assets/js/main.js?v=16"></script>
+<script src="assets/js/i18n.js?v=17"></script>
+<script src="assets/js/main.js?v=17"></script>
 </body>
 </html>
