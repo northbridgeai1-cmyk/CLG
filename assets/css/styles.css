@@ -1245,3 +1245,23 @@ html.motion-ready .word.is-in > i { transform: translateY(0); }
 /* The WhatsApp link in the fase-1 nav measured 314x23 — standalone control,
    one pixel under the 24px minimum. */
 .nav-wa { display: inline-block; padding-block: 4px; }
+
+/* ── Mobile menu: fix ─────────────────────────────────────────────────────
+   .site-header carries backdrop-filter for the frosted-glass effect. Like
+   transform and filter, backdrop-filter turns the element into the
+   containing block for its position:fixed descendants — so the open menu
+   (.main-nav, position:fixed; top:76px; bottom:0) was being laid out
+   INSIDE the 77px header instead of the viewport. It rendered as a 48px
+   strip the hero then covered. The menu has been unusable on phones since
+   the header was first styled.
+
+   While the menu is open the frosted effect is invisible anyway (the menu
+   covers the page), so dropping it for that state costs nothing and
+   restores the viewport as the containing block. */
+body.menu-open .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+/* Belt and braces: pin the menu to the viewport explicitly. */
+body.menu-open .main-nav {
+  top: 76px; bottom: 0; height: auto; max-height: calc(100vh - 76px);
+  max-height: calc(100dvh - 76px);
+}
